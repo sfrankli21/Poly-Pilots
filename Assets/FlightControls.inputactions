@@ -1,0 +1,352 @@
+{
+    "name": "FlightControls",
+    "maps": [
+        {
+            "name": "PhysicalControls",
+            "id": "c94d70ab-ba03-4eba-a7dd-a81e6c91b0a0",
+            "actions": [
+                {
+                    "name": "LeftEngines",
+                    "type": "Value",
+                    "id": "5534983b-e4a5-411c-b2b8-c0068f1274fc",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightEngines",
+                    "type": "Value",
+                    "id": "b1ff2ea5-ce43-4d3f-94a3-a2b7691908b4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ThrustVectorLeft",
+                    "type": "Value",
+                    "id": "7d938f24-b250-475d-a6bb-1973786d0f99",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ThrustVectorRight",
+                    "type": "Value",
+                    "id": "25008ab8-8963-4354-8978-b48110889d67",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Roll",
+                    "type": "Value",
+                    "id": "e6a7efc2-3f6d-4850-882c-c5dc49305dbd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Pitch",
+                    "type": "Value",
+                    "id": "0f936cf8-1f7c-49eb-b06c-e50b4477fe88",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Yaw",
+                    "type": "Value",
+                    "id": "d68aaa72-2d40-4f0f-bccb-ea32180e7344",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "AIOThrust",
+                    "type": "Value",
+                    "id": "f3b1fd21-075e-4592-8399-23187770903e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "AIOThrustVector",
+                    "type": "Value",
+                    "id": "e0d2df2e-1760-41d3-b032-c19cf372d994",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SwitchRadarModeOff",
+                    "type": "Value",
+                    "id": "a0d4ee44-99e1-4a4b-9160-3137fd2b1249",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SwitchRadarModeTWS",
+                    "type": "Button",
+                    "id": "d76edd9c-71d0-4205-bf8c-5142db1f23c7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchRadarModeHMD",
+                    "type": "Button",
+                    "id": "05ea6cff-528f-4bb5-a7ce-d36f2508ad1f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LockRadar",
+                    "type": "Button",
+                    "id": "1b8181fa-4033-4de4-b338-6988c3d498ec",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextRadarTarget",
+                    "type": "Button",
+                    "id": "04f7c802-5061-4f6f-ae2b-b9b0544f11db",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousRadarTarget",
+                    "type": "Button",
+                    "id": "2156acab-389c-4e30-9143-47f0bbcc2635",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ReleaseWeapon",
+                    "type": "Button",
+                    "id": "a132a701-2cd6-4077-a370-6d3c9d26da33",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "NextPylon",
+                    "type": "Button",
+                    "id": "addd0ed4-535c-47df-afd0-c27f37331ddd",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PreviousPylon",
+                    "type": "Button",
+                    "id": "da58de0b-4c22-405f-b181-e72e66d743eb",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4fe784b9-abba-493f-880c-fbed5ba612f4",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/stick/x",
+                    "interactions": "",
+                    "processors": "Invert",
+                    "groups": "",
+                    "action": "LeftEngines",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d823f5f5-4c05-48d4-8593-b2b367ed263b",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/stick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightEngines",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e02e6ddd-4f5c-469d-a3ea-cb6e099adcfb",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/z",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrustVectorLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2dfc409f-46b5-47f4-ac3a-a781cbc861da",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ThrustVectorRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "53d3f5c3-b428-4bec-8209-1f5ddd7b29a1",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "434471f7-e1fe-44b2-baf1-4b92aea48f52",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/y",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ff6037b-e19f-4627-a908-c2a012d138fd",
+                    "path": "<HID::Saitek Saitek Pro Flight Rudder Pedals>/rz",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Yaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "73b82fd8-84f9-4f27-bfac-668ebaa560f8",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button34",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchRadarModeOff",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "92f8804b-1b78-4146-880a-c11deef90b98",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button35",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchRadarModeTWS",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd923ef0-8bed-40a1-a279-27d49102c9f4",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button36",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchRadarModeHMD",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae33e905-4804-4004-9660-354f4647de33",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LockRadar",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a1299f13-1b7d-4e20-bd29-debee0451683",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextRadarTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "428b0cf7-7c80-4877-8662-f0db8daa46b1",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousRadarTarget",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b85b74a2-5a10-49c4-896d-bd3312f70632",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/button2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ReleaseWeapon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1832f1eb-4f17-4b3a-9da1-ca3fc31defdc",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button29",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "NextPylon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "93411c26-a09c-4df0-abb4-300a5d9f513b",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button28",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PreviousPylon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
