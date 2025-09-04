@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 
-public class FlightPhysics : MonoBehaviour
+public class FlightPhysicsV2 : MonoBehaviour
 {
     [System.Serializable]
     public class Engine
@@ -69,6 +69,20 @@ public class FlightPhysics : MonoBehaviour
     [Header("Engines")]
     public List<Engine> engines = new List<Engine>();
 
+    [Header("Off-Bore Linear Damping")]
+    [Tooltip("Exponential curve sharpness. Higher values reach max sooner.")]
+    public float angleSharpness = 3f; // try 2..5
+    [Tooltip("Damping when desired and momentum headings are aligned.")]
+    public float baseDamping = 0.005f;
+    [Tooltip("Damping when off-bore angle reaches maxOffBoreAngle.")]
+    public float maxDamping = 0.12f;
+    [Tooltip("Angle in degrees where damping saturates at maxDamping.")]
+    public float maxOffBoreAngle = 45f; // degrees
+    [Tooltip("Reference speed for scaling (m/s). Effect ramps up toward this speed.")]
+    public float refSpeed = 100f;
+    [Tooltip("Speed exponent for scaling. 2.0 approximates v^2 growth, clamped to 0..1.")]
+    public float speedPower = 2f;
+
     void OnEnable()
     {
         pitchInput?.action?.Enable();
@@ -118,6 +132,8 @@ public class FlightPhysics : MonoBehaviour
         ApplyYawControl();
         ApplyEngineThrust();
         ApplyUpforce();
+
+        ApplyOffBoreLinearDamping(); // auto-computed from base, max, and max angle
     }
 
     Rigidbody GetRB()
@@ -130,8 +146,8 @@ public class FlightPhysics : MonoBehaviour
     Vector3 ControlApplicationPoint(Transform forcePoint)
     {
         if (useColliderSurfaceForControls && forceApplicationCollider != null && forcePoint != null)
-            return forceApplicationCollider.ClosestPoint(forcePoint.position); // use BoxCollider surface
-        return (forcePoint != null) ? forcePoint.position : Vector3.zero;       // use point position
+            return forceApplicationCollider.ClosestPoint(forcePoint.position);
+        return (forcePoint != null) ? forcePoint.position : Vector3.zero;
     }
 
     static Vector3 DirFrom(Transform t, Vector3 localDir)
@@ -158,7 +174,6 @@ public class FlightPhysics : MonoBehaviour
             var p = rollForcePointPushDown.localPosition;
             p.x = offset;
             rollForcePointPushDown.localPosition = p;
-
             ApplyControlForce(rollForcePointPushDown, Vector3.down, rollForceStrength);
         }
 
@@ -167,7 +182,6 @@ public class FlightPhysics : MonoBehaviour
             var p = rollForcePointPushUp.localPosition;
             p.x = -offset;
             rollForcePointPushUp.localPosition = p;
-
             ApplyControlForce(rollForcePointPushUp, Vector3.up, rollForceStrength);
         }
     }
@@ -182,7 +196,6 @@ public class FlightPhysics : MonoBehaviour
             var p = pitchForcePointPushDown.localPosition;
             p.z = offset;
             pitchForcePointPushDown.localPosition = p;
-
             ApplyControlForce(pitchForcePointPushDown, Vector3.down, pitchForceStrength);
         }
 
@@ -191,7 +204,6 @@ public class FlightPhysics : MonoBehaviour
             var p = pitchForcePointPushUp.localPosition;
             p.z = -offset;
             pitchForcePointPushUp.localPosition = p;
-
             ApplyControlForce(pitchForcePointPushUp, Vector3.up, pitchForceStrength);
         }
     }
@@ -206,7 +218,6 @@ public class FlightPhysics : MonoBehaviour
             var p = yawForcePointPushRight.localPosition;
             p.z = offset;
             yawForcePointPushRight.localPosition = p;
-
             ApplyControlForce(yawForcePointPushRight, Vector3.right, yawForceStrength);
         }
 
@@ -215,7 +226,6 @@ public class FlightPhysics : MonoBehaviour
             var p = yawForcePointPushLeft.localPosition;
             p.z = -offset;
             yawForcePointPushLeft.localPosition = p;
-
             ApplyControlForce(yawForcePointPushLeft, Vector3.left, yawForceStrength);
         }
     }
@@ -269,4 +279,44 @@ public class FlightPhysics : MonoBehaviour
                                                          : upforcePoint.position;
         rb.AddForceAtPosition(upforcePoint.up * force, pos, ForceMode.Force);
     }
+
+    // Auto-computed off-bore driven linear damping
+    void ApplyOffBoreLinearDamping()
+    {
+        if (targetRigidbody == null) return;
+
+        Vector3 v = targetRigidbody.linearVelocity;
+        float speed = v.magnitude;
+
+        // When basically stopped, keep baseline
+        if (speed < 0.5f)
+        {
+            targetRigidbody.linearDamping = baseDamping;
+            return;
+        }
+
+        Vector3 vhat = v / Mathf.Max(speed, 1e-6f);
+        Vector3 fhat = transform.forward;
+
+        // Off-bore angle in degrees [0..180]
+        float offBoreDeg = Vector3.Angle(fhat, vhat);
+
+        // Normalize by maxOffBoreAngle to get 0..1
+        float angleNorm = 0f;
+        if (maxOffBoreAngle > 0.0001f)
+            angleNorm = Mathf.Clamp01(offBoreDeg / maxOffBoreAngle);
+        else
+            angleNorm = Mathf.Clamp01(offBoreDeg / 45f); // fallback if maxOffBoreAngle is zero
+
+        // Speed scaling in 0..1 so we never exceed maxDamping because of speed alone
+        float speedNorm = Mathf.Clamp01(Mathf.Pow(speed / Mathf.Max(1f, refSpeed), Mathf.Max(0.01f, speedPower)));
+
+        // Exponential easing from baseDamping to maxDamping
+        // angleSharpness controls how quickly we approach max as angle grows
+        float angleCurve = 1f - Mathf.Exp(-Mathf.Max(0f, angleSharpness) * angleNorm);
+
+        float damping = Mathf.Lerp(baseDamping, maxDamping, angleCurve * speedNorm);
+        targetRigidbody.linearDamping = damping; // or linearDamping on newer API
+    }
+
 }

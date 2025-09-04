@@ -1,8 +1,8 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
-
-public class FlightPhysics : MonoBehaviour
+using TMPro;
+public class FlightPhysicsV2_ProbeForces : MonoBehaviour
 {
     [System.Serializable]
     public class Engine
@@ -31,7 +31,7 @@ public class FlightPhysics : MonoBehaviour
     public Rigidbody targetRigidbody;
 
     [Header("Force Application Target")]
-    [Tooltip("Set this to your BoxCollider. Control forces can apply at this collider surface for stable torque.")]
+    [Tooltip("Set this to your collider that receives forces. Commonly a BoxCollider or SphereCollider at the RB root.")]
     public Collider forceApplicationCollider;
     [Tooltip("If true, control forces are applied at the collider surface nearest each force point; if false, at the force point position.")]
     public bool useColliderSurfaceForControls = true;
@@ -68,6 +68,42 @@ public class FlightPhysics : MonoBehaviour
 
     [Header("Engines")]
     public List<Engine> engines = new List<Engine>();
+
+    // ------------------ Probe Force Drag (your system) ------------------
+
+    [Header("Probe Force Drag")]
+    [Tooltip("Empty transform used as the probe. Its position will be driven by this script.")]
+    public Transform probe;                 // assign an empty GameObject
+    [Tooltip("Distance ahead along the momentum heading where the probe sits.")]
+    public float probeDistance = 5f;        // units ahead along velocity
+    [Tooltip("Minimum speed before the probe applies any force.")]
+    public float minSpeedForProbe = 1.0f;   // m/s
+
+    [Tooltip("Angle in degrees where the probe reaches Max Drag Force.")]
+    public float maxOffBoreAngle = 60f;     // degrees
+    [Tooltip("Optional exponential shaping. 0 means purely linear. 2..5 gives faster growth near max.")]
+    public float angleSharpness = 0f;       // 0 linear, >0 exponential
+
+    [Tooltip("Maximum drag force in Newtons when off-bore equals or exceeds maxOffBoreAngle.")]
+    public float maxDragForce = 20000f;     // N at max angle
+    [Tooltip("Reference speed in m/s used to scale the effect. 2 gives v^2-like behavior.")]
+    public float refSpeed = 150f;           // m/s
+    [Tooltip("Speed exponent. 2 is dynamic-pressure style. Set to 0 to remove speed scaling.")]
+    public float speedPower = 2f;
+
+    [Tooltip("Smoothing for momentum heading (0 raw, 1 heavy).")]
+    [Range(0f, 1f)] public float momentumSmoothing = 0.15f;
+
+    // state
+    Vector3 _vhatSmoothed = Vector3.forward;
+
+    [Header("UI Debug Output")]
+    public TMP_Text debugText;    // assign a TextMeshProUGUI object in Inspector
+
+    private float currentDragForce = 0f;
+    private float currentOffBoreAngle = 0f;
+
+    // -------------------------------------------------------------------
 
     void OnEnable()
     {
@@ -118,7 +154,11 @@ public class FlightPhysics : MonoBehaviour
         ApplyYawControl();
         ApplyEngineThrust();
         ApplyUpforce();
+
+        ApplyProbeForce();   // new system
     }
+
+    // ------------------ helpers ------------------
 
     Rigidbody GetRB()
     {
@@ -130,8 +170,8 @@ public class FlightPhysics : MonoBehaviour
     Vector3 ControlApplicationPoint(Transform forcePoint)
     {
         if (useColliderSurfaceForControls && forceApplicationCollider != null && forcePoint != null)
-            return forceApplicationCollider.ClosestPoint(forcePoint.position); // use BoxCollider surface
-        return (forcePoint != null) ? forcePoint.position : Vector3.zero;       // use point position
+            return forceApplicationCollider.ClosestPoint(forcePoint.position);
+        return (forcePoint != null) ? forcePoint.position : Vector3.zero;
     }
 
     static Vector3 DirFrom(Transform t, Vector3 localDir)
@@ -148,6 +188,8 @@ public class FlightPhysics : MonoBehaviour
         rb.AddForceAtPosition(dir * strength, pos, ForceMode.Force);
     }
 
+    // ------------------ controls ------------------
+
     void ApplyRollControl()
     {
         float input = rollInput?.action?.ReadValue<float>() ?? 0f;
@@ -158,7 +200,6 @@ public class FlightPhysics : MonoBehaviour
             var p = rollForcePointPushDown.localPosition;
             p.x = offset;
             rollForcePointPushDown.localPosition = p;
-
             ApplyControlForce(rollForcePointPushDown, Vector3.down, rollForceStrength);
         }
 
@@ -167,7 +208,6 @@ public class FlightPhysics : MonoBehaviour
             var p = rollForcePointPushUp.localPosition;
             p.x = -offset;
             rollForcePointPushUp.localPosition = p;
-
             ApplyControlForce(rollForcePointPushUp, Vector3.up, rollForceStrength);
         }
     }
@@ -182,7 +222,6 @@ public class FlightPhysics : MonoBehaviour
             var p = pitchForcePointPushDown.localPosition;
             p.z = offset;
             pitchForcePointPushDown.localPosition = p;
-
             ApplyControlForce(pitchForcePointPushDown, Vector3.down, pitchForceStrength);
         }
 
@@ -191,7 +230,6 @@ public class FlightPhysics : MonoBehaviour
             var p = pitchForcePointPushUp.localPosition;
             p.z = -offset;
             pitchForcePointPushUp.localPosition = p;
-
             ApplyControlForce(pitchForcePointPushUp, Vector3.up, pitchForceStrength);
         }
     }
@@ -206,7 +244,6 @@ public class FlightPhysics : MonoBehaviour
             var p = yawForcePointPushRight.localPosition;
             p.z = offset;
             yawForcePointPushRight.localPosition = p;
-
             ApplyControlForce(yawForcePointPushRight, Vector3.right, yawForceStrength);
         }
 
@@ -215,7 +252,6 @@ public class FlightPhysics : MonoBehaviour
             var p = yawForcePointPushLeft.localPosition;
             p.z = -offset;
             yawForcePointPushLeft.localPosition = p;
-
             ApplyControlForce(yawForcePointPushLeft, Vector3.left, yawForceStrength);
         }
     }
@@ -256,6 +292,8 @@ public class FlightPhysics : MonoBehaviour
         }
     }
 
+    // ------------------ legacy upforce kept as-is ------------------
+
     void ApplyUpforce()
     {
         if (upforcePoint == null) return;
@@ -268,5 +306,65 @@ public class FlightPhysics : MonoBehaviour
         Vector3 pos = (forceApplicationCollider != null) ? forceApplicationCollider.ClosestPoint(upforcePoint.position)
                                                          : upforcePoint.position;
         rb.AddForceAtPosition(upforcePoint.up * force, pos, ForceMode.Force);
+    }
+
+    // ------------------ Probe Force core ------------------
+
+    void ApplyProbeForce()
+    {
+        if (targetRigidbody == null || probe == null) return;
+
+        Vector3 v = targetRigidbody.linearVelocity;
+        float speed = v.magnitude;
+        if (speed < minSpeedForProbe) return;
+
+        // Momentum heading (optionally smoothed)
+        Vector3 vhat = v / Mathf.Max(speed, 1e-6f);
+        if (_vhatSmoothed.sqrMagnitude < 1e-8f) _vhatSmoothed = vhat;
+        float slerpT = Mathf.Clamp01(1f - momentumSmoothing);
+        _vhatSmoothed = Vector3.Slerp(_vhatSmoothed, vhat, slerpT);
+        vhat = _vhatSmoothed;
+
+        // Place the probe along momentum path
+        probe.position = transform.position + vhat * Mathf.Max(0f, probeDistance);
+        probe.rotation = Quaternion.LookRotation(vhat, transform.up);
+
+        // Off-bore angle
+        float offBoreDeg = Vector3.Angle(transform.forward, vhat);
+        currentOffBoreAngle = offBoreDeg;
+
+        // Normalize and curve
+        float angleNorm = (maxOffBoreAngle > 0.0001f) ? Mathf.Clamp01(offBoreDeg / maxOffBoreAngle)
+                                                      : Mathf.Clamp01(offBoreDeg / 45f);
+        if (angleSharpness > 0f)
+        {
+            float k = Mathf.Max(0f, angleSharpness);
+            angleNorm = 1f - Mathf.Exp(-k * angleNorm);
+        }
+
+        float speedNorm = (speedPower > 0f)
+            ? Mathf.Clamp01(Mathf.Pow(speed / Mathf.Max(1f, refSpeed), speedPower))
+            : 1f;
+
+        float strength = Mathf.Lerp(0f, maxDragForce, angleNorm * speedNorm);
+        currentDragForce = strength;
+
+        if (strength > 0f)
+        {
+            Rigidbody rb = GetRB();
+            Vector3 applicationPoint = (forceApplicationCollider != null)
+                ? forceApplicationCollider.ClosestPoint(probe.position)
+                : probe.position;
+
+            Vector3 F = -vhat * strength;
+            rb.AddForceAtPosition(F, applicationPoint, ForceMode.Force);
+        }
+
+        // Update TMP text if assigned
+        if (debugText != null)
+        {
+            debugText.text = $"Off-Bore: {currentOffBoreAngle:F1}°\nDrag Force: {currentDragForce:F0} N";
+        }
+
     }
 }
