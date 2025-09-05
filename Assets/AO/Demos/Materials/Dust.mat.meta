@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: da9366146542d504a9abc17d70a4dfdb
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Materials/Dust.mat
+  uploadId: 721855

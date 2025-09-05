@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 4daea64df04917d408fb394da07a55f2
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Ground Vehicle Wakes.unity
+  uploadId: 721855

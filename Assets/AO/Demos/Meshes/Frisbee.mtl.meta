@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e8b9b99cc1315054db1de8cbece817bd
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Meshes/Frisbee.mtl
+  uploadId: 721855

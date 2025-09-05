@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7265003d524898d4cb1d5d4953207926
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Materials/Force sensor leader line.mat
+  uploadId: 721855

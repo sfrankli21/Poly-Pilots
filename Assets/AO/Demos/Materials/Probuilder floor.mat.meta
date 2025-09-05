@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4d9545d7c1958c540a9df4fe874cdf71
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Materials/Probuilder floor.mat
+  uploadId: 721855

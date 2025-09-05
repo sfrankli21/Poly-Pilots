@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0a6debec10e5b5241a55b20cded6c0fa
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/Arrow Body.prefab
+  uploadId: 721855

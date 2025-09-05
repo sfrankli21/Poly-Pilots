@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2e04382501a02c0498fc17cc4eb0ebdc
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/Line material.mat
+  uploadId: 721855

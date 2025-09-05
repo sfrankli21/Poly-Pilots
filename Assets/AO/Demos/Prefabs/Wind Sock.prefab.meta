@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 69f4543ecb16eab47a0fdaaf46483c19
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Wind Sock.prefab
+  uploadId: 721855

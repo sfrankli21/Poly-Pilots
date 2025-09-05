@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e4ed5034a96e6b940b7214daf3357e1e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Materials/hex pattern.mat
+  uploadId: 721855

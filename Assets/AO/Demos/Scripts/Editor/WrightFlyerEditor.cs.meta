@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 0412ee838d887a249939e3afea925185
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Scripts/Editor/WrightFlyerEditor.cs
+  uploadId: 721855

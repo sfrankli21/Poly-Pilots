@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using TMPro;
+
 public class FlightPhysicsV2_ProbeForces : MonoBehaviour
 {
     [System.Serializable]
@@ -11,8 +12,8 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
         public Transform thrustPoint;
 
         [Header("Thrust (kN)")]
-        public float minThrust = 0f;   // in kilonewtons
-        public float maxThrust = 98f;  // in kilonewtons
+        public float minThrust = 0f;    // kilonewtons
+        public float maxThrust = 98f;   // kilonewtons
 
         public bool enableThrustVector = false;
         public InputActionReference thrustVectorInput;
@@ -31,9 +32,9 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
     public Rigidbody targetRigidbody;
 
     [Header("Force Application Target")]
-    [Tooltip("Set this to your collider that receives forces. Commonly a BoxCollider or SphereCollider at the RB root.")]
+    [Tooltip("Set this to the collider that should receive forces. Commonly a BoxCollider or SphereCollider at the RB root.")]
     public Collider forceApplicationCollider;
-    [Tooltip("If true, control forces are applied at the collider surface nearest each force point; if false, at the force point position.")]
+    [Tooltip("If true, control forces are applied at the collider surface nearest each force point. If false, at the force point position.")]
     public bool useColliderSurfaceForControls = true;
 
     [Header("Roll Control (labels show push direction)")]
@@ -69,41 +70,52 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
     [Header("Engines")]
     public List<Engine> engines = new List<Engine>();
 
-    // ------------------ Probe Force Drag (your system) ------------------
+    // ------------------ Probe Force Drag ------------------
 
     [Header("Probe Force Drag")]
-    [Tooltip("Empty transform used as the probe. Its position will be driven by this script.")]
-    public Transform probe;                 // assign an empty GameObject
+    [Tooltip("Empty transform used as the probe. Its position is driven by this script.")]
+    public Transform probe;
     [Tooltip("Distance ahead along the momentum heading where the probe sits.")]
-    public float probeDistance = 5f;        // units ahead along velocity
-    [Tooltip("Minimum speed before the probe applies any force.")]
-    public float minSpeedForProbe = 1.0f;   // m/s
+    public float probeDistance = 5f;
 
     [Tooltip("Angle in degrees where the probe reaches Max Drag Force.")]
-    public float maxOffBoreAngle = 60f;     // degrees
-    [Tooltip("Optional exponential shaping. 0 means purely linear. 2..5 gives faster growth near max.")]
-    public float angleSharpness = 0f;       // 0 linear, >0 exponential
-
+    public float maxOffBoreAngle = 60f;
+    [Tooltip("Optional exponential shaping. 0 means linear. 2 to 5 gives faster growth near max.")]
+    public float angleSharpness = 0f;
     [Tooltip("Maximum drag force in Newtons when off-bore equals or exceeds maxOffBoreAngle.")]
-    public float maxDragForce = 20000f;     // N at max angle
-    [Tooltip("Reference speed in m/s used to scale the effect. 2 gives v^2-like behavior.")]
-    public float refSpeed = 150f;           // m/s
-    [Tooltip("Speed exponent. 2 is dynamic-pressure style. Set to 0 to remove speed scaling.")]
+    public float maxDragForce = 20000f;
+    [Tooltip("Reference speed in m per s used to scale the effect. 2 gives v squared like behavior.")]
+    public float refSpeed = 150f;
+    [Tooltip("Speed exponent. 2 is dynamic pressure style. Set to 0 to remove speed scaling.")]
     public float speedPower = 2f;
 
-    [Tooltip("Smoothing for momentum heading (0 raw, 1 heavy).")]
+    [Tooltip("Smoothing for momentum heading. 0 raw, 1 heavy.")]
     [Range(0f, 1f)] public float momentumSmoothing = 0.15f;
 
-    // state
-    Vector3 _vhatSmoothed = Vector3.forward;
+    [Header("Probe Force Drag - Activation")]
+    [Tooltip("Below this speed, the probe system hard-stops and resets. Prevents jitter at dead stop.")]
+    public float zeroSpeedThreshold = 0.5f;
+    [Tooltip("Speed to turn probe force ON when accelerating.")]
+    public float minSpeedOn = 5f;
+    [Tooltip("Speed to turn probe force OFF when slowing down. Should be lower than minSpeedOn.")]
+    public float minSpeedOff = 3f;
+    [Tooltip("Seconds to fade the force to zero when turning off.")]
+    public float fadeOutTime = 0.25f;
+
+    // ------------------ UI Debug ------------------
 
     [Header("UI Debug Output")]
-    public TMP_Text debugText;    // assign a TextMeshProUGUI object in Inspector
+    public TMP_Text debugText;   // optional. Assign a TextMeshProUGUI to display values
 
-    private float currentDragForce = 0f;
-    private float currentOffBoreAngle = 0f;
+    // ------------------ Runtime state ------------------
 
-    // -------------------------------------------------------------------
+    Vector3 _vhatSmoothed = Vector3.forward;
+    bool _probeActive = false;
+    float _currentStrength = 0f;       // applied strength after smoothing
+    float _offBoreDegDisplay = 0f;     // for UI
+    float _lastSpeed = 0f;             // for reference if needed
+
+    // -----------------------------------------------------
 
     void OnEnable()
     {
@@ -135,6 +147,7 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
 
     void LateUpdate()
     {
+        // Mirrors your original behavior. Upforce orientation is yaw only.
         if (upforcePoint != null)
         {
             Vector3 targetPosition = transform.position + Vector3.up * upforceYOffset;
@@ -142,6 +155,12 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
 
             Vector3 jetEuler = transform.eulerAngles;
             upforcePoint.rotation = Quaternion.Euler(0f, jetEuler.y, 0f);
+        }
+
+        // UI
+        if (debugText != null)
+        {
+            debugText.text = $"Off-Bore: {_offBoreDegDisplay:F1} deg\nDrag Force: {_currentStrength:F0} N";
         }
     }
 
@@ -155,10 +174,12 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
         ApplyEngineThrust();
         ApplyUpforce();
 
-        ApplyProbeForce();   // new system
+        ApplyProbeForce();
+
+        _lastSpeed = targetRigidbody.linearVelocity.magnitude;
     }
 
-    // ------------------ helpers ------------------
+    // ------------------ Helpers ------------------
 
     Rigidbody GetRB()
     {
@@ -188,7 +209,7 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
         rb.AddForceAtPosition(dir * strength, pos, ForceMode.Force);
     }
 
-    // ------------------ controls ------------------
+    // ------------------ Controls ------------------
 
     void ApplyRollControl()
     {
@@ -256,6 +277,8 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
         }
     }
 
+    // ------------------ Engines ------------------
+
     void ApplyEngineThrust()
     {
         foreach (var engine in engines)
@@ -277,8 +300,9 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
             {
                 dir.Normalize();
                 Rigidbody rb = GetRB();
-                Vector3 pos = (forceApplicationCollider != null) ? forceApplicationCollider.ClosestPoint(engine.thrustPoint.position)
-                                                                 : engine.thrustPoint.position;
+                Vector3 pos = (forceApplicationCollider != null)
+                    ? forceApplicationCollider.ClosestPoint(engine.thrustPoint.position)
+                    : engine.thrustPoint.position;
                 rb.AddForceAtPosition(dir * thrustN, pos, ForceMode.Force);
             }
 
@@ -292,7 +316,7 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
         }
     }
 
-    // ------------------ legacy upforce kept as-is ------------------
+    // ------------------ Upforce kept as in your base script ------------------
 
     void ApplyUpforce()
     {
@@ -303,12 +327,14 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
         float force = Mathf.Lerp(0f, maxUpforce, t);
 
         Rigidbody rb = GetRB();
-        Vector3 pos = (forceApplicationCollider != null) ? forceApplicationCollider.ClosestPoint(upforcePoint.position)
-                                                         : upforcePoint.position;
+        Vector3 pos = (forceApplicationCollider != null)
+            ? forceApplicationCollider.ClosestPoint(upforcePoint.position)
+            : upforcePoint.position;
+
         rb.AddForceAtPosition(upforcePoint.up * force, pos, ForceMode.Force);
     }
 
-    // ------------------ Probe Force core ------------------
+    // ------------------ Probe Force core with dead-stop guard, hysteresis, fade ------------------
 
     void ApplyProbeForce()
     {
@@ -316,55 +342,105 @@ public class FlightPhysicsV2_ProbeForces : MonoBehaviour
 
         Vector3 v = targetRigidbody.linearVelocity;
         float speed = v.magnitude;
-        if (speed < minSpeedForProbe) return;
 
-        // Momentum heading (optionally smoothed)
-        Vector3 vhat = v / Mathf.Max(speed, 1e-6f);
-        if (_vhatSmoothed.sqrMagnitude < 1e-8f) _vhatSmoothed = vhat;
-        float slerpT = Mathf.Clamp01(1f - momentumSmoothing);
-        _vhatSmoothed = Vector3.Slerp(_vhatSmoothed, vhat, slerpT);
-        vhat = _vhatSmoothed;
-
-        // Place the probe along momentum path
-        probe.position = transform.position + vhat * Mathf.Max(0f, probeDistance);
-        probe.rotation = Quaternion.LookRotation(vhat, transform.up);
-
-        // Off-bore angle
-        float offBoreDeg = Vector3.Angle(transform.forward, vhat);
-        currentOffBoreAngle = offBoreDeg;
-
-        // Normalize and curve
-        float angleNorm = (maxOffBoreAngle > 0.0001f) ? Mathf.Clamp01(offBoreDeg / maxOffBoreAngle)
-                                                      : Mathf.Clamp01(offBoreDeg / 45f);
-        if (angleSharpness > 0f)
+        // Hard stop at dead or near-dead speed
+        if (speed <= Mathf.Max(0.0f, zeroSpeedThreshold))
         {
-            float k = Mathf.Max(0f, angleSharpness);
-            angleNorm = 1f - Mathf.Exp(-k * angleNorm);
+            _probeActive = false;
+            _currentStrength = 0f;
+            _offBoreDegDisplay = 0f;
+
+            // Reset probe to aircraft so ClosestPoint is stable
+            probe.position = transform.position;
+            probe.rotation = transform.rotation;
+
+            // Update UI now so it clears even if physics is paused
+            if (debugText != null)
+                debugText.text = $"Off-Bore: 0.0 deg\nDrag Force: 0 N";
+
+            return;
         }
 
-        float speedNorm = (speedPower > 0f)
-            ? Mathf.Clamp01(Mathf.Pow(speed / Mathf.Max(1f, refSpeed), speedPower))
-            : 1f;
+        // Hysteresis for activation when above zero-speed threshold
+        if (_probeActive)
+            _probeActive = speed > minSpeedOff;
+        else
+            _probeActive = speed > minSpeedOn;
 
-        float strength = Mathf.Lerp(0f, maxDragForce, angleNorm * speedNorm);
-        currentDragForce = strength;
+        float targetStrength = 0f;
+        _offBoreDegDisplay = 0f;
 
-        if (strength > 0f)
+        if (_probeActive)
         {
-            Rigidbody rb = GetRB();
+            // Momentum heading with smoothing
+            Vector3 vhat = v / speed;
+            if (_vhatSmoothed.sqrMagnitude < 1e-8f) _vhatSmoothed = vhat;
+            float slerpT = Mathf.Clamp01(1f - momentumSmoothing);
+            _vhatSmoothed = Vector3.Slerp(_vhatSmoothed, vhat, slerpT);
+            vhat = _vhatSmoothed;
+
+            // Place the probe along momentum path
+            probe.position = transform.position + vhat * Mathf.Max(0f, probeDistance);
+            probe.rotation = Quaternion.LookRotation(vhat, transform.up);
+
+            // Off-bore angle between desired heading and momentum heading
+            _offBoreDegDisplay = Vector3.Angle(transform.forward, vhat);
+
+            // Angle normalized 0..1
+            float angleNorm = (maxOffBoreAngle > 0.0001f)
+                ? Mathf.Clamp01(_offBoreDegDisplay / maxOffBoreAngle)
+                : Mathf.Clamp01(_offBoreDegDisplay / 45f);
+
+            // Optional exponential shaping
+            if (angleSharpness > 0f)
+            {
+                float k = Mathf.Max(0f, angleSharpness);
+                angleNorm = 1f - Mathf.Exp(-k * angleNorm);
+            }
+
+            // Speed scaling 0..1
+            float speedNorm = (speedPower > 0f)
+                ? Mathf.Clamp01(Mathf.Pow(speed / Mathf.Max(1f, refSpeed), speedPower))
+                : 1f;
+
+            // Target force
+            targetStrength = Mathf.Lerp(0f, maxDragForce, angleNorm * speedNorm);
+        }
+        else
+        {
+            // Inactive: keep probe at aircraft and fade out
+            probe.position = transform.position;
+            probe.rotation = transform.rotation;
+            targetStrength = 0f;
+        }
+
+        // Smooth the applied strength
+        float dt = Time.fixedDeltaTime;
+        float attackTime = 0.05f;                              // quick attack
+        float attackRate = (attackTime > 1e-4f) ? 1f / attackTime : 999f;
+        float releaseRate = (fadeOutTime > 1e-4f) ? 1f / fadeOutTime : 999f;
+
+        if (targetStrength >= _currentStrength)
+            _currentStrength = Mathf.MoveTowards(_currentStrength, targetStrength, attackRate * dt * maxDragForce);
+        else
+            _currentStrength = Mathf.MoveTowards(_currentStrength, targetStrength, releaseRate * dt * maxDragForce);
+
+        // Apply the force if any
+        if (_currentStrength > 0f)
+        {
+            Vector3 vhatNow = v.normalized;
             Vector3 applicationPoint = (forceApplicationCollider != null)
                 ? forceApplicationCollider.ClosestPoint(probe.position)
                 : probe.position;
 
-            Vector3 F = -vhat * strength;
-            rb.AddForceAtPosition(F, applicationPoint, ForceMode.Force);
+            Vector3 F = -vhatNow * _currentStrength;
+            GetRB().AddForceAtPosition(F, applicationPoint, ForceMode.Force);
         }
 
-        // Update TMP text if assigned
+        // Update UI here too
         if (debugText != null)
         {
-            debugText.text = $"Off-Bore: {currentOffBoreAngle:F1}°\nDrag Force: {currentDragForce:F0} N";
+            debugText.text = $"Off-Bore: {_offBoreDegDisplay:F1} deg\nDrag Force: {_currentStrength:F0} N";
         }
-
     }
 }

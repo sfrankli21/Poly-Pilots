@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 347a63c03f0640c49bc93bef3ee51d4d
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Cube.prefab
+  uploadId: 721855

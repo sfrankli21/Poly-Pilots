@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: d60a273a3d75c814b86508f9bf5e0a03
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/Arrow Head.prefab
+  uploadId: 721855

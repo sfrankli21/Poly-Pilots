@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e86e5e14cdf8e514aa9fb83c579269e1
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/GlobalFluidProperties.asset
+  uploadId: 721855

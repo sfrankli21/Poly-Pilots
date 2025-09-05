@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 0d0643e7e37d7ea45b448ffd150d9546
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Meshes/Paper plane.mtl
+  uploadId: 721855

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 91a49411913c00f49b197eb35a39e187
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4300000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Meshes/Hang glider pilot.asset
+  uploadId: 721855

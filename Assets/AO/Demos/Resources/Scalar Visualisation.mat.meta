@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 33317008969c22c47a976f4911c7f24d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Resources/Scalar Visualisation.mat
+  uploadId: 721855
