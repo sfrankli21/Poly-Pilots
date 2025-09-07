@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "AO Tutorial User Controls",
     "maps": [
         {
@@ -18,7 +19,7 @@
                     "name": "Pitch",
                     "type": "Button",
                     "id": "bd433a0b-e336-4069-939a-6459aefbe79d",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -27,7 +28,7 @@
                     "name": "Yaw",
                     "type": "Button",
                     "id": "1a267db1-84f5-4d65-b7c8-3339688e7115",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -36,7 +37,7 @@
                     "name": "Throttle",
                     "type": "Button",
                     "id": "64c68114-8903-4803-a6f9-1dbb71e8e4df",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false

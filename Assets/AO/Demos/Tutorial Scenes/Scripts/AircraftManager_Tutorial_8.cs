@@ -42,16 +42,16 @@ namespace AerodynamicObjects.Tutorials
 
             //Roll
             rollInput = Mathf.MoveTowards(rollInput, rollAction.ReadValue<float>(), controlResponsiveness * Time.fixedDeltaTime);
-            //portWing.ao.ControlCamber = rollControlGain * rollInput;
-            //starboardWing.ao.ControlCamber = -rollControlGain * rollInput;
+            portWing.ao.ControlCamber = rollControlGain * rollInput;
+            starboardWing.ao.ControlCamber = -rollControlGain * rollInput;
 
             //Pitch
             pitchInput = Mathf.MoveTowards(pitchInput, pitchAction.ReadValue<float>(), controlResponsiveness * Time.fixedDeltaTime);
-            //horizontalStabiliser.ao.ControlCamber = pitchControlGain * pitchInput;
+            horizontalStabiliser.ao.ControlCamber = pitchControlGain * pitchInput;
 
             //Yaw
             yawInput = Mathf.MoveTowards(yawInput, yawAction.ReadValue<float>(), controlResponsiveness * Time.fixedDeltaTime);
-            //verticalStabiliser.ao.ControlCamber = yawControlGain * yawInput;
+            verticalStabiliser.ao.ControlCamber = yawControlGain * yawInput;
 
         }
 
