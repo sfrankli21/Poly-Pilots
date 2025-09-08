@@ -284,6 +284,43 @@ namespace AerodynamicObjects.Aerodynamics
                     break;
                 default:
                     break;
+
+                case AeroObject.ReferenceAreaShape.Mesh:
+                    {
+                        // Planform area from mesh projected onto plane orthogonal to planformNormal (local space)
+                        float planformAreaMesh = ao.GetMeshProjectedArea(ao.planformNormal);
+                        planformArea = Mathf.Max(1e-6f, planformAreaMesh);
+
+                        // Aspect ratio inputs (span, chord)
+                        float span = ao.meshSpanOverride;
+                        float chord = ao.meshChordOverride;
+
+                        if (!(span > 0f && chord > 0f) && ao.meshFilter != null && ao.meshFilter.sharedMesh != null)
+                        {
+                            var bounds = ao.meshFilter.sharedMesh.bounds;
+                            Vector3 size = Vector3.Scale(bounds.size, ao.meshFilter.transform.lossyScale);
+
+                            Vector3 n = ao.planformNormal.normalized;
+                            float ex = (Vector3.right - Vector3.Dot(Vector3.right, n) * n).magnitude * size.x;
+                            float ey = (Vector3.up - Vector3.Dot(Vector3.up, n) * n).magnitude * size.y;
+                            float ez = (Vector3.forward - Vector3.Dot(Vector3.forward, n) * n).magnitude * size.z;
+
+                            float a = Mathf.Max(ex, Mathf.Max(ey, ez));
+                            float b = (Mathf.Approximately(a, ex)) ? Mathf.Max(ey, ez)
+                                  : (Mathf.Approximately(a, ey)) ? Mathf.Max(ex, ez)
+                                  : Mathf.Max(ex, ey);
+
+                            span = a;
+                            chord = Mathf.Max(1e-6f, b);
+                        }
+
+                        // If LiftModel tracks aspectRatio/resolvedChord explicitly, set them here if present.
+                        // Example (safe to leave commented if not used in your version):
+                        // aspectRatio = (span * span) / planformArea;
+                        // resolvedChord = chord;
+                        break;
+                    }
+
             }
 
             // We can't cache this unfortunately because it changes based on sideslip
