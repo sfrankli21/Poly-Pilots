@@ -1621,6 +1621,7 @@ GameObject:
   - component: {fileID: 1299959962}
   - component: {fileID: 1299959961}
   - component: {fileID: 1299959960}
+  - component: {fileID: 1299959963}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -1705,7 +1706,7 @@ MonoBehaviour:
     density: 1.23
     dynamicViscosity: 0.000018
   rb: {fileID: 2432788634042483637}
-  velocitySource: 0
+  velocitySource: 1
   velocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   relativeVelocity: {x: 0, y: 0, z: 0}
@@ -1739,6 +1740,25 @@ MonoBehaviour:
     moment: {x: 0, y: 0, z: 0}
   dynamicPressure: 0
   groupDimensions: {x: 10, y: 0.1, z: 2}
+--- !u!114 &1299959963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299959958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e7d8a91004e7949af6488a0792ee42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: 0
+  forwardAxis: {x: 0, y: 0, z: 1}
+  rotationAxis: {x: 1, y: 0, z: 0}
+  surfaceChordRatio: 0.2
+  controlSurfaceHinge: {fileID: 0}
+  controlSurfaceGraphic: {fileID: 0}
+  deflectionAngle: 0
 --- !u!1 &1326864027
 GameObject:
   m_ObjectHideFlags: 0
@@ -1934,6 +1954,7 @@ GameObject:
   - component: {fileID: 1471369497}
   - component: {fileID: 1471369496}
   - component: {fileID: 1471369495}
+  - component: {fileID: 1471369498}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2018,7 +2039,7 @@ MonoBehaviour:
     density: 1.23
     dynamicViscosity: 0.000018
   rb: {fileID: 2432788634042483637}
-  velocitySource: 0
+  velocitySource: 1
   velocity: {x: 0, y: 0, z: 0}
   localVelocity: {x: 0, y: 0, z: 0}
   relativeVelocity: {x: 0, y: 0, z: 0}
@@ -2052,6 +2073,25 @@ MonoBehaviour:
     moment: {x: 0, y: 0, z: 0}
   dynamicPressure: 0
   groupDimensions: {x: 10, y: 0.1, z: 2}
+--- !u!114 &1471369498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1471369493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08e7d8a91004e7949af6488a0792ee42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  axis: 0
+  forwardAxis: {x: 0, y: 0, z: 1}
+  rotationAxis: {x: 1, y: 0, z: 0}
+  surfaceChordRatio: 0.2
+  controlSurfaceHinge: {fileID: 0}
+  controlSurfaceGraphic: {fileID: 0}
+  deflectionAngle: 0
 --- !u!1 &1481028959
 GameObject:
   m_ObjectHideFlags: 0
