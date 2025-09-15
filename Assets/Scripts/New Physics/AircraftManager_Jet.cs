@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 using AerodynamicObjects; // ControlSurface
 
 namespace AerodynamicObjects.Tutorials
@@ -50,6 +51,17 @@ namespace AerodynamicObjects.Tutorials
         [Tooltip("1 = linear throttle, <1 snappier low-end, >1 softer low-end.")]
         public float throttleCurveGamma = 1.0f;
 
+        [Header("Throttle Behavior")]
+        [Tooltip("Rate at which the throttle setpoint changes when throttle input is held at +1 or -1 (0..1 per second).")]
+        public float throttleAdjustRatePerSec = 0.5f;
+
+        [Tooltip("How quickly engines respond to the setpoint (0..1 per second).")]
+        public float engineResponsePerSec = 2.0f;
+
+        [Header("UI")]
+        [Tooltip("TMP text to display the target throttle (setpoint) between 0 and 1.")]
+        public TextMeshProUGUI throttleSetpointText;
+
         [Header("Wing Ailerons (per-side)")]
         public SurfaceElement[] portWingAilerons;
         public SurfaceElement[] starboardWingAilerons;
@@ -88,8 +100,12 @@ namespace AerodynamicObjects.Tutorials
         private PlayerInput playerInput;
         private InputAction rollAction, pitchAction, yawAction, throttleAction;
 
-        // Smoothed inputs
-        private float rollInput, pitchInput, yawInput, throttleInput;
+        // Smoothed inputs (attitude)
+        private float rollInput, pitchInput, yawInput;
+
+        // Throttle model: persistent setpoint + smoothed engine output
+        private float throttleSetpoint; // 0..1, persists until adjusted
+        private float throttleInput;    // 0..1, engine follows setpoint smoothly
 
         void Awake()
         {
@@ -117,30 +133,44 @@ namespace AerodynamicObjects.Tutorials
             CacheInitialRotations(starboardHorizontalStabilisers);
             CacheInitialRotations(portVerticalStabilisers);
             CacheInitialRotations(starboardVerticalStabilisers);
+
+            // Initialize display once
+            if (throttleSetpointText)
+                throttleSetpointText.text = Mathf.Clamp01(throttleSetpoint).ToString("0.00");
         }
 
         void FixedUpdate()
         {
-            // Read & smooth inputs
             float dt = Time.fixedDeltaTime;
             float resp = Mathf.Max(0.0001f, controlResponsiveness);
 
+            // Attitude inputs: absolute axes, smoothed
             float rollTarget = rollAction.ReadValue<float>();
             float pitchTarget = pitchAction.ReadValue<float>();
             float yawTarget = yawAction.ReadValue<float>();
-            float throttleTarget = Mathf.Clamp01(throttleAction.ReadValue<float>());
 
             rollInput = Mathf.MoveTowards(rollInput, rollTarget, resp * dt);
             pitchInput = Mathf.MoveTowards(pitchInput, pitchTarget, resp * dt);
             yawInput = Mathf.MoveTowards(yawInput, yawTarget, resp * dt);
-            throttleInput = Mathf.MoveTowards(throttleInput, throttleTarget, resp * dt);
+
+            // Throttle treated as delta (-1..+1) adjusting persistent setpoint 0..1
+            float throttleDeltaAxis = Mathf.Clamp(throttleAction.ReadValue<float>(), -1f, 1f);
+            throttleSetpoint = Mathf.Clamp01(throttleSetpoint + throttleDeltaAxis * Mathf.Max(0f, throttleAdjustRatePerSec) * dt);
+
+            // Update TMP display of target throttle (0..1, decimal)
+            if (throttleSetpointText)
+                throttleSetpointText.text = throttleSetpoint.ToString("0.00");
+
+            // Engine follows the setpoint with spool response
+            float engineSlew = Mathf.Max(0f, engineResponsePerSec);
+            throttleInput = Mathf.MoveTowards(throttleInput, throttleSetpoint, engineSlew * dt);
 
             // Throttle shaping
             float shapedThrottle = (throttleCurveGamma <= 0.0001f)
                 ? throttleInput
                 : Mathf.Pow(Mathf.Clamp01(throttleInput), throttleCurveGamma);
 
-            // Engines: thrust per engine (N) along +Z
+            // Engines: thrust per engine (N) along +Z — always applied
             if (aircraftRigidBody)
             {
                 ApplyThrustArray(portEngines, shapedThrottle);
