@@ -1,37 +1,45 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
-using AerodynamicObjects; // ControlSurface
+using AerodynamicObjects;
 
 namespace AerodynamicObjects.Tutorials
 {
     [System.Serializable]
     public struct SurfaceElement
     {
-        [Tooltip("Optional label for clarity in the inspector.")]
         public string name;
-
-        [Tooltip("If checked, this element uses the ControlSurface component below.")]
-        public bool isControlSurface; // <-- Checkbox: "Control Surface"
-
-        [Tooltip("Used when isControlSurface = true.")]
+        public bool isControlSurface;
         public ControlSurface controlSurface;
-
-        [Tooltip("Pivot to rotate when isControlSurface = false.")]
         public Transform pivot;
-
-        [Tooltip("Local axis around which to rotate the pivot when isControlSurface = false.")]
         public Vector3 localAxis;
-
-        [Tooltip("Minimum angle (deg) when input = -1, used when isControlSurface = false.")]
         public float minDeflectionDeg;
-
-        [Tooltip("Maximum angle (deg) when input = +1, used when isControlSurface = false.")]
         public float maxDeflectionDeg;
-
-        // Runtime state (serialized so you can see values in Debug inspector)
         [HideInInspector] public Quaternion initialLocalRotation;
         [HideInInspector] public float currentAngleDeg;
+    }
+
+    [System.Serializable]
+    public class EngineElement
+    {
+        public Transform thrustPoint;
+
+        [Header("Thrust (kN)")]
+        public float minThrust;
+        public float maxThrust;
+
+        [Header("Thrust Vectoring")]
+        public bool enableThrustVector;
+        public float minAOA;
+        public float maxAOA;
+
+        [Header("Push Directions")]
+        public bool pushUp;
+        public bool pushDown;
+        public bool pushLeft;
+        public bool pushRight;
+        public bool pushForward;
+        public bool pushBack;
     }
 
     public class AircraftManager_Jet : MonoBehaviour
@@ -40,27 +48,16 @@ namespace AerodynamicObjects.Tutorials
         public Transform centreOfMassMarker;
         private Rigidbody aircraftRigidBody;
 
-        [Header("Engines (per-side)")]
-        [Tooltip("Each Transform's +Z is thrust direction; force is applied at that position.")]
-        public Transform[] portEngines;
-        public Transform[] starboardEngines;
+        [Header("Engines")]
+        public EngineElement[] portEngines;
+        public EngineElement[] starboardEngines;
 
-        [Tooltip("Max thrust PER ENGINE, in Newtons (N).")]
-        public float maxThrustPerEngine = 60000f;
-
-        [Tooltip("1 = linear throttle, <1 snappier low-end, >1 softer low-end.")]
         public float throttleCurveGamma = 1.0f;
-
-        [Header("Throttle Behavior")]
-        [Tooltip("Rate at which the throttle setpoint changes when throttle input is held at +1 or -1 (0..1 per second).")]
-        public float throttleAdjustRatePerSec = 0.5f;
-
-        [Tooltip("How quickly engines respond to the setpoint (0..1 per second).")]
         public float engineResponsePerSec = 2.0f;
 
-        [Header("UI")]
-        [Tooltip("TMP text to display the target throttle (setpoint) between 0 and 1.")]
-        public TextMeshProUGUI throttleSetpointText;
+        [Header("UI (Optional)")]
+        public TextMeshProUGUI leftThrottleSetpointText;
+        public TextMeshProUGUI rightThrottleSetpointText;
 
         [Header("Wing Ailerons (per-side)")]
         public SurfaceElement[] portWingAilerons;
@@ -80,32 +77,32 @@ namespace AerodynamicObjects.Tutorials
         public float maxYawDeflectionDeg = 20f;
 
         [Header("Response & Mixing")]
-        [Tooltip("How quickly inputs reach their target values (rad/s).")]
         public float controlResponsiveness = 8f;
-
-        [Tooltip("Roll share to WING ailerons (0..1).")]
         [Range(0f, 1f)] public float rollToWings = 1.0f;
-
-        [Tooltip("Roll share to TAILERONS (0..1).")]
         [Range(0f, 1f)] public float rollToTailerons = 0.5f;
-
-        [Tooltip("If true, rollToWings + rollToTailerons normalized to 1 at runtime.")]
         public bool normalizeRollMix = true;
 
         [Header("Direct-Rotate path (isControlSurface = false)")]
-        [Tooltip("Slew rate for direct-rotated surfaces (deg/s).")]
         public float surfaceRotationSpeedDegPerSec = 120f;
 
-        // Input System
-        private PlayerInput playerInput;
-        private InputAction rollAction, pitchAction, yawAction, throttleAction;
+        [Header("External Trim Inputs")]
+        public float externalPitchTrim;
 
-        // Smoothed inputs (attitude)
+        private PlayerInput playerInput;
+        private InputAction rollAction, pitchAction, yawAction;
+        private InputAction leftEnginesAction, rightEnginesAction;
+        private InputAction thrustVectorLeftAction, thrustVectorRightAction;
+
         private float rollInput, pitchInput, yawInput;
 
-        // Throttle model: persistent setpoint + smoothed engine output
-        private float throttleSetpoint; // 0..1, persists until adjusted
-        private float throttleInput;    // 0..1, engine follows setpoint smoothly
+        private float leftThrottleSetpoint;
+        private float rightThrottleSetpoint;
+        private float leftThrottleOutput;
+        private float rightThrottleOutput;
+
+        [Header("Runtime – Thrust Vector Inputs")]
+        [Range(-1f, 1f)] public float leftThrustVectorInput;
+        [Range(-1f, 1f)] public float rightThrustVectorInput;
 
         void Awake()
         {
@@ -113,30 +110,31 @@ namespace AerodynamicObjects.Tutorials
             rollAction = playerInput.actions.FindAction("Roll");
             pitchAction = playerInput.actions.FindAction("Pitch");
             yawAction = playerInput.actions.FindAction("Yaw");
-            throttleAction = playerInput.actions.FindAction("Throttle");
-
+            leftEnginesAction = playerInput.actions.FindAction("LeftEngines");
+            rightEnginesAction = playerInput.actions.FindAction("RightEngines");
+            thrustVectorLeftAction = playerInput.actions.FindAction("ThrustVectorLeft");
+            thrustVectorRightAction = playerInput.actions.FindAction("ThrustVectorRight");
             rollAction?.Enable();
             pitchAction?.Enable();
             yawAction?.Enable();
-            throttleAction?.Enable();
+            leftEnginesAction?.Enable();
+            rightEnginesAction?.Enable();
+            thrustVectorLeftAction?.Enable();
+            thrustVectorRightAction?.Enable();
         }
 
         void Start()
         {
             aircraftRigidBody = GetComponent<Rigidbody>();
             if (centreOfMassMarker) aircraftRigidBody.centerOfMass = centreOfMassMarker.localPosition;
-
-            // Capture initial rotations for all non-engine arrays
             CacheInitialRotations(portWingAilerons);
             CacheInitialRotations(starboardWingAilerons);
             CacheInitialRotations(portHorizontalStabilisers);
             CacheInitialRotations(starboardHorizontalStabilisers);
             CacheInitialRotations(portVerticalStabilisers);
             CacheInitialRotations(starboardVerticalStabilisers);
-
-            // Initialize display once
-            if (throttleSetpointText)
-                throttleSetpointText.text = Mathf.Clamp01(throttleSetpoint).ToString("0.00");
+            if (leftThrottleSetpointText) leftThrottleSetpointText.text = leftThrottleSetpoint.ToString("0.00");
+            if (rightThrottleSetpointText) rightThrottleSetpointText.text = rightThrottleSetpoint.ToString("0.00");
         }
 
         void FixedUpdate()
@@ -144,7 +142,6 @@ namespace AerodynamicObjects.Tutorials
             float dt = Time.fixedDeltaTime;
             float resp = Mathf.Max(0.0001f, controlResponsiveness);
 
-            // Attitude inputs: absolute axes, smoothed
             float rollTarget = rollAction.ReadValue<float>();
             float pitchTarget = pitchAction.ReadValue<float>();
             float yawTarget = yawAction.ReadValue<float>();
@@ -153,36 +150,34 @@ namespace AerodynamicObjects.Tutorials
             pitchInput = Mathf.MoveTowards(pitchInput, pitchTarget, resp * dt);
             yawInput = Mathf.MoveTowards(yawInput, yawTarget, resp * dt);
 
-            // Throttle treated as delta (-1..+1) adjusting persistent setpoint 0..1
-            float throttleDeltaAxis = Mathf.Clamp(throttleAction.ReadValue<float>(), -1f, 1f);
-            throttleSetpoint = Mathf.Clamp01(throttleSetpoint + throttleDeltaAxis * Mathf.Max(0f, throttleAdjustRatePerSec) * dt);
+            float leftRaw = Mathf.Clamp(leftEnginesAction.ReadValue<float>(), -1f, 1f);
+            float rightRaw = Mathf.Clamp(rightEnginesAction.ReadValue<float>(), -1f, 1f);
+            leftThrottleSetpoint = 0.5f * (leftRaw + 1f);
+            rightThrottleSetpoint = 0.5f * (rightRaw + 1f);
 
-            // Update TMP display of target throttle (0..1, decimal)
-            if (throttleSetpointText)
-                throttleSetpointText.text = throttleSetpoint.ToString("0.00");
+            if (leftThrottleSetpointText) leftThrottleSetpointText.text = leftThrottleSetpoint.ToString("0.00");
+            if (rightThrottleSetpointText) rightThrottleSetpointText.text = rightThrottleSetpoint.ToString("0.00");
 
-            // Engine follows the setpoint with spool response
-            float engineSlew = Mathf.Max(0f, engineResponsePerSec);
-            throttleInput = Mathf.MoveTowards(throttleInput, throttleSetpoint, engineSlew * dt);
+            float spool = Mathf.Max(0f, engineResponsePerSec);
+            leftThrottleOutput = Mathf.MoveTowards(leftThrottleOutput, leftThrottleSetpoint, spool * dt);
+            rightThrottleOutput = Mathf.MoveTowards(rightThrottleOutput, rightThrottleSetpoint, spool * dt);
 
-            // Throttle shaping
-            float shapedThrottle = (throttleCurveGamma <= 0.0001f)
-                ? throttleInput
-                : Mathf.Pow(Mathf.Clamp01(throttleInput), throttleCurveGamma);
+            float shapedLeft = (throttleCurveGamma <= 0.0001f) ? leftThrottleOutput : Mathf.Pow(Mathf.Clamp01(leftThrottleOutput), throttleCurveGamma);
+            float shapedRight = (throttleCurveGamma <= 0.0001f) ? rightThrottleOutput : Mathf.Pow(Mathf.Clamp01(rightThrottleOutput), throttleCurveGamma);
 
-            // Engines: thrust per engine (N) along +Z — always applied
+            leftThrustVectorInput = Mathf.Clamp(thrustVectorLeftAction.ReadValue<float>(), -1f, 1f);
+            rightThrustVectorInput = Mathf.Clamp(thrustVectorRightAction.ReadValue<float>(), -1f, 1f);
+
             if (aircraftRigidBody)
             {
-                ApplyThrustArray(portEngines, shapedThrottle);
-                ApplyThrustArray(starboardEngines, shapedThrottle);
+                ApplyEngines(portEngines, shapedLeft, leftThrustVectorInput);
+                ApplyEngines(starboardEngines, shapedRight, rightThrustVectorInput);
             }
 
-            // Convert control-surface limits to radians
             float rollMaxRad = Mathf.Deg2Rad * maxRollDeflectionDeg;
             float pitchMaxRad = Mathf.Deg2Rad * maxPitchDeflectionDeg;
             float yawMaxRad = Mathf.Deg2Rad * maxYawDeflectionDeg;
 
-            // Roll mixing between wings & tailerons
             float wingsMix = rollToWings;
             float tailsMix = rollToTailerons;
             if (normalizeRollMix)
@@ -192,55 +187,63 @@ namespace AerodynamicObjects.Tutorials
                 tailsMix /= sum;
             }
 
-            // Command signals
             float rollCmdBaseNorm = Mathf.Clamp(rollInput, -1f, 1f);
-            float pitchCmdNorm = Mathf.Clamp(pitchInput, -1f, 1f);
+            float pitchCmdNorm = Mathf.Clamp(pitchInput + externalPitchTrim, -1f, 1f);
             float yawCmdNorm = Mathf.Clamp(yawInput, -1f, 1f);
 
-            // 1) Wing ailerons: roll only
             float rollCmdWingsNorm = Mathf.Clamp(rollCmdBaseNorm * Mathf.Clamp01(wingsMix), -1f, 1f);
             float rollCmdWingsRad = rollMaxRad * rollCmdWingsNorm;
-            ApplySurfaceCommands(portWingAilerons, rollCmdWingsRad, rollCmdWingsNorm);
-            ApplySurfaceCommands(starboardWingAilerons, -rollCmdWingsRad, -rollCmdWingsNorm);
+            ApplySurfaceCommands(portWingAilerons, rollCmdWingsRad, rollCmdWingsNorm, false);
+            ApplySurfaceCommands(starboardWingAilerons, -rollCmdWingsRad, -rollCmdWingsNorm, false);
 
-            // 2) Tailerons: pitch ± roll
             float rollCmdTailNorm = Mathf.Clamp(rollCmdBaseNorm * Mathf.Clamp01(tailsMix), -1f, 1f);
             float pitchCmdRad = pitchMaxRad * pitchCmdNorm;
             float rollTailRad = rollMaxRad * rollCmdTailNorm;
 
-            // Port = pitch + roll ; Starboard = pitch - roll
-            ApplySurfaceCommands(portHorizontalStabilisers, pitchCmdRad + rollTailRad, Mathf.Clamp(pitchCmdNorm + rollCmdTailNorm, -1f, 1f));
-            ApplySurfaceCommands(starboardHorizontalStabilisers, pitchCmdRad - rollTailRad, Mathf.Clamp(pitchCmdNorm - rollCmdTailNorm, -1f, 1f));
+            ApplySurfaceCommands(portHorizontalStabilisers, pitchCmdRad + rollTailRad, Mathf.Clamp(pitchCmdNorm + rollCmdTailNorm, -1f, 1f), true);
+            ApplySurfaceCommands(starboardHorizontalStabilisers, pitchCmdRad - rollTailRad, Mathf.Clamp(pitchCmdNorm - rollCmdTailNorm, -1f, 1f), true);
 
-            // 3) Rudders: yaw
             float yawCmdRad = yawMaxRad * yawCmdNorm;
-            ApplySurfaceCommands(portVerticalStabilisers, yawCmdRad, yawCmdNorm);
-            ApplySurfaceCommands(starboardVerticalStabilisers, yawCmdRad, yawCmdNorm);
+            ApplySurfaceCommands(portVerticalStabilisers, yawCmdRad, yawCmdNorm, false);
+            ApplySurfaceCommands(starboardVerticalStabilisers, yawCmdRad, yawCmdNorm, false);
         }
 
-        // ================= Helpers =================
-
-        private void ApplyThrustArray(Transform[] enginePoints, float throttle01)
+        private void ApplyEngines(EngineElement[] engines, float throttle01, float sideVectorInput)
         {
-            if (enginePoints == null) return;
-            float perEngineThrust = Mathf.Max(0f, maxThrustPerEngine) * Mathf.Clamp01(throttle01);
+            if (engines == null || aircraftRigidBody == null) return;
 
-            for (int i = 0; i < enginePoints.Length; i++)
+            for (int i = 0; i < engines.Length; i++)
             {
-                Transform t = enginePoints[i];
-                if (!t) continue;
+                var e = engines[i];
+                if (e == null || e.thrustPoint == null) continue;
 
-                Vector3 force = t.forward * perEngineThrust; // +Z thrust
-                aircraftRigidBody.AddForceAtPosition(force, t.position, ForceMode.Force);
+                float thrustN = Mathf.Lerp(e.minThrust, e.maxThrust, Mathf.Clamp01(throttle01)) * 1000f;
+
+                Vector3 dir = Vector3.zero;
+                if (e.pushUp) dir += e.thrustPoint.up;
+                if (e.pushDown) dir += -e.thrustPoint.up;
+                if (e.pushRight) dir += e.thrustPoint.right;
+                if (e.pushLeft) dir += -e.thrustPoint.right;
+                if (e.pushForward) dir += e.thrustPoint.forward;
+                if (e.pushBack) dir += -e.thrustPoint.forward;
+
+                if (dir != Vector3.zero && thrustN > 0f)
+                {
+                    dir.Normalize();
+                    aircraftRigidBody.AddForceAtPosition(dir * thrustN, e.thrustPoint.position, ForceMode.Force);
+                }
+
+                if (e.enableThrustVector)
+                {
+                    float v = Mathf.Clamp(sideVectorInput, -1f, 1f);
+                    float aoa = Mathf.Lerp(e.minAOA, e.maxAOA, (v + 1f) * 0.5f);
+                    Vector3 current = e.thrustPoint.localEulerAngles;
+                    e.thrustPoint.localRotation = Quaternion.Euler(aoa, current.y, current.z);
+                }
             }
         }
 
-        /// <summary>
-        /// Apply to a surface array. 
-        /// angleRad: target angle (radians) for ControlSurface path.
-        /// norm: normalized command (-1..1) for direct-rotate path (maps to min/max per element).
-        /// </summary>
-        private void ApplySurfaceCommands(SurfaceElement[] elems, float angleRad, float norm)
+        private void ApplySurfaceCommands(SurfaceElement[] elems, float angleRad, float norm, bool instant)
         {
             if (elems == null) return;
             float slew = Mathf.Max(0f, surfaceRotationSpeedDegPerSec);
@@ -249,31 +252,22 @@ namespace AerodynamicObjects.Tutorials
             for (int i = 0; i < elems.Length; i++)
             {
                 var e = elems[i];
-
                 if (e.isControlSurface)
                 {
-                    if (e.controlSurface)
-                    {
-                        e.controlSurface.deflectionAngle = angleRad; // radians
-                    }
+                    if (e.controlSurface) e.controlSurface.deflectionAngle = angleRad;
                 }
                 else
                 {
                     if (e.pivot)
                     {
-                        // Map -1..1 -> [min,max]
                         float t = 0.5f * (Mathf.Clamp(norm, -1f, 1f) + 1f);
                         float targetDeg = Mathf.Lerp(e.minDeflectionDeg, e.maxDeflectionDeg, t);
-
-                        // Smooth toward target
-                        e.currentAngleDeg = Mathf.MoveTowardsAngle(e.currentAngleDeg, targetDeg, slew * dt);
-
+                        e.currentAngleDeg = instant ? targetDeg : Mathf.MoveTowardsAngle(e.currentAngleDeg, targetDeg, slew * dt);
                         Vector3 axis = (e.localAxis.sqrMagnitude < 1e-6f) ? Vector3.right : e.localAxis.normalized;
                         e.pivot.localRotation = e.initialLocalRotation * Quaternion.AngleAxis(e.currentAngleDeg, axis);
                     }
                 }
-
-                elems[i] = e; // write back (struct)
+                elems[i] = e;
             }
         }
 
@@ -286,7 +280,6 @@ namespace AerodynamicObjects.Tutorials
                 if (e.pivot)
                 {
                     e.initialLocalRotation = e.pivot.localRotation;
-                    // Initialize current to whatever the pivot already is relative to initial (assume 0)
                     e.currentAngleDeg = 0f;
                 }
                 elems[i] = e;
