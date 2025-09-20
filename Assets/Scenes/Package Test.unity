@@ -1375,7 +1375,7 @@ Transform:
   m_GameObject: {fileID: 549159808}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.39, z: 0}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2313,7 +2313,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 960435037}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.026176924, y: 0, z: 0, w: 0.99965733}
   m_LocalPosition: {x: 0, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2321,7 +2321,7 @@ Transform:
   - {fileID: 697550698}
   - {fileID: 1374126355}
   m_Father: {fileID: 461585049}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3, y: 0, z: 0}
 --- !u!1 &973910863
 GameObject:
   m_ObjectHideFlags: 0
@@ -3010,7 +3010,7 @@ GameObject:
   - component: {fileID: 1441616527}
   - component: {fileID: 1441616530}
   - component: {fileID: 1441616528}
-  - component: {fileID: 1441616529}
+  - component: {fileID: 1441616531}
   m_Layer: 0
   m_Name: FuselageGeometry
   m_TagString: Untagged
@@ -3041,28 +3041,6 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441616526}
-  m_Mesh: {fileID: -7424140736373074731, guid: 021feaf25322c76439e3c879a1326747, type: 3}
---- !u!64 &1441616529
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441616526}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
   m_Mesh: {fileID: -7424140736373074731, guid: 021feaf25322c76439e3c879a1326747, type: 3}
 --- !u!23 &1441616530
 MeshRenderer:
@@ -3109,6 +3087,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1441616531
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441616526}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 0.1, z: 10}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1456795036
 GameObject:
   m_ObjectHideFlags: 0
@@ -3298,7 +3297,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.05, z: 1}
+  m_LocalScale: {x: 1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2029313923}
@@ -3332,9 +3331,9 @@ MonoBehaviour:
   localRelativeVelocity: {x: 0, y: 0, z: 0}
   angularVelocity: {x: 0, y: 0, z: 0}
   localAngularVelocity: {x: 0, y: 0, z: 0}
-  hasDrag: 0
-  hasLift: 0
-  hasRotationalDamping: 1
+  hasDrag: 1
+  hasLift: 1
+  hasRotationalDamping: 0
   hasRotationalLift: 0
   hasBuoyancy: 0
   updateDimensionsInRuntime: 0
@@ -3349,11 +3348,9 @@ MonoBehaviour:
   controlSurfaces: []
   ControlCamber: 0
   dimensions: {x: 2, y: 0.1, z: 10}
-  relativeDimensions: {x: 2, y: 2, z: 10}
-  camber: {x: 1, y: 0, z: 0}
+  relativeDimensions: {x: 2, y: 1, z: 10}
+  camber: {x: 1, y: 1, z: 1}
   aerodynamicLoads:
-  - force: {x: 0, y: 0, z: 0}
-    moment: {x: 0, y: 0, z: 0}
   - force: {x: 0, y: 0, z: 0}
     moment: {x: 0, y: 0, z: 0}
   - force: {x: 0, y: 0, z: 0}
@@ -10221,7 +10218,7 @@ Transform:
   m_GameObject: {fileID: 5468068424289331442}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.5, z: -1}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10241,12 +10238,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActuatorName: Actuator
-  InputValue: 500
+  InputValue: 1000
   TargetValue: 0
   CurrentValue: 0
   ValueRate: 500
   MinValue: -15
-  MaxValue: 500
+  MaxValue: 1000
   rb: {fileID: 549159809}
   thrustDirection: {x: 0, y: 0, z: 1}
   thrustVector: {x: 0, y: 0, z: 0}
