@@ -44,6 +44,8 @@ namespace AerodynamicObjects.Tutorials
 
     public class AircraftManager_Jet : MonoBehaviour
     {
+        const float KnotsPerMS = 1.9438444924406f; // m/s -> kt
+
         [Header("Mass & Physics")]
         public Transform centreOfMassMarker;
         private Rigidbody aircraftRigidBody;
@@ -85,8 +87,20 @@ namespace AerodynamicObjects.Tutorials
         [Header("Direct-Rotate path (isControlSurface = false)")]
         public float surfaceRotationSpeedDegPerSec = 120f;
 
-        [Header("External Trim Inputs")]
-        public float externalPitchTrim;
+        [Header("Trim Target (X Rotation in Degrees)")]
+        public Transform trimTarget;
+        public float trimSlewDegPerSec = 60f;
+        public bool useTrimCurve = true;
+        public AnimationCurve trimCurveSpeedToTrim = new AnimationCurve(
+            new Keyframe(0f, 0f),
+            new Keyframe(500f, 0f),
+            new Keyframe(1000f, 0f),
+            new Keyframe(1500f, 0f)
+        );
+        public bool clampCurveX = true; // clamp X (speed) to first/last key
+        public float manualTrimDegrees = 0f; // used when useTrimCurve == false
+
+        private float trimCurrentDeg;
 
         private PlayerInput playerInput;
         private InputAction rollAction, pitchAction, yawAction;
@@ -100,7 +114,7 @@ namespace AerodynamicObjects.Tutorials
         private float leftThrottleOutput;
         private float rightThrottleOutput;
 
-        [Header("Runtime – Thrust Vector Inputs")]
+        [Header("Runtime â€“ Thrust Vector Inputs")]
         [Range(-1f, 1f)] public float leftThrustVectorInput;
         [Range(-1f, 1f)] public float rightThrustVectorInput;
 
@@ -127,14 +141,18 @@ namespace AerodynamicObjects.Tutorials
         {
             aircraftRigidBody = GetComponent<Rigidbody>();
             if (centreOfMassMarker) aircraftRigidBody.centerOfMass = centreOfMassMarker.localPosition;
+
             CacheInitialRotations(portWingAilerons);
             CacheInitialRotations(starboardWingAilerons);
             CacheInitialRotations(portHorizontalStabilisers);
             CacheInitialRotations(starboardHorizontalStabilisers);
             CacheInitialRotations(portVerticalStabilisers);
             CacheInitialRotations(starboardVerticalStabilisers);
+
             if (leftThrottleSetpointText) leftThrottleSetpointText.text = leftThrottleSetpoint.ToString("0.00");
             if (rightThrottleSetpointText) rightThrottleSetpointText.text = rightThrottleSetpoint.ToString("0.00");
+
+            trimCurrentDeg = (trimTarget ? trimTarget.localEulerAngles.x : 0f);
         }
 
         void FixedUpdate()
@@ -188,8 +206,30 @@ namespace AerodynamicObjects.Tutorials
             }
 
             float rollCmdBaseNorm = Mathf.Clamp(rollInput, -1f, 1f);
-            float pitchCmdNorm = Mathf.Clamp(pitchInput + externalPitchTrim, -1f, 1f);
+            float pitchCmdNorm = Mathf.Clamp(pitchInput, -1f, 1f);
             float yawCmdNorm = Mathf.Clamp(yawInput, -1f, 1f);
+
+            // Trim: exact X rotation from curve (degrees)
+            if (trimTarget)
+            {
+                float targetDeg;
+                if (useTrimCurve && aircraftRigidBody != null)
+                {
+                    float speedMS = aircraftRigidBody.linearVelocity.magnitude;
+                    float speedKnots = speedMS * KnotsPerMS;
+                    targetDeg = EvaluateTrimAtSpeed(speedKnots);
+                }
+                else
+                {
+                    targetDeg = manualTrimDegrees;
+                }
+
+                float slew = Mathf.Max(0f, trimSlewDegPerSec);
+                trimCurrentDeg = Mathf.MoveTowardsAngle(trimCurrentDeg, targetDeg, slew * dt);
+
+                Vector3 eul = trimTarget.localEulerAngles;
+                trimTarget.localEulerAngles = new Vector3(trimCurrentDeg, eul.y, eul.z);
+            }
 
             float rollCmdWingsNorm = Mathf.Clamp(rollCmdBaseNorm * Mathf.Clamp01(wingsMix), -1f, 1f);
             float rollCmdWingsRad = rollMaxRad * rollCmdWingsNorm;
@@ -206,6 +246,18 @@ namespace AerodynamicObjects.Tutorials
             float yawCmdRad = yawMaxRad * yawCmdNorm;
             ApplySurfaceCommands(portVerticalStabilisers, yawCmdRad, yawCmdNorm, false);
             ApplySurfaceCommands(starboardVerticalStabilisers, yawCmdRad, yawCmdNorm, false);
+        }
+
+        float EvaluateTrimAtSpeed(float speedKnots)
+        {
+            if (trimCurveSpeedToTrim == null || trimCurveSpeedToTrim.length == 0) return 0f;
+            if (!clampCurveX) return trimCurveSpeedToTrim.Evaluate(speedKnots);
+
+            var keys = trimCurveSpeedToTrim.keys;
+            float minX = keys[0].time;
+            float maxX = keys[keys.Length - 1].time;
+            float x = Mathf.Clamp(speedKnots, minX, maxX);
+            return trimCurveSpeedToTrim.Evaluate(x);
         }
 
         private void ApplyEngines(EngineElement[] engines, float throttle01, float sideVectorInput)
