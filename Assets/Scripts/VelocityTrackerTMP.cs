@@ -6,9 +6,7 @@ public class VelocityTrackerTMP : MonoBehaviour
 {
     [Header("Output")]
     public TMP_Text textTarget;
-    [Tooltip("Text prefix, for example: Speed")]
     public string label = "Speed";
-    [Tooltip("How many decimal places to show")]
     [Range(0, 4)] public int decimalPlaces = 1;
 
     [Header("Units (can enable multiple)")]
@@ -17,7 +15,6 @@ public class VelocityTrackerTMP : MonoBehaviour
     public bool milesPerHour = false;
 
     [Header("Smoothing")]
-    [Tooltip("If greater than zero, smooths the displayed speed with an exponential moving average")]
     [Range(0f, 1f)] public float smoothing = 0.2f;
 
     Rigidbody _rb;
@@ -25,8 +22,8 @@ public class VelocityTrackerTMP : MonoBehaviour
     bool _hadLastPos;
     float _displaySpeed;
 
-    const float MS_TO_KNOTS = 1.94384449f;   // meters per second to knots
-    const float MS_TO_MPH = 2.23693629f;   // meters per second to miles per hour
+    const float MS_TO_KNOTS = 1.94384449f;
+    const float MS_TO_MPH = 2.23693629f;
 
     void Awake()
     {
@@ -41,26 +38,31 @@ public class VelocityTrackerTMP : MonoBehaviour
 
     void Update()
     {
-        // Determine velocity magnitude in meters per second
         float speedMS = 0f;
 
         if (Application.isPlaying && _rb != null)
         {
-            speedMS = _rb.linearVelocity.magnitude;
+            // Forward-only: project velocity onto transform.forward
+            Vector3 v = _rb.linearVelocity; // use .velocity; replace with .linearVelocity if your rig defines it
+            float forward = Vector3.Dot(v, transform.forward);
+            speedMS = Mathf.Max(0f, forward);
         }
         else
         {
+            // Editor/preview: derive velocity from position delta, then project onto forward
             if (!_hadLastPos)
             {
                 _lastPos = transform.position;
                 _hadLastPos = true;
             }
             float dt = Mathf.Max(Time.deltaTime, 1e-6f);
-            speedMS = (transform.position - _lastPos).magnitude / dt;
+            Vector3 velApprox = (transform.position - _lastPos) / dt;
             _lastPos = transform.position;
+
+            float forward = Vector3.Dot(velApprox, transform.forward);
+            speedMS = Mathf.Max(0f, forward);
         }
 
-        // Smooth value if requested
         float rawSpeed = speedMS;
         if (smoothing > 0f)
         {
@@ -71,7 +73,6 @@ public class VelocityTrackerTMP : MonoBehaviour
             _displaySpeed = rawSpeed;
         }
 
-        // Build display string
         if (textTarget != null)
         {
             string fmt = "F" + decimalPlaces.ToString();

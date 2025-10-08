@@ -215,14 +215,16 @@ namespace AerodynamicObjects.Tutorials
                 float targetDeg;
                 if (useTrimCurve && aircraftRigidBody != null)
                 {
-                    float speedMS = aircraftRigidBody.linearVelocity.magnitude;
-                    float speedKnots = speedMS * KnotsPerMS;
+                    Vector3 v = aircraftRigidBody.linearVelocity; // or .linearVelocity if that's your API
+                    float forwardMS = Mathf.Max(0f, Vector3.Dot(v, transform.forward));
+                    float speedKnots = forwardMS * KnotsPerMS;
                     targetDeg = EvaluateTrimAtSpeed(speedKnots);
                 }
                 else
                 {
                     targetDeg = manualTrimDegrees;
                 }
+
 
                 float slew = Mathf.Max(0f, trimSlewDegPerSec);
                 trimCurrentDeg = Mathf.MoveTowardsAngle(trimCurrentDeg, targetDeg, slew * dt);
