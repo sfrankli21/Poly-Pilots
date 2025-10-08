@@ -3,7 +3,17 @@ guid: 88fe307756405ea428eb7d0645a2824b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MFD_Screen_Mat
+    second: {fileID: 2100000, guid: f8b0328edcbf5c84a9cd5843c5234f3b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: PanelMat
+    second: {fileID: 2100000, guid: e1773299df16ae64bb954449c83c74dc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -30,7 +40,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
