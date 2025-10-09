@@ -165,6 +165,9 @@ namespace AerodynamicObjects.Aerodynamics
 
         public AerodynamicLoad aerodynamicLoad;
 
+        // Option B: force-only scaling (boost magnitude without changing CL/CDi)
+        public float forceScale = 1000f;
+
         public AerodynamicLoad GetAerodynamicLoad(AeroObject ao)
         {
             // Resolving the velocity and getting angles
@@ -389,7 +392,7 @@ namespace AerodynamicObjects.Aerodynamics
             liftDirection = Vector3.Normalize(Vector3.Cross(bodyVelocityDirection, angleOfAttackRotationVector));
 
             // Convert coefficients to forces
-            qS = ao.dynamicPressure * planformArea;
+            qS = ao.dynamicPressure * planformArea * forceScale; // scaled here (Option B)
             lift_bodyFrame = qS * CL * liftDirection;
             inducedDrag_bodyFrame = -qS * CD_induced * bodyVelocityDirection;
 
