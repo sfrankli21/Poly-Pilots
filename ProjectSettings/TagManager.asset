@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - FxTemporaire
+  - HOOK
   layers:
   - Default
   - TransparentFX
