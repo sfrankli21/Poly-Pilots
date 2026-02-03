@@ -166,7 +166,7 @@ namespace AerodynamicObjects.Aerodynamics
         public AerodynamicLoad aerodynamicLoad;
 
         // Option B: force-only scaling (boost magnitude without changing CL/CDi)
-        public float forceScale = 1000f;
+        public float forceScale = 5f;
 
         public AerodynamicLoad GetAerodynamicLoad(AeroObject ao)
         {
