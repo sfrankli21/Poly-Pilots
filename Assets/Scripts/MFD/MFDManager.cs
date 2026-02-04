@@ -6,8 +6,24 @@ using UnityEngine.Events;
 public class MFDMenuPreset
 {
     public string presetName;
+
+    [Header("Auto Toggle (Optional)")]
+    public GameObject presetRootObject;
+
     public UnityEvent onActivatePreset;
     public UnityEvent onDeactivatePreset;
+
+    public void Activate()
+    {
+        if (presetRootObject != null) presetRootObject.SetActive(true);
+        onActivatePreset?.Invoke();
+    }
+
+    public void Deactivate()
+    {
+        if (presetRootObject != null) presetRootObject.SetActive(false);
+        onDeactivatePreset?.Invoke();
+    }
 }
 
 public class MFDManager : MonoBehaviour
@@ -34,10 +50,11 @@ public class MFDManager : MonoBehaviour
     public void SelectMenuByName(string presetName)
     {
         if (string.IsNullOrEmpty(presetName)) return;
+        if (currentPreset != null && currentPreset.presetName == presetName) return;
 
-        if (currentPreset != null && currentPreset.presetName != presetName)
+        if (currentPreset != null)
         {
-            currentPreset.onDeactivatePreset?.Invoke();
+            currentPreset.Deactivate();
         }
 
         var newPreset = menuPresets.Find(p => p.presetName == presetName);
@@ -45,7 +62,7 @@ public class MFDManager : MonoBehaviour
         {
             currentMenuName = presetName;
             currentPreset = newPreset;
-            newPreset.onActivatePreset?.Invoke();
+            newPreset.Activate();
         }
     }
 

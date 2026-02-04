@@ -167,6 +167,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "RadarGimbleX",
+                    "type": "Value",
+                    "id": "2440b454-6f90-4cba-8864-d51124b73a1a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RadarGimbleY",
+                    "type": "Value",
+                    "id": "939cf7f5-88f7-4ba6-a05c-46650888f5c1",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -283,7 +301,7 @@
                 {
                     "name": "",
                     "id": "ae33e905-4804-4004-9660-354f4647de33",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/button3",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -343,6 +361,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "PreviousPylon",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b2bb292e-3863-49d2-a53c-6c71080e4ddf",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/slider",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RadarGimbleX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "704337d6-81ca-452f-ab9e-57c5a7dfc703",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/dial",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RadarGimbleY",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

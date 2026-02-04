@@ -6,6 +6,10 @@ TagManager:
   tags:
   - FxTemporaire
   - HOOK
+  - RCS
+  - RadarDisplay
+  - HUD
+  - RadarSettingDisplay
   layers:
   - Default
   - TransparentFX

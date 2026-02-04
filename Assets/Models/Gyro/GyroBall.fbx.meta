@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7052635d588c59741bb774d404c3cd62
+guid: dacd618bc17c0244689b75d1e536505c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert888
-    second: {fileID: 2100000, guid: 24763329e4943b349aae094fd516ee5f, type: 2}
+      name: GyroBottom
+    second: {fileID: 2100000, guid: 9c66b2173a2cb7f4c8ccacdab2ac13d5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: GyroTop
+    second: {fileID: 2100000, guid: fa7b946598d9ac745acb7e1f2559d4d4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
