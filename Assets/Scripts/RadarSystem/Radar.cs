@@ -10,8 +10,7 @@ public class Radar : MonoBehaviour
         TWS_30X30,
         TWS_10X10,
         TWS_20X20,
-        TWS_50X20,
-        LK_5x5
+        TWS_50X20
     }
 
     public enum RadarRange
@@ -91,9 +90,6 @@ public class Radar : MonoBehaviour
     [SerializeField, InspectorName("Previous Contact Input")]
     InputActionReference previousContactInput;
 
-    [SerializeField, InspectorName("Lock Radar Input")]
-    InputActionReference lockRadarInput;
-
     [SerializeField, InspectorName("Radar Control X Axis")]
     InputActionReference radarControlXAxis;
 
@@ -149,10 +145,6 @@ public class Radar : MonoBehaviour
     RadarMode lastMode;
     RadarRange lastRange;
 
-    bool lkActive;
-    RadarMode preLKMode;
-    RadarRange preLKRange;
-
     void Awake()
     {
         AllocateRayBuffers();
@@ -165,14 +157,6 @@ public class Radar : MonoBehaviour
 
         lastMode = radarMode;
         lastRange = radarRange;
-
-        lkActive = radarMode == RadarMode.LK_5x5;
-        if (lkActive)
-        {
-            preLKMode = RadarMode.TWS_30X30;
-            preLKRange = radarRange;
-            ForceLkSettings();
-        }
     }
 
     void OnEnable()
@@ -195,12 +179,6 @@ public class Radar : MonoBehaviour
             previousContactInput.action.Enable();
         }
 
-        if (lockRadarInput != null && lockRadarInput.action != null)
-        {
-            lockRadarInput.action.performed += OnLockRadarPerformed;
-            lockRadarInput.action.Enable();
-        }
-
         if (radarControlXAxis != null && radarControlXAxis.action != null) radarControlXAxis.action.Enable();
         if (radarControlYAxis != null && radarControlYAxis.action != null) radarControlYAxis.action.Enable();
     }
@@ -217,12 +195,6 @@ public class Radar : MonoBehaviour
         {
             previousContactInput.action.performed -= OnPreviousContactPerformed;
             previousContactInput.action.Disable();
-        }
-
-        if (lockRadarInput != null && lockRadarInput.action != null)
-        {
-            lockRadarInput.action.performed -= OnLockRadarPerformed;
-            lockRadarInput.action.Disable();
         }
 
         if (radarControlXAxis != null && radarControlXAxis.action != null) radarControlXAxis.action.Disable();
@@ -275,8 +247,7 @@ public class Radar : MonoBehaviour
 
     void Update()
     {
-        if (!lkActive) UpdateGimbleRotation();
-        else UpdateGimbleLkTrackInstant();
+        UpdateGimbleRotation();
 
         scanTimer += Time.deltaTime;
         if (scanTimer >= scanInterval)
@@ -300,11 +271,6 @@ public class Radar : MonoBehaviour
         }
 
         ValidateSelection();
-
-        if (lkActive && selectedContact == null)
-        {
-            ExitLKMode();
-        }
 
         UpdateAllScreens();
         SyncHudBlips();
@@ -337,184 +303,54 @@ public class Radar : MonoBehaviour
         gimble.transform.localRotation = Quaternion.Euler(localX, localY, 0f);
     }
 
-    void PointGimbleAtSelectedInstant()
-    {
-        if (gimble == null) return;
-        if (selectedContact == null) return;
-
-        Transform g = gimble.transform;
-
-        Vector3 toTargetWorld = selectedContact.transform.position - g.position;
-        float d = toTargetWorld.magnitude;
-        if (d <= 0.0001f) return;
-
-        Vector3 dirWorld = toTargetWorld / d;
-        Vector3 dirLocal = g.InverseTransformDirection(dirWorld);
-
-        float yawDeg = Mathf.Atan2(dirLocal.x, dirLocal.z) * Mathf.Rad2Deg;
-        float pitchDeg = Mathf.Atan2(dirLocal.y, dirLocal.z) * Mathf.Rad2Deg;
-
-        float targetLocalY = Mathf.Clamp(yawDeg, -90f, 90f);
-        float targetLocalX = Mathf.Clamp(pitchDeg, -90f, 90f);
-
-        g.localRotation = Quaternion.Euler(targetLocalX, targetLocalY, 0f);
-    }
-
-    void UpdateGimbleLkTrackInstant()
-    {
-        PointGimbleAtSelectedInstant();
-    }
-
-    void OnLockRadarPerformed(InputAction.CallbackContext ctx)
-    {
-        if (lkActive)
-        {
-            ExitLKMode();
-            return;
-        }
-
-        if (selectedContact == null) return;
-
-        EnterLKMode();
-    }
-
-    public void EnterLKMode()
-    {
-        if (lkActive) return;
-        if (selectedContact == null) return;
-
-        PointGimbleAtSelectedInstant();
-
-        preLKMode = radarMode;
-        preLKRange = radarRange;
-
-        lkActive = true;
-        radarMode = RadarMode.LK_5x5;
-        ForceLkSettings();
-
-        SetInputsDead(true);
-
-        UpdateSettingDisplays(true);
-        lastMode = radarMode;
-        lastRange = radarRange;
-    }
-
-    public void ExitLKMode()
-    {
-        if (!lkActive) return;
-
-        lkActive = false;
-
-        radarMode = preLKMode;
-        radarRange = preLKRange;
-
-        SetInputsDead(false);
-
-        UpdateSettingDisplays(true);
-        lastMode = radarMode;
-        lastRange = radarRange;
-    }
-
-    void SetInputsDead(bool dead)
-    {
-        if (dead)
-        {
-            if (radarControlXAxis != null && radarControlXAxis.action != null) radarControlXAxis.action.Disable();
-            if (radarControlYAxis != null && radarControlYAxis.action != null) radarControlYAxis.action.Disable();
-            if (nextContactInput != null && nextContactInput.action != null) nextContactInput.action.Disable();
-            if (previousContactInput != null && previousContactInput.action != null) previousContactInput.action.Disable();
-        }
-        else
-        {
-            if (radarControlXAxis != null && radarControlXAxis.action != null) radarControlXAxis.action.Enable();
-            if (radarControlYAxis != null && radarControlYAxis.action != null) radarControlYAxis.action.Enable();
-            if (nextContactInput != null && nextContactInput.action != null) nextContactInput.action.Enable();
-            if (previousContactInput != null && previousContactInput.action != null) previousContactInput.action.Enable();
-        }
-    }
-
-    void ForceLkSettings()
-    {
-        radarRange = (RadarRange)(System.Enum.GetValues(typeof(RadarRange)).Length - 1);
-    }
-
-    bool IsModeCyclable(RadarMode mode)
-    {
-        return mode != RadarMode.LK_5x5;
-    }
-
     public void NextMode()
     {
-        if (lkActive) return;
-
         int count = System.Enum.GetValues(typeof(RadarMode)).Length;
         if (count <= 0) return;
 
         int i = (int)radarMode;
+        i++;
+        if (i >= count) i = 0;
+        radarMode = (RadarMode)i;
 
-        for (int step = 0; step < count; step++)
-        {
-            i++;
-            if (i >= count) i = 0;
-
-            RadarMode m = (RadarMode)i;
-            if (IsModeCyclable(m))
-            {
-                radarMode = m;
-                UpdateSettingDisplays(true);
-                lastMode = radarMode;
-                return;
-            }
-        }
+        UpdateSettingDisplays(true);
+        lastMode = radarMode;
     }
 
     public void BackMode()
     {
-        if (lkActive) return;
-
         int count = System.Enum.GetValues(typeof(RadarMode)).Length;
         if (count <= 0) return;
 
         int i = (int)radarMode;
+        i--;
+        if (i < 0) i = count - 1;
+        radarMode = (RadarMode)i;
 
-        for (int step = 0; step < count; step++)
-        {
-            i--;
-            if (i < 0) i = count - 1;
-
-            RadarMode m = (RadarMode)i;
-            if (IsModeCyclable(m))
-            {
-                radarMode = m;
-                UpdateSettingDisplays(true);
-                lastMode = radarMode;
-                return;
-            }
-        }
+        UpdateSettingDisplays(true);
+        lastMode = radarMode;
     }
 
     public void NextRange()
     {
-        if (lkActive) return;
-
         int count = System.Enum.GetValues(typeof(RadarRange)).Length;
         int i = (int)radarRange;
         i++;
         if (i >= count) i = 0;
         radarRange = (RadarRange)i;
+
         UpdateSettingDisplays(true);
         lastRange = radarRange;
     }
 
     public void BackRange()
     {
-        if (lkActive) return;
-
         int count = System.Enum.GetValues(typeof(RadarRange)).Length;
         int i = (int)radarRange;
         i--;
         if (i < 0) i = count - 1;
         radarRange = (RadarRange)i;
+
         UpdateSettingDisplays(true);
         lastRange = radarRange;
     }
@@ -563,17 +399,15 @@ public class Radar : MonoBehaviour
 
     void OnNextContactPerformed(InputAction.CallbackContext ctx)
     {
-        if (lkActive) return;
         SelectNextContact();
     }
 
     void OnPreviousContactPerformed(InputAction.CallbackContext ctx)
     {
-        if (lkActive) return;
         SelectPreviousContact();
     }
 
-    void SelectNextContact()
+    public void SelectNextContact()
     {
         if (radarContacts == null || radarContacts.Count == 0)
         {
@@ -588,7 +422,7 @@ public class Radar : MonoBehaviour
         selectedContact = radarContacts[selectedContactIndex];
     }
 
-    void SelectPreviousContact()
+    public void SelectPreviousContact()
     {
         if (radarContacts == null || radarContacts.Count == 0)
         {
@@ -708,7 +542,7 @@ public class Radar : MonoBehaviour
             }
 
             SyncScreenBlips(screen, blipMap);
-            UpdateScreenBlips(screen, blipMap, g, hDeg, vDeg, range);
+            UpdateScreenBlips(screen, blipMap, g, hDeg, range);
         }
     }
 
@@ -779,7 +613,7 @@ public class Radar : MonoBehaviour
         }
     }
 
-    void UpdateScreenBlips(RectTransform screen, Dictionary<GameObject, BlipInfo> blipMap, Transform g, float hDeg, float vDeg, float range)
+    void UpdateScreenBlips(RectTransform screen, Dictionary<GameObject, BlipInfo> blipMap, Transform g, float hDeg, float range)
     {
         Vector2 half = screen.rect.size * 0.5f;
 
@@ -795,7 +629,6 @@ public class Radar : MonoBehaviour
             float dist = toTarget.magnitude;
 
             Vector3 dirWorld = dist > 0.0001f ? (toTarget / dist) : g.forward;
-
             Vector3 dirLocal = g.InverseTransformDirection(dirWorld);
             float yawDeg = Mathf.Atan2(dirLocal.x, dirLocal.z) * Mathf.Rad2Deg;
 
@@ -1167,13 +1000,6 @@ public class Radar : MonoBehaviour
 
     static void GetModeAngles(RadarMode mode, out float horizontalAngleDeg, out float verticalAngleDeg)
     {
-        if (mode == RadarMode.LK_5x5)
-        {
-            horizontalAngleDeg = 5f;
-            verticalAngleDeg = 5f;
-            return;
-        }
-
         string s = mode.ToString();
         int underscore = s.IndexOf('_');
         horizontalAngleDeg = 0f;
