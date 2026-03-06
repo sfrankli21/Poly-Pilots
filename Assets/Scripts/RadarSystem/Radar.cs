@@ -15,13 +15,9 @@ public class Radar : MonoBehaviour
 
     public enum RadarRange
     {
-        Range_10,
-        Range_500,
-        Range_1000,
-        Range_1500,
-        Range_2000,
-        Range_2500,
-        Range_3000
+        Range_5000,
+        Range_7500,
+        Range_10000
     }
 
     [SerializeField, InspectorName("Gimble")]

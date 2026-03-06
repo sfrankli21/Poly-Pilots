@@ -185,6 +185,42 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "FlapsUp",
+                    "type": "Button",
+                    "id": "ca0e5152-57f0-4e01-9466-8e2be3205ed6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GearUp",
+                    "type": "Button",
+                    "id": "a976985f-359b-4771-b9e8-738a8dd56f82",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FlapsDown",
+                    "type": "Button",
+                    "id": "8057937c-beec-483b-b72d-065c3dd23edf",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "GearDown",
+                    "type": "Button",
+                    "id": "658d3980-92f2-4d2e-bd93-5c9b13913f05",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -213,7 +249,7 @@
                 {
                     "name": "",
                     "id": "e02e6ddd-4f5c-469d-a3ea-cb6e099adcfb",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/rz",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -257,7 +293,7 @@
                 {
                     "name": "",
                     "id": "1ff6037b-e19f-4627-a908-c2a012d138fd",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/z",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/rz",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -383,6 +419,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "RadarGimbleY",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "26c1256f-9f0f-42f2-aca7-dc9980ce25a3",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FlapsUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b700c454-4f04-48bb-9a86-ebaab3dd480f",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GearUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14f4dc76-6aab-4714-b4b0-a50e3d944f42",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FlapsDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0030fbe3-70d4-4cd2-bc21-09071553f04a",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GearDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
