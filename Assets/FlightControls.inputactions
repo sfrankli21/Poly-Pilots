@@ -227,9 +227,9 @@
                 {
                     "name": "",
                     "id": "4fe784b9-abba-493f-880c-fbed5ba612f4",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/stick/x",
+                    "path": "<XInputController>/leftTrigger",
                     "interactions": "",
-                    "processors": "Invert",
+                    "processors": "",
                     "groups": "",
                     "action": "LeftEngines",
                     "isComposite": false,
@@ -238,7 +238,7 @@
                 {
                     "name": "",
                     "id": "d823f5f5-4c05-48d4-8593-b2b367ed263b",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/stick/y",
+                    "path": "<XInputController>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -271,7 +271,7 @@
                 {
                     "name": "",
                     "id": "53d3f5c3-b428-4bec-8209-1f5ddd7b29a1",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/x",
+                    "path": "<XInputController>/rightStick/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -282,7 +282,7 @@
                 {
                     "name": "",
                     "id": "434471f7-e1fe-44b2-baf1-4b92aea48f52",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/y",
+                    "path": "<XInputController>/rightStick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -293,7 +293,7 @@
                 {
                     "name": "",
                     "id": "1ff6037b-e19f-4627-a908-c2a012d138fd",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/rz",
+                    "path": "<XInputController>/leftStick/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -436,7 +436,7 @@
                 {
                     "name": "",
                     "id": "b700c454-4f04-48bb-9a86-ebaab3dd480f",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button6",
+                    "path": "<XInputController>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -458,7 +458,7 @@
                 {
                     "name": "",
                     "id": "0030fbe3-70d4-4cd2-bc21-09071553f04a",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button7",
+                    "path": "<XInputController>/buttonSouth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

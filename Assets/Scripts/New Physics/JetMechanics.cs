@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class JetMechanics : MonoBehaviour
@@ -54,6 +54,16 @@ public class JetMechanics : MonoBehaviour
         public Vector3 maxLocalPosition;
         public float moveSpeed;
         [HideInInspector] public Vector3 currentLocalPosition;
+    }
+
+    [System.Serializable]
+    public class LandingGearElement
+    {
+        public string gearUpAnimationName;
+        public float playGearUpDelay;
+        public string gearDownAnimationName;
+        public float playGearDownDelay;
+        public Collider gearCollider;
     }
 
     [SerializeField]
@@ -125,7 +135,7 @@ public class JetMechanics : MonoBehaviour
 
     [Header("Misc")]
     [SerializeField]
-    List<Collider> landingGear;
+    LandingGearElement[] landingGear;
     [SerializeField]
     PhysicsMaterial landingGearBrakesMaterial;
     [SerializeField]
@@ -162,6 +172,7 @@ public class JetMechanics : MonoBehaviour
     Vector3 controlInput;
     Vector3 lastVelocity;
     PhysicsMaterial landingGearDefaultMaterial;
+    Coroutine[] landingGearAnimationCoroutines;
 
     public Rigidbody Rigidbody { get; private set; }
     public float Throttle { get; private set; }
@@ -196,15 +207,13 @@ public class JetMechanics : MonoBehaviour
         }
         private set
         {
-            gearDeployed = value;
-
-            foreach (var lg in landingGear)
+            if (gearDeployed == value)
             {
-                if (lg != null)
-                {
-                    lg.enabled = value;
-                }
+                return;
             }
+
+            gearDeployed = value;
+            PlayLandingGearAnimations(value);
         }
     }
 
@@ -212,9 +221,14 @@ public class JetMechanics : MonoBehaviour
     {
         Rigidbody = GetComponent<Rigidbody>();
 
-        if (landingGear.Count > 0 && landingGear[0] != null)
+        if (landingGear != null)
         {
-            landingGearDefaultMaterial = landingGear[0].sharedMaterial;
+            landingGearAnimationCoroutines = new Coroutine[landingGear.Length];
+        }
+
+        if (landingGear != null && landingGear.Length > 0 && landingGear[0] != null && landingGear[0].gearCollider != null)
+        {
+            landingGearDefaultMaterial = landingGear[0].gearCollider.sharedMaterial;
         }
 
         if (Rigidbody != null)
@@ -222,7 +236,7 @@ public class JetMechanics : MonoBehaviour
             Rigidbody.linearVelocity = Rigidbody.rotation * new Vector3(0f, 0f, initialSpeed);
         }
 
-        GearDeployed = gearDeployed;
+        ApplyLandingGearStateImmediate(gearDeployed);
 
         InitializeSurfaceAngles(pitchSurfaces);
         InitializeSurfaceAngles(rollSurfaces);
@@ -234,6 +248,75 @@ public class JetMechanics : MonoBehaviour
         InitializeThrottleVisuals(leftThrottleVisual);
         InitializeThrottleVisuals(rightThrottleVisual);
         InitializeRudderPedalVisuals(rudderPedalVisual);
+    }
+
+    void ApplyLandingGearStateImmediate(bool deployed)
+    {
+        gearDeployed = deployed;
+    }
+
+    void PlayLandingGearAnimations(bool deployed)
+    {
+        if (landingGear == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < landingGear.Length; i++)
+        {
+            if (landingGearAnimationCoroutines != null && i < landingGearAnimationCoroutines.Length && landingGearAnimationCoroutines[i] != null)
+            {
+                StopCoroutine(landingGearAnimationCoroutines[i]);
+                landingGearAnimationCoroutines[i] = null;
+            }
+
+            landingGearAnimationCoroutines[i] = StartCoroutine(PlayLandingGearAnimationRoutine(i, deployed));
+        }
+    }
+
+    IEnumerator PlayLandingGearAnimationRoutine(int index, bool deployed)
+    {
+        if (landingGear == null || index < 0 || index >= landingGear.Length)
+        {
+            yield break;
+        }
+
+        LandingGearElement gear = landingGear[index];
+
+        if (gear == null || gear.gearCollider == null)
+        {
+            yield break;
+        }
+
+        float delay = deployed ? gear.playGearDownDelay : gear.playGearUpDelay;
+        string animationName = deployed ? gear.gearDownAnimationName : gear.gearUpAnimationName;
+
+        if (delay > 0f)
+        {
+            yield return new WaitForSeconds(delay);
+        }
+
+        if (string.IsNullOrEmpty(animationName))
+        {
+            yield break;
+        }
+
+        Animator animator = gear.gearCollider.GetComponent<Animator>();
+
+        if (animator == null)
+        {
+            animator = gear.gearCollider.GetComponentInParent<Animator>();
+        }
+
+        if (animator != null)
+        {
+            animator.Play(animationName, 0, 0f);
+        }
+
+        if (landingGearAnimationCoroutines != null && index < landingGearAnimationCoroutines.Length)
+        {
+            landingGearAnimationCoroutines[index] = null;
+        }
     }
 
     void InitializeSurfaceAngles(SurfaceElement[] surfaces)
@@ -369,6 +452,15 @@ public class JetMechanics : MonoBehaviour
         {
             FlapsDeployed = false;
         }
+
+        if (inputRouter.GearUp)
+        {
+            GearDeployed = true;
+        }
+        else if (inputRouter.GearDown)
+        {
+            GearDeployed = false;
+        }
     }
 
     void UpdateThrottle(float dt)
@@ -380,14 +472,19 @@ public class JetMechanics : MonoBehaviour
         RightThrottle = Mathf.MoveTowards(RightThrottle, rightTarget, throttleSpeed * Mathf.Abs(rightThrottleInput) * dt);
         Throttle = (LeftThrottle + RightThrottle) * 0.5f;
 
-        foreach (var lg in landingGear)
+        if (landingGear == null)
         {
-            if (lg == null)
+            return;
+        }
+
+        for (int i = 0; i < landingGear.Length; i++)
+        {
+            if (landingGear[i] == null || landingGear[i].gearCollider == null)
             {
                 continue;
             }
 
-            lg.sharedMaterial = AirbrakeDeployed ? landingGearBrakesMaterial : landingGearDefaultMaterial;
+            landingGear[i].gearCollider.sharedMaterial = AirbrakeDeployed ? landingGearBrakesMaterial : landingGearDefaultMaterial;
         }
     }
 
