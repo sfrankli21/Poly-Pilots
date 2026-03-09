@@ -157,6 +157,12 @@ public class JetMechanics : MonoBehaviour
     [SerializeField]
     SurfaceElement[] flapsSurfaces;
 
+    [Header("Thrust Vector")]
+    [SerializeField]
+    SurfaceElement[] leftEngineThrustVectorSurfaces;
+    [SerializeField]
+    SurfaceElement[] rightEngineThrustVectorSurfaces;
+
     [Header("Visuals")]
     [SerializeField]
     JoystickVisualElement[] joystickVisual;
@@ -169,6 +175,9 @@ public class JetMechanics : MonoBehaviour
 
     float leftThrottleInput;
     float rightThrottleInput;
+    float leftThrustVectorInput;
+    float rightThrustVectorInput;
+    bool gOverrideActive;
     Vector3 controlInput;
     Vector3 lastVelocity;
     PhysicsMaterial landingGearDefaultMaterial;
@@ -243,6 +252,8 @@ public class JetMechanics : MonoBehaviour
         InitializeSurfaceAngles(yawSurfaces);
         InitializeSurfaceAngles(airbrakeSurfaces);
         InitializeSurfaceAngles(flapsSurfaces);
+        InitializeSurfaceAngles(leftEngineThrustVectorSurfaces);
+        InitializeSurfaceAngles(rightEngineThrustVectorSurfaces);
 
         InitializeJoystickVisuals(joystickVisual);
         InitializeThrottleVisuals(leftThrottleVisual);
@@ -443,6 +454,9 @@ public class JetMechanics : MonoBehaviour
         controlInput = Vector3.ClampMagnitude(new Vector3(inputRouter.Pitch, inputRouter.Yaw, -inputRouter.Roll), 1f);
         leftThrottleInput = Mathf.Clamp(inputRouter.LeftEngines, -1f, 1f);
         rightThrottleInput = Mathf.Clamp(inputRouter.RightEngines, -1f, 1f);
+        leftThrustVectorInput = Mathf.Clamp(inputRouter.ThrustVectorLeft, -1f, 1f);
+        rightThrustVectorInput = Mathf.Clamp(inputRouter.ThrustVectorRight, -1f, 1f);
+        gOverrideActive = inputRouter.GOverride;
 
         if (inputRouter.FlapsUp)
         {
@@ -725,6 +739,31 @@ public class JetMechanics : MonoBehaviour
         }
     }
 
+    void UpdateSurfaceArrayToNeutral(SurfaceElement[] surfaces, float dt)
+    {
+        if (surfaces == null)
+        {
+            return;
+        }
+
+        for (int i = 0; i < surfaces.Length; i++)
+        {
+            SurfaceElement surface = surfaces[i];
+
+            if (surface == null || surface.targetTransform == null)
+            {
+                continue;
+            }
+
+            float neutralAngle = (surface.minAngleValue + surface.maxAngleValue) * 0.5f;
+            surface.currentAngle = Mathf.MoveTowards(surface.currentAngle, neutralAngle, surface.rotationSpeed * dt);
+
+            Vector3 localEuler = surface.targetTransform.localEulerAngles;
+            SetAxisAngle(ref localEuler, surface.rotationAxis, surface.currentAngle);
+            surface.targetTransform.localEulerAngles = localEuler;
+        }
+    }
+
     void UpdateJoystickVisuals(float dt)
     {
         if (joystickVisual == null)
@@ -813,6 +852,17 @@ public class JetMechanics : MonoBehaviour
         UpdateSurfaceArray(yawSurfaces, Mathf.Clamp(controlInput.y, -1f, 1f), dt);
         UpdateSurfaceArray(airbrakeSurfaces, AirbrakeDeployed ? 1f : -1f, dt);
         UpdateSurfaceArray(flapsSurfaces, FlapsDeployed ? 1f : -1f, dt);
+
+        if (gOverrideActive)
+        {
+            UpdateSurfaceArray(leftEngineThrustVectorSurfaces, Mathf.Clamp(leftThrustVectorInput, -1f, 1f), dt);
+            UpdateSurfaceArray(rightEngineThrustVectorSurfaces, Mathf.Clamp(rightThrustVectorInput, -1f, 1f), dt);
+        }
+        else
+        {
+            UpdateSurfaceArrayToNeutral(leftEngineThrustVectorSurfaces, dt);
+            UpdateSurfaceArrayToNeutral(rightEngineThrustVectorSurfaces, dt);
+        }
 
         UpdateJoystickVisuals(dt);
         UpdateThrottleVisuals(leftThrottleVisual, Mathf.Clamp(leftThrottleInput, -1f, 1f), dt);

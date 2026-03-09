@@ -221,6 +221,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "GOverride",
+                    "type": "Button",
+                    "id": "369744cf-6d04-4f81-89a7-3756c82e8aca",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -249,7 +258,7 @@
                 {
                     "name": "",
                     "id": "e02e6ddd-4f5c-469d-a3ea-cb6e099adcfb",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/z",
+                    "path": "<XInputController>/rightStick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -260,7 +269,7 @@
                 {
                     "name": "",
                     "id": "2dfc409f-46b5-47f4-ac3a-a781cbc861da",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/rz",
+                    "path": "<XInputController>/rightStick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -425,7 +434,7 @@
                 {
                     "name": "",
                     "id": "26c1256f-9f0f-42f2-aca7-dc9980ce25a3",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button8",
+                    "path": "<XInputController>/buttonWest",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -447,7 +456,7 @@
                 {
                     "name": "",
                     "id": "14f4dc76-6aab-4714-b4b0-a50e3d944f42",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button9",
+                    "path": "<XInputController>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -463,6 +472,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "GearDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6c994190-213e-43c0-9d12-0983ae8a8f50",
+                    "path": "<XInputController>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GOverride",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

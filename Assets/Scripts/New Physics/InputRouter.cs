@@ -32,6 +32,7 @@ public class InputRouter : MonoBehaviour
     InputAction gearDownAction;
     InputAction flapsUpAction;
     InputAction flapsDownAction;
+    InputAction gOverrideAction;
 
     public float LeftEngines;
     public float RightEngines;
@@ -57,6 +58,7 @@ public class InputRouter : MonoBehaviour
     public bool GearDown;
     public bool FlapsUp;
     public bool FlapsDown;
+    public bool GOverride;
 
     void Awake()
     {
@@ -123,6 +125,7 @@ public class InputRouter : MonoBehaviour
         gearDownAction = actionMap.FindAction("GearDown", false);
         flapsUpAction = actionMap.FindAction("FlapsUp", false);
         flapsDownAction = actionMap.FindAction("FlapsDown", false);
+        gOverrideAction = actionMap.FindAction("GOverride", false);
     }
 
     void Update()
@@ -151,6 +154,7 @@ public class InputRouter : MonoBehaviour
         GearDown = ReadButton(gearDownAction);
         FlapsUp = ReadButton(flapsUpAction);
         FlapsDown = ReadButton(flapsDownAction);
+        GOverride = ReadButton(gOverrideAction);
     }
 
     float ReadFloat(InputAction action)
@@ -199,5 +203,6 @@ public class InputRouter : MonoBehaviour
         GearDown = false;
         FlapsUp = false;
         FlapsDown = false;
+        GOverride = false;
     }
 }
