@@ -230,6 +230,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ShootGun",
+                    "type": "Button",
+                    "id": "1c5e4c67-da0b-4ac8-858d-26f14f284cab",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -483,6 +492,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "GOverride",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e973f883-b166-4016-a64e-0c4831b84cb6",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ShootGun",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
