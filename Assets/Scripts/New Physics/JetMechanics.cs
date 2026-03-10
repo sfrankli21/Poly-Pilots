@@ -92,7 +92,7 @@ public class JetMechanics : MonoBehaviour
     [SerializeField]
     float burnFuelBurnPerSecond;
     [SerializeField]
-    float fuelQuantity = 0f;
+    public float fuelQuantity = 0f;
 
     [Header("Lift")]
     [SerializeField]
@@ -513,8 +513,35 @@ public class JetMechanics : MonoBehaviour
         }
     }
 
+    void UpdateFuel(float dt)
+    {
+        if (fuelQuantity <= 0f)
+        {
+            fuelQuantity = 0f;
+            return;
+        }
+
+        float leftBurnRate = LeftThrottle >= 0.99f ? burnFuelBurnPerSecond : dryFuelBurnPerSecond;
+        float rightBurnRate = RightThrottle >= 0.99f ? burnFuelBurnPerSecond : dryFuelBurnPerSecond;
+
+        float leftFuelBurn = leftBurnRate * Mathf.Clamp01(LeftThrottle) * dt;
+        float rightFuelBurn = rightBurnRate * Mathf.Clamp01(RightThrottle) * dt;
+
+        fuelQuantity -= leftFuelBurn + rightFuelBurn;
+
+        if (fuelQuantity < 0f)
+        {
+            fuelQuantity = 0f;
+        }
+    }
+
     void UpdateThrust()
     {
+        if (fuelQuantity <= 0f)
+        {
+            return;
+        }
+
         if (leftEngine != null)
         {
             Rigidbody.AddForceAtPosition(leftEngine.forward * (LeftThrottle * leftMaxThrust), leftEngine.position);
@@ -945,6 +972,7 @@ public class JetMechanics : MonoBehaviour
         CalculateState();
         CalculateGForce(dt);
         UpdateThrottle(dt);
+        UpdateFuel(dt);
         UpdateThrust();
         UpdateLift();
         UpdateSteering(dt);

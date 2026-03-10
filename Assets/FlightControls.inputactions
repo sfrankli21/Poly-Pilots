@@ -379,7 +379,7 @@
                 {
                     "name": "",
                     "id": "b85b74a2-5a10-49c4-896d-bd3312f70632",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/button2",
+                    "path": "<XInputController>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -390,7 +390,7 @@
                 {
                     "name": "",
                     "id": "1832f1eb-4f17-4b3a-9da1-ca3fc31defdc",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button29",
+                    "path": "<XInputController>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -401,7 +401,7 @@
                 {
                     "name": "",
                     "id": "93411c26-a09c-4df0-abb4-300a5d9f513b",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button28",
+                    "path": "<XInputController>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
