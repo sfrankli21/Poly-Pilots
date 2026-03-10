@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 public class JetMechanics : MonoBehaviour
 {
@@ -84,6 +85,14 @@ public class JetMechanics : MonoBehaviour
     Transform leftEngine;
     [SerializeField]
     Transform rightEngine;
+
+    [Header("Fuel")]
+    [SerializeField]
+    float dryFuelBurnPerSecond;
+    [SerializeField]
+    float burnFuelBurnPerSecond;
+    [SerializeField]
+    float fuelQuantity = 0f;
 
     [Header("Lift")]
     [SerializeField]
@@ -172,6 +181,8 @@ public class JetMechanics : MonoBehaviour
     ThrottleVisualElement[] rightThrottleVisual;
     [SerializeField]
     RudderPedalVisualElement[] rudderPedalVisual;
+    [SerializeField]
+    TMP_Text airSpeedKnotsText;
 
     float leftThrottleInput;
     float rightThrottleInput;
@@ -845,6 +856,17 @@ public class JetMechanics : MonoBehaviour
         }
     }
 
+    void UpdateAirSpeedDisplay()
+    {
+        if (airSpeedKnotsText == null)
+        {
+            return;
+        }
+
+        float knots = Velocity.magnitude * 1.94384f;
+        airSpeedKnotsText.text = Mathf.RoundToInt(knots).ToString();
+    }
+
     void UpdateSurfaces(float dt)
     {
         UpdateSurfaceArray(pitchSurfaces, Mathf.Clamp(controlInput.x, -1f, 1f), dt);
@@ -930,5 +952,6 @@ public class JetMechanics : MonoBehaviour
         UpdateAngularDrag();
         UpdateSurfaces(dt);
         CalculateState();
+        UpdateAirSpeedDisplay();
     }
 }

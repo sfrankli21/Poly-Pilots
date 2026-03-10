@@ -12,52 +12,86 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16f203f2940cbfa498f71300f929d9e6, type: 3}
   m_Name: F15WeaponData
   m_EditorClassIdentifier: 
+  fuelQuantity: 0
   Pylons:
-  - allowAIM120C5: 0
-    allowAIM9M: 0
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 0
     allowFUELPOD: 0
     allowZUNI: 0
-    SelectedWeapon: 0
-  - allowAIM120C5: 0
-    allowAIM9M: 0
+    SelectedWeapon: 2
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 0
     allowFUELPOD: 0
     allowZUNI: 0
-    SelectedWeapon: 0
-  - allowAIM120C5: 0
-    allowAIM9M: 0
+    SelectedWeapon: 2
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 0
     allowFUELPOD: 0
     allowZUNI: 0
-    SelectedWeapon: 0
-  - allowAIM120C5: 0
-    allowAIM9M: 0
+    SelectedWeapon: 2
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 0
     allowFUELPOD: 0
     allowZUNI: 0
-    SelectedWeapon: 0
-  - allowAIM120C5: 0
+    SelectedWeapon: 2
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
     allowAIM9M: 0
+    allowAGM88: 0
+    allowGBU32: 0
+    allowMK84: 1
+    allowFUELPOD: 1
+    allowZUNI: 0
+    SelectedWeapon: 0
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 0
     allowFUELPOD: 0
     allowZUNI: 0
-    SelectedWeapon: 0
-  - allowAIM120C5: 0
-    allowAIM9M: 0
+    SelectedWeapon: 2
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 0
     allowFUELPOD: 0
     allowZUNI: 0
-    SelectedWeapon: 0
+    SelectedWeapon: 2
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
+    allowAGM88: 0
+    allowGBU32: 0
+    allowMK84: 0
+    allowFUELPOD: 0
+    allowZUNI: 0
+    SelectedWeapon: 2
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 0
+    allowAIM9M: 1
+    allowAGM88: 0
+    allowGBU32: 0
+    allowMK84: 0
+    allowFUELPOD: 0
+    allowZUNI: 0
+    SelectedWeapon: 2

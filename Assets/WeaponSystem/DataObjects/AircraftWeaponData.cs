@@ -8,6 +8,7 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "AircraftWeaponData", menuName = "Aircraft/Aircraft Weapon Data")]
 public class AircraftWeaponData : ScriptableObject
 {
+    public float fuelQuantity = 0f;
     public Pylon[] Pylons;
 
     public enum SelectedWeaponType
@@ -25,6 +26,7 @@ public class AircraftWeaponData : ScriptableObject
     [System.Serializable]
     public class Pylon
     {
+        public Vector3 PylonLocalXYZ;
         public bool allowAIM120C5;
         public bool allowAIM9M;
         public bool allowAGM88;
@@ -73,10 +75,12 @@ public class AircraftWeaponData : ScriptableObject
 [CustomEditor(typeof(AircraftWeaponData))]
 public class AircraftWeaponDataEditor : Editor
 {
+    SerializedProperty fuelQuantityProp;
     SerializedProperty pylonsProp;
 
     void OnEnable()
     {
+        fuelQuantityProp = serializedObject.FindProperty("fuelQuantity");
         pylonsProp = serializedObject.FindProperty("Pylons");
     }
 
@@ -84,6 +88,7 @@ public class AircraftWeaponDataEditor : Editor
     {
         serializedObject.Update();
 
+        EditorGUILayout.PropertyField(fuelQuantityProp);
         EditorGUILayout.PropertyField(pylonsProp, true);
 
         var data = (AircraftWeaponData)target;
