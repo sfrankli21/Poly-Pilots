@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -152,6 +153,8 @@ public class JetMechanics : MonoBehaviour
     [SerializeField]
     bool gearDeployed;
     [SerializeField]
+    bool airBrakeDeployed;
+    [SerializeField]
     float initialSpeed;
 
     [Header("Control Surfaces")]
@@ -182,7 +185,7 @@ public class JetMechanics : MonoBehaviour
     [SerializeField]
     RudderPedalVisualElement[] rudderPedalVisual;
     [SerializeField]
-    TMP_Text airSpeedKnotsText;
+    List<TMP_Text> airSpeedKnotsTexts = new List<TMP_Text>();
 
     float leftThrottleInput;
     float rightThrottleInput;
@@ -205,7 +208,18 @@ public class JetMechanics : MonoBehaviour
     public Vector3 LocalAngularVelocity { get; private set; }
     public float AngleOfAttack { get; private set; }
     public float AngleOfAttackYaw { get; private set; }
-    public bool AirbrakeDeployed { get; private set; }
+
+    public bool AirbrakeDeployed
+    {
+        get
+        {
+            return airBrakeDeployed;
+        }
+        private set
+        {
+            airBrakeDeployed = value;
+        }
+    }
 
     public bool FlapsDeployed
     {
@@ -485,6 +499,15 @@ public class JetMechanics : MonoBehaviour
         else if (inputRouter.GearDown)
         {
             GearDeployed = false;
+        }
+
+        if (inputRouter.AirBrakeUp)
+        {
+            AirbrakeDeployed = true;
+        }
+        else if (inputRouter.AirBrakeDown)
+        {
+            AirbrakeDeployed = false;
         }
     }
 
@@ -885,13 +908,23 @@ public class JetMechanics : MonoBehaviour
 
     void UpdateAirSpeedDisplay()
     {
-        if (airSpeedKnotsText == null)
+        if (airSpeedKnotsTexts == null || airSpeedKnotsTexts.Count == 0)
         {
             return;
         }
 
         float knots = Velocity.magnitude * 1.94384f;
-        airSpeedKnotsText.text = Mathf.RoundToInt(knots).ToString();
+        string speedText = Mathf.RoundToInt(knots).ToString();
+
+        for (int i = 0; i < airSpeedKnotsTexts.Count; i++)
+        {
+            if (airSpeedKnotsTexts[i] == null)
+            {
+                continue;
+            }
+
+            airSpeedKnotsTexts[i].text = speedText;
+        }
     }
 
     void UpdateSurfaces(float dt)

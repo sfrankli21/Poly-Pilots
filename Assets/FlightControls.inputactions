@@ -239,6 +239,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "AirBrakeUp",
+                    "type": "Button",
+                    "id": "d2dd878b-eff4-4ce0-9451-6f31db638c44",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AirBrakeDown",
+                    "type": "Button",
+                    "id": "bd2c0ec0-c64f-4993-b946-cc49061ca63f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -503,6 +521,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "ShootGun",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4a96536f-9db6-49fc-8938-0079bb0bbf03",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AirBrakeUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "933a7d91-0614-4c81-8519-d23ddfa3d534",
+                    "path": "<Keyboard>/n",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AirBrakeDown",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

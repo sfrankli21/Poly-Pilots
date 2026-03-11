@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -41,6 +42,13 @@ public class MFDManager : MonoBehaviour
 
     void Start()
     {
+        StartCoroutine(SetInitialPresetRoutine());
+    }
+
+    IEnumerator SetInitialPresetRoutine()
+    {
+        yield return new WaitForSeconds(0.25f);
+
         if (!string.IsNullOrEmpty(initialPresetName))
         {
             SelectMenuByName(initialPresetName);
@@ -51,6 +59,14 @@ public class MFDManager : MonoBehaviour
     {
         if (string.IsNullOrEmpty(presetName)) return;
         if (currentPreset != null && currentPreset.presetName == presetName) return;
+
+        for (int i = 0; i < menuPresets.Count; i++)
+        {
+            if (menuPresets[i] != null && menuPresets[i].presetRootObject != null)
+            {
+                menuPresets[i].presetRootObject.SetActive(false);
+            }
+        }
 
         if (currentPreset != null)
         {

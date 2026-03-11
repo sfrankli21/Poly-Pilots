@@ -13,6 +13,11 @@ TagManager:
   - Dirt
   - Metal
   - Concrete
+  - LeftEngineOutputNeedle
+  - RightEngineOutputNeedle
+  - FlapsStatusTextDisplay
+  - GearStatusTextDisplay
+  - AirBrakeStatusTextDisplay
   layers:
   - Default
   - TransparentFX
