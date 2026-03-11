@@ -245,7 +245,7 @@
                 {
                     "name": "",
                     "id": "4fe784b9-abba-493f-880c-fbed5ba612f4",
-                    "path": "<XInputController>/leftTrigger",
+                    "path": "<XInputController>/leftStick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -256,7 +256,7 @@
                 {
                     "name": "",
                     "id": "d823f5f5-4c05-48d4-8593-b2b367ed263b",
-                    "path": "<XInputController>/leftTrigger",
+                    "path": "<XInputController>/leftStick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

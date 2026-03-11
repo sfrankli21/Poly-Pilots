@@ -103,7 +103,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignToVelocity: {fileID: 6364967909186680511}
   moveSpeed: 1000
-  gravityMultiplier: 0.25
+  gravityMultiplier: 0.01
   Impact:
     m_PersistentCalls:
       m_Calls: []
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignToVelocity: {fileID: 7445010739907036107}
   moveSpeed: 1000
-  gravityMultiplier: 0.25
+  gravityMultiplier: 0.01
   Impact:
     m_PersistentCalls:
       m_Calls: []
@@ -391,7 +391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignToVelocity: {fileID: 4473515009993635751}
   moveSpeed: 1000
-  gravityMultiplier: 0.25
+  gravityMultiplier: 0.01
   Impact:
     m_PersistentCalls:
       m_Calls: []
@@ -535,7 +535,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignToVelocity: {fileID: 3509391748615609676}
   moveSpeed: 1000
-  gravityMultiplier: 0.25
+  gravityMultiplier: 0.01
   Impact:
     m_PersistentCalls:
       m_Calls: []
@@ -679,7 +679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignToVelocity: {fileID: 2195269721044647230}
   moveSpeed: 1000
-  gravityMultiplier: 0.25
+  gravityMultiplier: 0.01
   Impact:
     m_PersistentCalls:
       m_Calls: []
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignToVelocity: {fileID: 8343859383150216185}
   moveSpeed: 1000
-  gravityMultiplier: 0.25
+  gravityMultiplier: 0.01
   Impact:
     m_PersistentCalls:
       m_Calls: []
@@ -967,7 +967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   alignToVelocity: {fileID: 8547978779666384452}
   moveSpeed: 1000
-  gravityMultiplier: 0.25
+  gravityMultiplier: 0.01
   Impact:
     m_PersistentCalls:
       m_Calls: []
