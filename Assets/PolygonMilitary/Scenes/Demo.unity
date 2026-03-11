@@ -14698,7 +14698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &77764969
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -342532,13 +342532,77 @@ PrefabInstance:
       propertyPath: m_Name
       value: F-15Edit
       objectReference: {fileID: 0}
+    - target: {fileID: 3443747145225847246, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: gearDeployed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3443747145225847246, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: initialSpeed
+      value: 400
+      objectReference: {fileID: 0}
+    - target: {fileID: 3443747145225847246, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: flapsDeployed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616411811528890712, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4239941253814299826, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: ZUNIPrefab
+      value: 
+      objectReference: {fileID: 8461132231358323503, guid: 0ad159d997fb1bf4da4d931968caa014, type: 3}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: poolSize
+      value: 480
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: AutoRefill
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
       propertyPath: BulletPool
       value: 
       objectReference: {fileID: 199992442}
     - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: ammoCapacity
+      value: 480
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: autoRefillDelay
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: fireLoopEvent.Path
+      value: event:/JetGun
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: fireExitParameterName
+      value: ExitLoop
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
       propertyPath: TextDisplays.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: fireLoopEvent.Guid.Data1
+      value: 1951056674
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: fireLoopEvent.Guid.Data2
+      value: 1099734396
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: fireLoopEvent.Guid.Data3
+      value: 223614893
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: fireLoopEvent.Guid.Data4
+      value: -106829144
+      objectReference: {fileID: 0}
+    - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
+      propertyPath: fireSoundExitTimeSeconds
+      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 8212629964716244297, guid: d8821e83667e2424ca50e6d7eec72f1c, type: 3}
       propertyPath: 'TextDisplays.Array.data[0]'

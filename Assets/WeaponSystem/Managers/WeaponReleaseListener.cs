@@ -17,9 +17,16 @@ public class WeaponReleaseListener : MonoBehaviour
 
     public void TriggerReleaseApproved()
     {
-        if (hasReleased) return;
+        if (weaponType == AircraftWeaponData.SelectedWeaponType.MK84 && hasReleased)
+        {
+            return;
+        }
 
-        hasReleased = true;
+        if (weaponType == AircraftWeaponData.SelectedWeaponType.MK84)
+        {
+            hasReleased = true;
+        }
+
         Debug.Log("Weapon release approved event fired on " + gameObject.name + " | Pylon: " + pylonIndex + " | Weapon: " + weaponType);
         OnReleaseApproved.Invoke();
     }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9176132684335010387
+--- !u!114 &-8937870563260056584
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10,13 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/UI.bank
+  m_Name: bank:/Weapon.bank
   m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/UI.bank
-  Name: UI
-  StudioPath: bank:/UI
-  lastModified: 639087733171566448
-  FileSizes: []
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Weapon.bank
+  Name: Weapon
+  StudioPath: bank:/Weapon
+  lastModified: 639087862840000000
+  FileSizes:
+  - Name: 
+    Value: 225600
   Exists: 1
 --- !u!114 &-8480916537825965099
 MonoBehaviour:
@@ -37,8 +39,8 @@ MonoBehaviour:
     Data3: 490170274
     Data4: 23205322
   Banks:
-  - {fileID: 977928305486179674}
-  - {fileID: -3906274320684342302}
+  - {fileID: 8357622970963403756}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -46,6 +48,54 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 40
   Length: 552
+--- !u!114 &-8046069385023133086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/JetGun
+  m_EditorClassIdentifier: 
+  Path: event:/JetGun
+  Guid:
+    Data1: 1951056674
+    Data2: 1099734396
+    Data3: 223614893
+    Data4: -106829144
+  Banks:
+  - {fileID: -7451690536092709837}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 6378601991204081667}
+  MinDistance: 1
+  MaxDistance: 60
+  Length: 6252
+--- !u!114 &-7451690536092709837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Player.bank
+  m_EditorClassIdentifier: 
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Player.bank
+  Name: Player
+  StudioPath: bank:/Player
+  lastModified: 639087854020000000
+  FileSizes:
+  - Name: 
+    Value: 255264
+  Exists: 1
 --- !u!114 &-7393874123029624137
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,7 +115,7 @@ MonoBehaviour:
     Data3: 623520928
     Data4: 1740258954
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -92,7 +142,7 @@ MonoBehaviour:
     Data3: -338186875
     Data4: -1658103034
   Banks:
-  - {fileID: 977928305486179674}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -119,7 +169,7 @@ MonoBehaviour:
     Data3: 1073314224
     Data4: -832512821
   Banks:
-  - {fileID: 3099402758209862402}
+  - {fileID: -4832564487200758955}
   IsStream: 0
   Is3D: 1
   IsOneShot: 0
@@ -146,7 +196,7 @@ MonoBehaviour:
     Data3: -1331236464
     Data4: 1433856201
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -173,7 +223,7 @@ MonoBehaviour:
     Data3: -201433700
     Data4: 1880126724
   Banks:
-  - {fileID: -9176132684335010387}
+  - {fileID: 5789722118239899491}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -181,6 +231,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 156
+--- !u!114 &-4832564487200758955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Env.bank
+  m_EditorClassIdentifier: 
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Env.bank
+  Name: Env
+  StudioPath: bank:/Env
+  lastModified: 639082215280000000
+  FileSizes:
+  - Name: 
+    Value: 2440224
+  Exists: 1
 --- !u!114 &-4303358964551558971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +270,7 @@ MonoBehaviour:
     Data3: -1578352972
     Data4: 437322454
   Banks:
-  - {fileID: 977928305486179674}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -227,7 +297,7 @@ MonoBehaviour:
     Data3: 1449105842
     Data4: -479337920
   Banks:
-  - {fileID: 3099402758209862402}
+  - {fileID: -4832564487200758955}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
@@ -254,7 +324,7 @@ MonoBehaviour:
     Data3: 684288432
     Data4: 562289265
   Banks:
-  - {fileID: -3817120152538452099}
+  - {fileID: -849044855920613463}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -262,42 +332,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 35
   Length: 1500
---- !u!114 &-3906274320684342302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Weapon.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/Weapon.bank
-  Name: Weapon
-  StudioPath: bank:/Weapon
-  lastModified: 639087733171903663
-  FileSizes: []
-  Exists: 1
---- !u!114 &-3817120152538452099
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/VO.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/VO.bank
-  Name: VO
-  StudioPath: bank:/New Folder 3/VO
-  lastModified: 639087733172731327
-  FileSizes: []
-  Exists: 1
 --- !u!114 &-3244505145265779316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +351,7 @@ MonoBehaviour:
     Data3: 2060470973
     Data4: -525781916
   Banks:
-  - {fileID: -3906274320684342302}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -325,6 +359,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 800
+--- !u!114 &-2967204366925964351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ZuniLaunch
+  m_EditorClassIdentifier: 
+  Path: event:/ZuniLaunch
+  Guid:
+    Data1: -534311869
+    Data2: 1122508054
+    Data3: -1537625933
+    Data4: -433049593
+  Banks:
+  - {fileID: -8937870563260056584}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 650
+  Length: 2136
 --- !u!114 &-2919811006287766545
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -344,7 +405,7 @@ MonoBehaviour:
     Data3: -1271369568
     Data4: -1738682032
   Banks:
-  - {fileID: 977928305486179674}
+  - {fileID: 8357622970963403756}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
@@ -371,7 +432,7 @@ MonoBehaviour:
     Data3: -1653024861
     Data4: 1348319895
   Banks:
-  - {fileID: -3906274320684342302}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -398,7 +459,7 @@ MonoBehaviour:
     Data3: -1610669427
     Data4: 382296414
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -425,7 +486,7 @@ MonoBehaviour:
     Data3: 819505580
     Data4: -1994292628
   Banks:
-  - {fileID: -3906274320684342302}
+  - {fileID: -8937870563260056584}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
@@ -433,26 +494,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 500
---- !u!114 &-1872172937211655131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 639087733171023649
-  FileSizes:
-  - Name: 
-    Value: 2528
-  Exists: 1
 --- !u!114 &-1061848579527120730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,8 +513,8 @@ MonoBehaviour:
     Data3: -1830341462
     Data4: -108242841
   Banks:
-  - {fileID: 977928305486179674}
-  - {fileID: -3906274320684342302}
+  - {fileID: 8357622970963403756}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -481,7 +522,7 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 40
   Length: 408
---- !u!114 &-812356920444526341
+--- !u!114 &-849044855920613463
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -491,13 +532,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Player.bank
+  m_Name: bank:/VO.bank
   m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/Player.bank
-  Name: Player
-  StudioPath: bank:/Player
-  lastModified: 639087733171287392
-  FileSizes: []
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/VO.bank
+  Name: VO
+  StudioPath: bank:/New Folder 3/VO
+  lastModified: 639082466120000000
+  FileSizes:
+  - Name: 
+    Value: 187648
   Exists: 1
 --- !u!114 &-744119925403892480
 MonoBehaviour:
@@ -518,7 +561,7 @@ MonoBehaviour:
     Data3: 1749683628
     Data4: -867343061
   Banks:
-  - {fileID: -3906274320684342302}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -526,24 +569,6 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 700
   Length: 720
---- !u!114 &-521125825892209367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 639087733170766205
-  FileSizes: []
-  Exists: 1
 --- !u!114 &-173448003141908477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +588,7 @@ MonoBehaviour:
     Data3: 298315172
     Data4: -350274961
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -584,14 +609,14 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -1872172937211655131}
-  - {fileID: 3099402758209862402}
-  - {fileID: 977928305486179674}
-  - {fileID: -521125825892209367}
-  - {fileID: -812356920444526341}
-  - {fileID: -9176132684335010387}
-  - {fileID: -3817120152538452099}
-  - {fileID: -3906274320684342302}
+  - {fileID: 4868761543586494059}
+  - {fileID: 8357622970963403756}
+  - {fileID: 5237935236821261486}
+  - {fileID: -7451690536092709837}
+  - {fileID: 5789722118239899491}
+  - {fileID: -8937870563260056584}
+  - {fileID: -4832564487200758955}
+  - {fileID: -849044855920613463}
   EditorEvents:
   - {fileID: 7743112782885482955}
   - {fileID: 6501610323053941898}
@@ -628,13 +653,15 @@ MonoBehaviour:
   - {fileID: 2899792259199340924}
   - {fileID: -3244505145265779316}
   - {fileID: -2101297985564000946}
+  - {fileID: -8046069385023133086}
+  - {fileID: -2967204366925964351}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -521125825892209367}
+  - {fileID: 5237935236821261486}
   StringsBanks:
-  - {fileID: -1872172937211655131}
+  - {fileID: 4868761543586494059}
   cacheVersion: 131849
-  cacheTime: 639087733172731327
+  cacheTime: 639087862840000000
   SerializableEventsDict:
   - key: event:/MenuTheme
     index: 0
@@ -706,6 +733,10 @@ MonoBehaviour:
     index: 33
   - key: event:/AttachmentClick
     index: 34
+  - key: event:/JetGun
+    index: 35
+  - key: event:/ZuniLaunch
+    index: 36
 --- !u!114 &29588018979775467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -725,7 +756,7 @@ MonoBehaviour:
     Data3: 405004703
     Data4: 884020815
   Banks:
-  - {fileID: -521125825892209367}
+  - {fileID: 5237935236821261486}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -752,7 +783,7 @@ MonoBehaviour:
     Data3: -1712975731
     Data4: -791809552
   Banks:
-  - {fileID: -9176132684335010387}
+  - {fileID: 5789722118239899491}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -760,24 +791,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 0
---- !u!114 &977928305486179674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/ImpactSounds.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/ImpactSounds.bank
-  Name: ImpactSounds
-  StudioPath: bank:/ImpactSounds
-  lastModified: 639087733170156357
-  FileSizes: []
-  Exists: 1
 --- !u!114 &1158604216065523540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,7 +810,7 @@ MonoBehaviour:
     Data3: 1364284560
     Data4: 1357088979
   Banks:
-  - {fileID: 977928305486179674}
+  - {fileID: 8357622970963403756}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
@@ -824,7 +837,7 @@ MonoBehaviour:
     Data3: -1276934014
     Data4: -506972805
   Banks:
-  - {fileID: 3099402758209862402}
+  - {fileID: -4832564487200758955}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
@@ -851,7 +864,7 @@ MonoBehaviour:
     Data3: 2146919049
     Data4: 1610427187
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -878,7 +891,7 @@ MonoBehaviour:
     Data3: 389358222
     Data4: -1139941322
   Banks:
-  - {fileID: -3906274320684342302}
+  - {fileID: -8937870563260056584}
   IsStream: 1
   Is3D: 0
   IsOneShot: 1
@@ -886,24 +899,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 200
---- !u!114 &3099402758209862402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Env.bank
-  m_EditorClassIdentifier: 
-  Path: ../../../../Desktop/Desktop/Desktop/Env.bank
-  Name: Env
-  StudioPath: bank:/Env
-  lastModified: 639087733172434755
-  FileSizes: []
-  Exists: 1
 --- !u!114 &3952229175516838745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -923,7 +918,7 @@ MonoBehaviour:
     Data3: 1675387063
     Data4: -359700393
   Banks:
-  - {fileID: 977928305486179674}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -950,7 +945,7 @@ MonoBehaviour:
     Data3: 1757571482
     Data4: 1263888333
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -977,7 +972,7 @@ MonoBehaviour:
     Data3: -1597467715
     Data4: -1702295200
   Banks:
-  - {fileID: -3817120152538452099}
+  - {fileID: -849044855920613463}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1004,7 +999,7 @@ MonoBehaviour:
     Data3: -588076616
     Data4: 378661968
   Banks:
-  - {fileID: 977928305486179674}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1012,6 +1007,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 20
   Length: 2000
+--- !u!114 &4868761543586494059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 639087859500000000
+  FileSizes:
+  - Name: 
+    Value: 2666
+  Exists: 1
 --- !u!114 &4960075687400951640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1031,7 +1046,7 @@ MonoBehaviour:
     Data3: -1851430733
     Data4: -1215293612
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 1
   Is3D: 1
   IsOneShot: 1
@@ -1058,7 +1073,7 @@ MonoBehaviour:
     Data3: -1390226557
     Data4: 1348323787
   Banks:
-  - {fileID: -3906274320684342302}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1085,7 +1100,7 @@ MonoBehaviour:
     Data3: 188389020
     Data4: 1938538123
   Banks:
-  - {fileID: 3099402758209862402}
+  - {fileID: -4832564487200758955}
   IsStream: 1
   Is3D: 1
   IsOneShot: 0
@@ -1093,6 +1108,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 5
   Length: 45500
+--- !u!114 &5237935236821261486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 639087859500000000
+  FileSizes:
+  - Name: 
+    Value: 3632384
+  Exists: 1
 --- !u!114 &5431293797295025028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1112,7 +1147,7 @@ MonoBehaviour:
     Data3: -1136612981
     Data4: -751463275
   Banks:
-  - {fileID: -812356920444526341}
+  - {fileID: -7451690536092709837}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1120,6 +1155,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1720
+--- !u!114 &5789722118239899491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/UI.bank
+  m_EditorClassIdentifier: 
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/UI.bank
+  Name: UI
+  StudioPath: bank:/UI
+  lastModified: 639080250720000000
+  FileSizes:
+  - Name: 
+    Value: 10528
+  Exists: 1
 --- !u!114 &6341040465053238413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1139,8 +1194,8 @@ MonoBehaviour:
     Data3: 907369403
     Data4: 1223343480
   Banks:
-  - {fileID: 977928305486179674}
-  - {fileID: -3906274320684342302}
+  - {fileID: 8357622970963403756}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1148,6 +1203,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 40
   Length: 576
+--- !u!114 &6378601991204081667
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/JetGun/ExitLoop
+  m_EditorClassIdentifier: 
+  Name: ExitLoop
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1250449292
+    data2: 3863421984
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &6493330115562569370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1167,7 +1246,7 @@ MonoBehaviour:
     Data3: 2075371401
     Data4: 279290860
   Banks:
-  - {fileID: -9176132684335010387}
+  - {fileID: 5789722118239899491}
   IsStream: 0
   Is3D: 0
   IsOneShot: 1
@@ -1194,8 +1273,8 @@ MonoBehaviour:
     Data3: -654977628
     Data4: -1425777573
   Banks:
-  - {fileID: 3099402758209862402}
-  - {fileID: 977928305486179674}
+  - {fileID: 8357622970963403756}
+  - {fileID: -4832564487200758955}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1222,7 +1301,7 @@ MonoBehaviour:
     Data3: 523434129
     Data4: 1489820124
   Banks:
-  - {fileID: 3099402758209862402}
+  - {fileID: -4832564487200758955}
   IsStream: 1
   Is3D: 0
   IsOneShot: 0
@@ -1230,3 +1309,23 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 78000
+--- !u!114 &8357622970963403756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/ImpactSounds.bank
+  m_EditorClassIdentifier: 
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/ImpactSounds.bank
+  Name: ImpactSounds
+  StudioPath: bank:/ImpactSounds
+  lastModified: 639082466100000000
+  FileSizes:
+  - Name: 
+    Value: 1614720
+  Exists: 1

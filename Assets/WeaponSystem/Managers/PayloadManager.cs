@@ -205,6 +205,22 @@ public class PayloadManager : MonoBehaviour
         if (aircraftWeaponData.Pylons[index] == null) return false;
         if (aircraftWeaponData.Pylons[index].SelectedWeapon == AircraftWeaponData.SelectedWeaponType.None) return false;
 
+        if (aircraftWeaponData.Pylons[index].SelectedWeapon == AircraftWeaponData.SelectedWeaponType.ZUNI)
+        {
+            if (index >= 0 && index < spawnedWeaponObjects.Length)
+            {
+                GameObject weaponObject = spawnedWeaponObjects[index];
+                if (weaponObject != null)
+                {
+                    ZuniPodRelease zuniPod = weaponObject.GetComponent<ZuniPodRelease>();
+                    if (zuniPod != null && !zuniPod.HasAmmo())
+                    {
+                        return false;
+                    }
+                }
+            }
+        }
+
         return true;
     }
 
@@ -275,6 +291,28 @@ public class PayloadManager : MonoBehaviour
             ClampToNearestArmedPylon();
             UpdateSelectedPylonWeaponDisplay();
             UpdateTrajectoryPreviewVisibility();
+            return;
+        }
+
+        if (weaponType == AircraftWeaponData.SelectedWeaponType.ZUNI)
+        {
+            GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
+            if (weaponObject == null) return;
+
+            ZuniPodRelease zuniPod = weaponObject.GetComponent<ZuniPodRelease>();
+            if (zuniPod == null) return;
+            if (!zuniPod.HasAmmo()) return;
+
+            listener.TriggerReleaseApproved();
+
+            if (!zuniPod.HasAmmo())
+            {
+                aircraftWeaponData.Pylons[pylonIndex].SelectedWeapon = AircraftWeaponData.SelectedWeaponType.None;
+                spawnedWeaponListeners[pylonIndex] = null;
+                ClampToNearestArmedPylon();
+                UpdateSelectedPylonWeaponDisplay();
+                UpdateTrajectoryPreviewVisibility();
+            }
         }
     }
 
@@ -327,6 +365,23 @@ public class PayloadManager : MonoBehaviour
         {
             CurrentSelectedPylonWeapon = AircraftWeaponData.SelectedWeaponType.None;
             return;
+        }
+
+        if (aircraftWeaponData.Pylons[pylonIndex].SelectedWeapon == AircraftWeaponData.SelectedWeaponType.ZUNI)
+        {
+            if (pylonIndex >= 0 && pylonIndex < spawnedWeaponObjects.Length)
+            {
+                GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
+                if (weaponObject != null)
+                {
+                    ZuniPodRelease zuniPod = weaponObject.GetComponent<ZuniPodRelease>();
+                    if (zuniPod != null && !zuniPod.HasAmmo())
+                    {
+                        CurrentSelectedPylonWeapon = AircraftWeaponData.SelectedWeaponType.None;
+                        return;
+                    }
+                }
+            }
         }
 
         CurrentSelectedPylonWeapon = aircraftWeaponData.Pylons[pylonIndex].SelectedWeapon;

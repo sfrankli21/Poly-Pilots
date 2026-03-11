@@ -498,7 +498,7 @@
                 {
                     "name": "",
                     "id": "e973f883-b166-4016-a64e-0c4831b84cb6",
-                    "path": "<Keyboard>/f",
+                    "path": "<XInputController>/leftStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

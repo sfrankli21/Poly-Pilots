@@ -16,11 +16,17 @@ public class AutoAdjustingGun : MonoBehaviour
     public int currentAmmo;
     public int poolSize = 100;
     public EventReference fireLoopEvent;
-    public float fireSoundExitTimeSeconds;
+    public string fireExitParameterName;
+    public float fireExitParameterValue = 1f;
     public List<TMP_Text> TextDisplays = new List<TMP_Text>();
     public Transform BulletPool;
+    public bool AutoRefill;
+    public float autoRefillDelay;
 
     float fireAccumulator;
+    float refillTimer;
+    bool refillCountdownActive;
+    bool wasTryingToFireLastFrame;
     readonly List<GameObject> bulletPool = new List<GameObject>();
     EventInstance fireLoopInstance;
     bool fireLoopInstanceCreated;
@@ -67,6 +73,7 @@ public class AutoAdjustingGun : MonoBehaviour
             MuzzlePoint.localEulerAngles = localEuler;
         }
 
+        HandleAutoRefill();
         UpdateFireAudio();
 
         if (inputRouter == null || !inputRouter.ShootGun || fireRateRPM <= 0f || currentAmmo <= 0 || bulletPrefab == null)
@@ -93,26 +100,58 @@ public class AutoAdjustingGun : MonoBehaviour
             currentAmmo--;
             fireAccumulator -= secondsPerShot;
             UpdateAmmoDisplays();
+
+            if (currentAmmo <= 0)
+            {
+                break;
+            }
         }
 
         UpdateAmmoDisplays();
     }
 
+    void HandleAutoRefill()
+    {
+        if (!AutoRefill)
+        {
+            refillCountdownActive = false;
+            refillTimer = 0f;
+            return;
+        }
+
+        if (currentAmmo > 0)
+        {
+            refillCountdownActive = false;
+            refillTimer = 0f;
+            return;
+        }
+
+        if (!refillCountdownActive)
+        {
+            refillCountdownActive = true;
+            refillTimer = autoRefillDelay;
+        }
+
+        refillTimer -= Time.deltaTime;
+
+        if (refillTimer <= 0f)
+        {
+            currentAmmo = ammoCapacity;
+            refillCountdownActive = false;
+            refillTimer = 0f;
+            UpdateAmmoDisplays();
+        }
+    }
+
     void UpdateFireAudio()
     {
         bool wantsToFire = inputRouter != null && inputRouter.ShootGun && currentAmmo > 0;
-
-        if (wantsToFire)
-        {
-            StartFireLoop();
-        }
-        else
-        {
-            ExitFireLoop();
-        }
+        bool fireStartedThisFrame = wantsToFire && !wasTryingToFireLastFrame;
 
         if (fireLoopInstanceCreated)
         {
+            fireLoopInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+
             PLAYBACK_STATE playbackState;
             fireLoopInstance.getPlaybackState(out playbackState);
 
@@ -123,6 +162,24 @@ public class AutoAdjustingGun : MonoBehaviour
                 fireLoopExiting = false;
             }
         }
+
+        if (wantsToFire)
+        {
+            if (fireStartedThisFrame)
+            {
+                RestartFireLoop();
+            }
+            else if (!fireLoopInstanceCreated)
+            {
+                StartFireLoop();
+            }
+        }
+        else
+        {
+            ExitFireLoop();
+        }
+
+        wasTryingToFireLastFrame = wantsToFire;
     }
 
     void StartFireLoop()
@@ -137,33 +194,55 @@ public class AutoAdjustingGun : MonoBehaviour
             PLAYBACK_STATE playbackState;
             fireLoopInstance.getPlaybackState(out playbackState);
 
-            if (playbackState == PLAYBACK_STATE.STOPPED)
+            if (playbackState != PLAYBACK_STATE.STOPPED)
             {
-                fireLoopInstance.release();
-                fireLoopInstanceCreated = false;
-                fireLoopExiting = false;
+                return;
             }
-            else if (fireLoopExiting)
-            {
-                fireLoopInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-                fireLoopInstance.release();
-                fireLoopInstanceCreated = false;
-                fireLoopExiting = false;
-            }
-        }
 
-        if (!fireLoopInstanceCreated)
-        {
-            fireLoopInstance = RuntimeManager.CreateInstance(fireLoopEvent);
-            fireLoopInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
-            fireLoopInstance.start();
-            fireLoopInstanceCreated = true;
+            fireLoopInstance.release();
+            fireLoopInstanceCreated = false;
             fireLoopExiting = false;
         }
-        else
+
+        fireLoopInstance = RuntimeManager.CreateInstance(fireLoopEvent);
+        fireLoopInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+
+        if (!string.IsNullOrEmpty(fireExitParameterName))
         {
-            fireLoopInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+            fireLoopInstance.setParameterByName(fireExitParameterName, 0f);
         }
+
+        fireLoopInstance.start();
+        fireLoopInstanceCreated = true;
+        fireLoopExiting = false;
+    }
+
+    void RestartFireLoop()
+    {
+        if (fireLoopEvent.IsNull)
+        {
+            return;
+        }
+
+        if (fireLoopInstanceCreated)
+        {
+            fireLoopInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+            fireLoopInstance.release();
+            fireLoopInstanceCreated = false;
+            fireLoopExiting = false;
+        }
+
+        fireLoopInstance = RuntimeManager.CreateInstance(fireLoopEvent);
+        fireLoopInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+
+        if (!string.IsNullOrEmpty(fireExitParameterName))
+        {
+            fireLoopInstance.setParameterByName(fireExitParameterName, 0f);
+        }
+
+        fireLoopInstance.start();
+        fireLoopInstanceCreated = true;
+        fireLoopExiting = false;
     }
 
     void ExitFireLoop()
@@ -174,7 +253,16 @@ public class AutoAdjustingGun : MonoBehaviour
         }
 
         fireLoopInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
-        fireLoopInstance.setTimelinePosition(Mathf.RoundToInt(fireSoundExitTimeSeconds * 1000f));
+
+        if (!string.IsNullOrEmpty(fireExitParameterName))
+        {
+            fireLoopInstance.setParameterByName(fireExitParameterName, fireExitParameterValue);
+        }
+        else
+        {
+            fireLoopInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        }
+
         fireLoopExiting = true;
     }
 
@@ -228,6 +316,8 @@ public class AutoAdjustingGun : MonoBehaviour
 
     void OnDisable()
     {
+        wasTryingToFireLastFrame = false;
+
         if (fireLoopInstanceCreated)
         {
             fireLoopInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
