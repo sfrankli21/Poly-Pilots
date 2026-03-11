@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -16,6 +17,8 @@ public class AutoAdjustingGun : MonoBehaviour
     public int poolSize = 100;
     public EventReference fireLoopEvent;
     public float fireSoundExitTimeSeconds;
+    public List<TMP_Text> TextDisplays = new List<TMP_Text>();
+    public Transform BulletPool;
 
     float fireAccumulator;
     readonly List<GameObject> bulletPool = new List<GameObject>();
@@ -29,10 +32,12 @@ public class AutoAdjustingGun : MonoBehaviour
 
         for (int i = 0; i < poolSize; i++)
         {
-            GameObject bullet = Instantiate(bulletPrefab);
+            GameObject bullet = Instantiate(bulletPrefab, BulletPool);
             bullet.SetActive(false);
             bulletPool.Add(bullet);
         }
+
+        UpdateAmmoDisplays();
     }
 
     void Update()
@@ -66,6 +71,7 @@ public class AutoAdjustingGun : MonoBehaviour
 
         if (inputRouter == null || !inputRouter.ShootGun || fireRateRPM <= 0f || currentAmmo <= 0 || bulletPrefab == null)
         {
+            UpdateAmmoDisplays();
             return;
         }
 
@@ -80,12 +86,16 @@ public class AutoAdjustingGun : MonoBehaviour
                 break;
             }
 
+            bullet.transform.SetParent(null, true);
             bullet.transform.SetPositionAndRotation(MuzzlePoint.position, MuzzlePoint.rotation);
             bullet.SetActive(true);
 
             currentAmmo--;
             fireAccumulator -= secondsPerShot;
+            UpdateAmmoDisplays();
         }
+
+        UpdateAmmoDisplays();
     }
 
     void UpdateFireAudio()
@@ -178,10 +188,42 @@ public class AutoAdjustingGun : MonoBehaviour
             }
         }
 
-        GameObject bullet = Instantiate(bulletPrefab);
+        GameObject bullet = Instantiate(bulletPrefab, BulletPool);
         bullet.SetActive(false);
         bulletPool.Add(bullet);
         return bullet;
+    }
+
+    void UpdateAmmoDisplays()
+    {
+        string ammoText = currentAmmo.ToString();
+
+        for (int i = 0; i < TextDisplays.Count; i++)
+        {
+            if (TextDisplays[i] != null)
+            {
+                TextDisplays[i].text = ammoText;
+            }
+        }
+    }
+
+    public void ReturnBulletToPool(GameObject bullet)
+    {
+        if (bullet == null)
+        {
+            return;
+        }
+
+        bullet.SetActive(false);
+
+        if (BulletPool != null)
+        {
+            bullet.transform.SetParent(BulletPool, false);
+        }
+        else
+        {
+            bullet.transform.SetParent(transform, false);
+        }
     }
 
     void OnDisable()
