@@ -10,6 +10,9 @@ TagManager:
   - RadarDisplay
   - HUD
   - RadarSettingDisplay
+  - Dirt
+  - Metal
+  - Concrete
   layers:
   - Default
   - TransparentFX
@@ -17,7 +20,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - Bullet
   - 
   - Arrows
   - 
