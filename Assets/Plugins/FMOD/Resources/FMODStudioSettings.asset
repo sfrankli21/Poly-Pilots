@@ -638,6 +638,7 @@ MonoBehaviour:
   - Env
   - ImpactSounds
   - Player
+  - RWR
   - UI
   - VO
   - Weapon

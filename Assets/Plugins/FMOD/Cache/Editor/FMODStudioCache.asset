@@ -39,8 +39,8 @@ MonoBehaviour:
     Data3: 490170274
     Data4: 23205322
   Banks:
-  - {fileID: 8357622970963403756}
   - {fileID: -8937870563260056584}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -91,10 +91,10 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Player.bank
   Name: Player
   StudioPath: bank:/Player
-  lastModified: 639087854020000000
+  lastModified: 639089359900000000
   FileSizes:
   - Name: 
-    Value: 255264
+    Value: 456512
   Exists: 1
 --- !u!114 &-7393874123029624137
 MonoBehaviour:
@@ -251,6 +251,33 @@ MonoBehaviour:
   - Name: 
     Value: 2440224
   Exists: 1
+--- !u!114 &-4567588085064308626
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RWR/NewContact
+  m_EditorClassIdentifier: 
+  Path: event:/RWR/NewContact
+  Guid:
+    Data1: 2143396436
+    Data2: 1102588610
+    Data3: 934590640
+    Data4: -141511183
+  Banks:
+  - {fileID: -1323337311726445338}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 360
 --- !u!114 &-4303358964551558971
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,6 +521,26 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 500
+--- !u!114 &-1323337311726445338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/RWR.bank
+  m_EditorClassIdentifier: 
+  Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/RWR.bank
+  Name: RWR
+  StudioPath: bank:/RWR
+  lastModified: 639089356280000000
+  FileSizes:
+  - Name: 
+    Value: 166688
+  Exists: 1
 --- !u!114 &-1061848579527120730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,8 +560,8 @@ MonoBehaviour:
     Data3: -1830341462
     Data4: -108242841
   Banks:
-  - {fileID: 8357622970963403756}
   - {fileID: -8937870563260056584}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -617,6 +664,7 @@ MonoBehaviour:
   - {fileID: -8937870563260056584}
   - {fileID: -4832564487200758955}
   - {fileID: -849044855920613463}
+  - {fileID: -1323337311726445338}
   EditorEvents:
   - {fileID: 7743112782885482955}
   - {fileID: 6501610323053941898}
@@ -655,13 +703,17 @@ MonoBehaviour:
   - {fileID: -2101297985564000946}
   - {fileID: -8046069385023133086}
   - {fileID: -2967204366925964351}
+  - {fileID: 4706956040776775730}
+  - {fileID: 4162160456536093411}
+  - {fileID: 8613440715585615094}
+  - {fileID: -4567588085064308626}
   EditorParameters: []
   MasterBanks:
   - {fileID: 5237935236821261486}
   StringsBanks:
   - {fileID: 4868761543586494059}
   cacheVersion: 131849
-  cacheTime: 639087862840000000
+  cacheTime: 639089359900000000
   SerializableEventsDict:
   - key: event:/MenuTheme
     index: 0
@@ -737,6 +789,14 @@ MonoBehaviour:
     index: 35
   - key: event:/ZuniLaunch
     index: 36
+  - key: event:/JetEngine
+    index: 37
+  - key: event:/ZuniExplode
+    index: 38
+  - key: event:/MK84Explode
+    index: 39
+  - key: event:/RWR/NewContact
+    index: 40
 --- !u!114 &29588018979775467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -926,6 +986,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 250
   Length: 6000
+--- !u!114 &4162160456536093411
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/ZuniExplode
+  m_EditorClassIdentifier: 
+  Path: event:/ZuniExplode
+  Guid:
+    Data1: 427763506
+    Data2: 1247509514
+    Data3: 686064258
+    Data4: -283470383
+  Banks:
+  - {fileID: 8357622970963403756}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 1000
+  Length: 995
 --- !u!114 &4318993591015538794
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -980,6 +1067,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 35
   Length: 2000
+--- !u!114 &4706956040776775730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/JetEngine
+  m_EditorClassIdentifier: 
+  Path: event:/JetEngine
+  Guid:
+    Data1: -1620341720
+    Data2: 1314432764
+    Data3: 1705790856
+    Data4: 4442349
+  Banks:
+  - {fileID: -7451690536092709837}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters:
+  - {fileID: 7530898389266872974}
+  MinDistance: 0
+  MaxDistance: 800
+  Length: 2000
 --- !u!114 &4767588375474076145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,10 +1137,10 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639087859500000000
+  lastModified: 639089356280000000
   FileSizes:
   - Name: 
-    Value: 2666
+    Value: 2936
   Exists: 1
 --- !u!114 &4960075687400951640
 MonoBehaviour:
@@ -1123,7 +1238,7 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639087859500000000
+  lastModified: 639089356280000000
   FileSizes:
   - Name: 
     Value: 3632384
@@ -1194,8 +1309,8 @@ MonoBehaviour:
     Data3: 907369403
     Data4: 1223343480
   Banks:
-  - {fileID: 8357622970963403756}
   - {fileID: -8937870563260056584}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1273,8 +1388,8 @@ MonoBehaviour:
     Data3: -654977628
     Data4: -1425777573
   Banks:
-  - {fileID: 8357622970963403756}
   - {fileID: -4832564487200758955}
+  - {fileID: 8357622970963403756}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -1282,6 +1397,30 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 40
   Length: 1855
+--- !u!114 &7530898389266872974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/JetEngine/EnginePitch
+  m_EditorClassIdentifier: 
+  Name: EnginePitch
+  StudioPath: 
+  Min: -2
+  Max: 2
+  Default: 0
+  ID:
+    data1: 2202316259
+    data2: 2923246498
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &7743112782885482955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1324,8 +1463,35 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/ImpactSounds.bank
   Name: ImpactSounds
   StudioPath: bank:/ImpactSounds
-  lastModified: 639082466100000000
+  lastModified: 639089326540000000
   FileSizes:
   - Name: 
-    Value: 1614720
+    Value: 1671776
   Exists: 1
+--- !u!114 &8613440715585615094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/MK84Explode
+  m_EditorClassIdentifier: 
+  Path: event:/MK84Explode
+  Guid:
+    Data1: 412548517
+    Data2: 1304218799
+    Data3: 676078223
+    Data4: -1553756878
+  Banks:
+  - {fileID: 8357622970963403756}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 2200
+  Length: 2904

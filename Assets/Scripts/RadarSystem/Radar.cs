@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using FMODUnity;
 
 public class Radar : MonoBehaviour
 {
@@ -115,6 +116,9 @@ public class Radar : MonoBehaviour
 
     [SerializeField, InspectorName("Setting Display Refresh Interval")]
     float settingDisplayRefreshInterval = 0.25f;
+
+    [SerializeField, InspectorName("New Contact Event")]
+    EventReference newContactEvent;
 
     HashSet<GameObject> contactsSet = new HashSet<GameObject>();
 
@@ -854,6 +858,11 @@ public class Radar : MonoBehaviour
         if (contactsSet.Add(rcsObject))
         {
             radarContacts.Add(rcsObject);
+
+            if (!newContactEvent.IsNull)
+            {
+                RuntimeManager.PlayOneShot(newContactEvent, transform.position);
+            }
         }
     }
 

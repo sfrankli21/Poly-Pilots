@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 6746333351631954358}
   - component: {fileID: 730664266754031255}
   - component: {fileID: 3951747773066449883}
+  - component: {fileID: 2369104992422198508}
   m_Layer: 0
   m_Name: MK84
   m_TagString: Untagged
@@ -195,6 +196,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.CapsuleCollider, UnityEngine
         m_MethodName: set_enabled
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2369104992422198508}
+        m_TargetAssemblyTypeName: MK84Logic, Assembly-CSharp
+        m_MethodName: Fire
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -339,3 +352,19 @@ MonoBehaviour:
   stepCount: 200
   timeStep: 0.1
   releaseForwardSpeedMultiplier: 1
+--- !u!114 &2369104992422198508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4486328996315071543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f3da59517a6feb24fb25725e8585e3e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Impact:
+    m_PersistentCalls:
+      m_Calls: []
+  impactPrefab: {fileID: 100002, guid: 95cb8bdc9fe020648a2a3c7fcdf23c71, type: 3}

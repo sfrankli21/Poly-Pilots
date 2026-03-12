@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using FMODUnity;
+using FMOD.Studio;
 
 public class JetMechanics : MonoBehaviour
 {
@@ -86,6 +88,14 @@ public class JetMechanics : MonoBehaviour
     Transform leftEngine;
     [SerializeField]
     Transform rightEngine;
+
+    [Header("Engine Audio")]
+    [SerializeField]
+    EventReference EngineEvent;
+    [SerializeField]
+    string enginePitchParameterName = "EnginePitch";
+    [SerializeField]
+    float enginePitchResponseSeconds = 0.25f;
 
     [Header("Fuel")]
     [SerializeField]
@@ -196,6 +206,10 @@ public class JetMechanics : MonoBehaviour
     Vector3 lastVelocity;
     PhysicsMaterial landingGearDefaultMaterial;
     Coroutine[] landingGearAnimationCoroutines;
+    EventInstance leftEngineEventInstance;
+    EventInstance rightEngineEventInstance;
+    float currentLeftEnginePitchParameter;
+    float currentRightEnginePitchParameter;
 
     public Rigidbody Rigidbody { get; private set; }
     public float Throttle { get; private set; }
@@ -284,6 +298,110 @@ public class JetMechanics : MonoBehaviour
         InitializeThrottleVisuals(leftThrottleVisual);
         InitializeThrottleVisuals(rightThrottleVisual);
         InitializeRudderPedalVisuals(rudderPedalVisual);
+
+        currentLeftEnginePitchParameter = GetEnginePitchParameterValue(leftThrottleInput);
+        currentRightEnginePitchParameter = GetEnginePitchParameterValue(rightThrottleInput);
+
+        StartEngineAudio();
+        UpdateEngineAudio(Time.fixedDeltaTime);
+    }
+
+    void OnDestroy()
+    {
+        StopAndReleaseEngineAudio(ref leftEngineEventInstance);
+        StopAndReleaseEngineAudio(ref rightEngineEventInstance);
+    }
+
+    void OnDisable()
+    {
+        StopAndReleaseEngineAudio(ref leftEngineEventInstance);
+        StopAndReleaseEngineAudio(ref rightEngineEventInstance);
+    }
+
+    void StartEngineAudio()
+    {
+        if (EngineEvent.IsNull)
+        {
+            return;
+        }
+
+        leftEngineEventInstance = RuntimeManager.CreateInstance(EngineEvent);
+        rightEngineEventInstance = RuntimeManager.CreateInstance(EngineEvent);
+
+        SetEngineInstance3DAttributes(leftEngineEventInstance, leftEngine != null ? leftEngine : transform);
+        SetEngineInstance3DAttributes(rightEngineEventInstance, rightEngine != null ? rightEngine : transform);
+
+        leftEngineEventInstance.setParameterByName(enginePitchParameterName, currentLeftEnginePitchParameter);
+        rightEngineEventInstance.setParameterByName(enginePitchParameterName, currentRightEnginePitchParameter);
+
+        leftEngineEventInstance.start();
+        rightEngineEventInstance.start();
+    }
+
+    void StopAndReleaseEngineAudio(ref EventInstance instance)
+    {
+        if (!instance.isValid())
+        {
+            return;
+        }
+
+        instance.stop(STOP_MODE.ALLOWFADEOUT);
+        instance.release();
+        instance.clearHandle();
+    }
+
+    void SetEngineInstance3DAttributes(EventInstance instance, Transform targetTransform)
+    {
+        if (!instance.isValid() || targetTransform == null)
+        {
+            return;
+        }
+
+        if (Rigidbody != null)
+        {
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(targetTransform, Rigidbody));
+        }
+        else
+        {
+            instance.set3DAttributes(RuntimeUtils.To3DAttributes(targetTransform));
+        }
+    }
+
+    float GetEnginePitchParameterValue(float value)
+    {
+        return Mathf.Clamp(value, -1f, 1f) * 2f;
+    }
+
+    float MovePitchParameterTowards(float currentValue, float targetValue, float dt)
+    {
+        if (enginePitchResponseSeconds <= 0f)
+        {
+            return targetValue;
+        }
+
+        float maxDelta = (4f / enginePitchResponseSeconds) * dt;
+        return Mathf.MoveTowards(currentValue, targetValue, maxDelta);
+    }
+
+    void UpdateEngineAudio(float dt)
+    {
+        float targetLeftPitchParameter = GetEnginePitchParameterValue(leftThrottleInput);
+        float targetRightPitchParameter = GetEnginePitchParameterValue(rightThrottleInput);
+
+        currentLeftEnginePitchParameter = MovePitchParameterTowards(currentLeftEnginePitchParameter, targetLeftPitchParameter, dt);
+        currentRightEnginePitchParameter = MovePitchParameterTowards(currentRightEnginePitchParameter, targetRightPitchParameter, dt);
+
+        if (leftEngineEventInstance.isValid())
+        {
+            SetEngineInstance3DAttributes(leftEngineEventInstance, leftEngine != null ? leftEngine : transform);
+            leftEngineEventInstance.setParameterByName(enginePitchParameterName, currentLeftEnginePitchParameter);
+        }
+
+        if (rightEngineEventInstance.isValid())
+        {
+            SetEngineInstance3DAttributes(rightEngineEventInstance, rightEngine != null ? rightEngine : transform);
+            rightEngineEventInstance.setParameterByName(enginePitchParameterName, currentRightEnginePitchParameter);
+        }
     }
 
     void ApplyLandingGearStateImmediate(bool deployed)
@@ -1002,6 +1120,7 @@ public class JetMechanics : MonoBehaviour
         float dt = Time.fixedDeltaTime;
 
         ReadRouterInputs();
+        UpdateEngineAudio(dt);
         CalculateState();
         CalculateGForce(dt);
         UpdateThrottle(dt);
