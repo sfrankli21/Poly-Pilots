@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5bf3d2702a7fbd9469a4762ad70fafb2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 13400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Physics Materials/Wheel Friction.physicMaterial
+  uploadId: 721855

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a519fb3cf7b59ba4f905edf1a83b1517
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Scripts/AngularVelocityWarning.cs
+  uploadId: 721855

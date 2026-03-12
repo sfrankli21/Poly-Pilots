@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 793ba670141f82c45b83928265e18318
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Resources/Demo UI .prefab
+  uploadId: 721855

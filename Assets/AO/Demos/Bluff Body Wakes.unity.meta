@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 81a27ae908de70e459b258cd6d29f591
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Bluff Body Wakes.unity
+  uploadId: 721855

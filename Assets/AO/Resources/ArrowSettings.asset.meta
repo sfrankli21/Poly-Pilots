@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: da887a331dcbfeb4bbfc593a40cae6d2
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/ArrowSettings.asset
+  uploadId: 721855

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b4284e52498508746825f93b3437879c
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4300000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/ParticleGridMesh.asset
+  uploadId: 721855

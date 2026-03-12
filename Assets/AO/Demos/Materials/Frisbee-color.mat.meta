@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dc486175c6224af4dbda9f7b079c5978
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Materials/Frisbee-color.mat
+  uploadId: 721855

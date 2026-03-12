@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 27d2fa93a8e76e44f9841c822850f82f
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Meshes/Hill.mtl
+  uploadId: 721855

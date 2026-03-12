@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: f44b40d796f2d6640aeaa966aa6c488f
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Cup Anemometer.unity
+  uploadId: 721855

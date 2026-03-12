@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: fc7b7110840435a469cb4c775b432304
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Propeller Engine.prefab
+  uploadId: 721855

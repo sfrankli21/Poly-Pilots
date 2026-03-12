@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6e144ee9cf6a5be498cd3d6a319f4b33
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Airship.unity
+  uploadId: 721855

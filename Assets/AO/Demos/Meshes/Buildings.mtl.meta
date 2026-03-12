@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: cdc3b3b2898d37b458eefe9b0f8c96c5
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Meshes/Buildings.mtl
+  uploadId: 721855

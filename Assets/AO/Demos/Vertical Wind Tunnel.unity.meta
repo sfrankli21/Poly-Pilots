@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 6e3636415cca82640a7c9e45915b7bfa
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Vertical Wind Tunnel.unity
+  uploadId: 721855

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e8d467aebd00eaf4b84b9f12434c0bcf
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 13400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Physics Materials/Friction  Physic Material (wheels).physicMaterial
+  uploadId: 721855

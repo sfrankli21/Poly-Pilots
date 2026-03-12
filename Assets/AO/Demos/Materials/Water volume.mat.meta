@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ce09159ff193e574399e2456f5e25377
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Materials/Water volume.mat
+  uploadId: 721855

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6759c49afc9afea4cb40ff35a380e764
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Scripts/Editor/GliderSpawnerEditor.cs
+  uploadId: 721855

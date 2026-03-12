@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 8d2c1e05077cb1a4db49e22dd90d542a
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Scripts/FlightInfoDisplay.cs
+  uploadId: 721855

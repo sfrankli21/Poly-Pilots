@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 7cd9acf1784d9ec4fb29bc7b9a44d8ec
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Model Glider.prefab
+  uploadId: 721855

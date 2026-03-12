@@ -1,0 +1,5 @@
+newmtl Probuilder_floor
+map_Kd GridBox_Default.png
+Kd 0.7075472 0.6668521 0.5511621
+d 1
+

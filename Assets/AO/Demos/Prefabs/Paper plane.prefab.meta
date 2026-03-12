@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 78017ae02de07854a8c7b7581b14f4d0
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Paper plane.prefab
+  uploadId: 721855
