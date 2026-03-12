@@ -3,21 +3,44 @@ using UnityEngine.Events;
 
 public class ZUNIRocketLogic : MonoBehaviour
 {
-    public AlignToVelocity alignToVelocity;
-    public float moveSpeed = 100f;
-    public float gravityMultiplier = 0.25f;
+    public float pushForce = 200f;
+    public float gravityMultiplier = 0.01f;
     public UnityEvent Impact;
+    public UnityEvent FireEvent;
     public GameObject impactPrefab;
 
     public bool HasFired { get; private set; }
 
     Rigidbody rb;
+    float releaseForwardSpeed;
 
     public void Fire()
     {
         if (HasFired)
         {
             return;
+        }
+
+        Rigidbody aircraftRb = null;
+        Transform current = transform.parent;
+        FireEvent.Invoke();
+
+        while (current != null)
+        {
+            aircraftRb = current.GetComponent<Rigidbody>();
+            if (aircraftRb != null)
+            {
+                break;
+            }
+
+            current = current.parent;
+        }
+
+        releaseForwardSpeed = 0f;
+
+        if (aircraftRb != null)
+        {
+            releaseForwardSpeed = Vector3.Dot(aircraftRb.linearVelocity, transform.forward);
         }
 
         HasFired = true;
@@ -30,13 +53,9 @@ public class ZUNIRocketLogic : MonoBehaviour
             rb = gameObject.AddComponent<Rigidbody>();
         }
 
-        rb.useGravity = false;
+        rb.useGravity = true;
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
-
-        if (alignToVelocity != null)
-        {
-            alignToVelocity.Activate();
-        }
+        rb.linearVelocity = transform.forward * releaseForwardSpeed;
     }
 
     void FixedUpdate()
@@ -55,11 +74,8 @@ public class ZUNIRocketLogic : MonoBehaviour
             }
         }
 
+        rb.AddForce(transform.forward * pushForce, ForceMode.Acceleration);
         rb.AddForce(Physics.gravity * gravityMultiplier, ForceMode.Acceleration);
-
-        Vector3 gravityVelocity = Vector3.Project(rb.linearVelocity, Vector3.up);
-        Vector3 forwardVelocity = transform.forward * moveSpeed;
-        rb.linearVelocity = forwardVelocity + gravityVelocity;
     }
 
     void OnCollisionEnter(Collision collision)

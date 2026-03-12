@@ -3,7 +3,17 @@ guid: 1304c44cea89ebc479643a71ceaac49d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Throttle
+    second: {fileID: 2100000, guid: b6034903389bf2e438c89965a31627c7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_Throttle_Buttons
+    second: {fileID: 2100000, guid: 5837ab064509a4b488157bc2ab687075, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

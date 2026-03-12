@@ -68,14 +68,23 @@ public class Radar : MonoBehaviour
     [SerializeField, InspectorName("Display Refresh Interval")]
     float displayRefreshInterval = 0.25f;
 
-    [SerializeField, InspectorName("HUD Canvas")]
-    Transform hudCanvas;
-
     [SerializeField, InspectorName("HUD Radar Blip Prefab")]
     GameObject hudRadarBlipPrefab;
 
     [SerializeField, InspectorName("Player Camera")]
     Transform playerCamera;
+
+    [SerializeField, InspectorName("HUD Min Scale")]
+    Vector3 hudMinScale = new Vector3(15f, 15f, 15f);
+
+    [SerializeField, InspectorName("HUD Max Scale")]
+    Vector3 hudMaxScale = new Vector3(200f, 200f, 200f);
+
+    [SerializeField, InspectorName("HUD Min Scale Distance")]
+    float hudMinScaleDistance = 0f;
+
+    [SerializeField, InspectorName("HUD Max Scale Distance")]
+    float hudMaxScaleDistance = 10000f;
 
     [SerializeField, InspectorName("Clamp HUD To Segment")]
     bool clampHudToSegment = true;
@@ -128,7 +137,6 @@ public class Radar : MonoBehaviour
     struct HudBlipInfo
     {
         public Transform t;
-        public float localZ;
         public GameObject selectedMarker;
     }
 
@@ -207,6 +215,7 @@ public class Radar : MonoBehaviour
         if (gizmoSegments < 3) gizmoSegments = 3;
         if (selectedMarkerChildName == null) selectedMarkerChildName = "";
         if (radarSettingDisplayTag == null) radarSettingDisplayTag = "";
+        if (hudMaxScaleDistance < hudMinScaleDistance) hudMaxScaleDistance = hudMinScaleDistance;
         RebuildContactSetFromList();
         ValidateSelection();
     }
@@ -666,7 +675,6 @@ public class Radar : MonoBehaviour
 
     void SyncHudBlips()
     {
-        if (hudCanvas == null) return;
         if (hudRadarBlipPrefab == null) return;
 
         for (int i = 0; i < radarContacts.Count; i++)
@@ -676,16 +684,13 @@ public class Radar : MonoBehaviour
 
             if (!hudBlips.ContainsKey(c))
             {
-                GameObject go = Instantiate(hudRadarBlipPrefab, hudCanvas);
-                Transform t = go.transform;
-
-                float z = t.localPosition.z;
+                GameObject go = Instantiate(hudRadarBlipPrefab);
 
                 GameObject marker = null;
                 Transform m = FindChildByName(go.transform, selectedMarkerChildName);
                 if (m != null) marker = m.gameObject;
 
-                HudBlipInfo info = new HudBlipInfo { t = t, localZ = z, selectedMarker = marker };
+                HudBlipInfo info = new HudBlipInfo { t = go.transform, selectedMarker = marker };
                 hudBlips.Add(c, info);
             }
         }
@@ -737,14 +742,8 @@ public class Radar : MonoBehaviour
 
     void UpdateHudBlips()
     {
-        if (hudCanvas == null) return;
         if (playerCamera == null) return;
         if (hudBlips.Count == 0) return;
-
-        Vector3 planePoint = hudCanvas.position;
-        Vector3 planeNormal = hudCanvas.forward;
-
-        Vector3 camPos = playerCamera.position;
 
         foreach (var kvp in hudBlips)
         {
@@ -754,37 +753,20 @@ public class Radar : MonoBehaviour
             if (contact == null) continue;
             if (info.t == null) continue;
 
-            Vector3 targetPos = contact.transform.position;
+            info.t.position = contact.transform.position;
 
-            Vector3 dir = targetPos - camPos;
-            float segLen = dir.magnitude;
-            if (segLen <= 0.0001f) continue;
-
-            dir /= segLen;
-
-            float denom = Vector3.Dot(planeNormal, dir);
-
-            Vector3 worldPoint;
-            if (Mathf.Abs(denom) > 0.000001f)
+            Vector3 forward = info.t.position - playerCamera.position;
+            if (forward.sqrMagnitude > 0.000001f)
             {
-                float t = Vector3.Dot(planePoint - camPos, planeNormal) / denom;
-
-                if (clampHudToSegment)
-                {
-                    if (t < 0f) t = 0f;
-                    if (t > segLen) t = segLen;
-                }
-
-                worldPoint = camPos + dir * t;
-            }
-            else
-            {
-                Vector3 toPlane = planePoint - camPos;
-                worldPoint = camPos + Vector3.ProjectOnPlane(toPlane, planeNormal);
+                info.t.rotation = Quaternion.LookRotation(forward.normalized, playerCamera.up);
             }
 
-            Vector3 local = hudCanvas.InverseTransformPoint(worldPoint);
-            info.t.localPosition = new Vector3(local.x, local.y, info.localZ);
+            float distanceToCamera = Vector3.Distance(playerCamera.position, info.t.position);
+            float scaleT = hudMaxScaleDistance <= hudMinScaleDistance
+                ? 1f
+                : Mathf.InverseLerp(hudMinScaleDistance, hudMaxScaleDistance, distanceToCamera);
+
+            info.t.localScale = Vector3.Lerp(hudMinScale, hudMaxScale, scaleT);
 
             if (info.selectedMarker != null)
             {

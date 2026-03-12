@@ -398,28 +398,47 @@ public class PayloadManager : MonoBehaviour
                 continue;
             }
 
-            MK84TrajectoryPreview preview = weaponObject.GetComponent<MK84TrajectoryPreview>();
-            if (preview == null)
+            MK84TrajectoryPreview mk84Preview = weaponObject.GetComponent<MK84TrajectoryPreview>();
+            if (mk84Preview != null)
             {
-                continue;
-            }
+                bool showMk84 = false;
 
-            bool shouldShow = false;
-
-            if (aircraftWeaponData != null && aircraftWeaponData.Pylons != null)
-            {
-                if (i >= 0 && i < aircraftWeaponData.Pylons.Length)
+                if (aircraftWeaponData != null && aircraftWeaponData.Pylons != null)
                 {
-                    if (aircraftWeaponData.Pylons[i] != null)
+                    if (i >= 0 && i < aircraftWeaponData.Pylons.Length)
                     {
-                        shouldShow =
-                            i == (int)CurrentSelectedPylon &&
-                            aircraftWeaponData.Pylons[i].SelectedWeapon == AircraftWeaponData.SelectedWeaponType.MK84;
+                        if (aircraftWeaponData.Pylons[i] != null)
+                        {
+                            showMk84 =
+                                i == (int)CurrentSelectedPylon &&
+                                aircraftWeaponData.Pylons[i].SelectedWeapon == AircraftWeaponData.SelectedWeaponType.MK84;
+                        }
                     }
                 }
+
+                mk84Preview.SetPreviewVisible(showMk84);
             }
 
-            preview.SetPreviewVisible(shouldShow);
+            ZUNITrajectoryPreview zuniPreview = weaponObject.GetComponent<ZUNITrajectoryPreview>();
+            if (zuniPreview != null)
+            {
+                bool showZuni = false;
+
+                if (aircraftWeaponData != null && aircraftWeaponData.Pylons != null)
+                {
+                    if (i >= 0 && i < aircraftWeaponData.Pylons.Length)
+                    {
+                        if (aircraftWeaponData.Pylons[i] != null)
+                        {
+                            showZuni =
+                                i == (int)CurrentSelectedPylon &&
+                                aircraftWeaponData.Pylons[i].SelectedWeapon == AircraftWeaponData.SelectedWeaponType.ZUNI;
+                        }
+                    }
+                }
+
+                zuniPreview.SetPreviewVisible(showZuni);
+            }
         }
     }
 
