@@ -406,7 +406,7 @@
                 {
                     "name": "",
                     "id": "b85b74a2-5a10-49c4-896d-bd3312f70632",
-                    "path": "<XInputController>/rightTrigger",
+                    "path": "<XInputController>/leftTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -505,7 +505,7 @@
                 {
                     "name": "",
                     "id": "6c994190-213e-43c0-9d12-0983ae8a8f50",
-                    "path": "<XInputController>/leftShoulder",
+                    "path": "<XInputController>/rightStickPress",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -516,7 +516,7 @@
                 {
                     "name": "",
                     "id": "e973f883-b166-4016-a64e-0c4831b84cb6",
-                    "path": "<XInputController>/leftStickPress",
+                    "path": "<XInputController>/rightTrigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
