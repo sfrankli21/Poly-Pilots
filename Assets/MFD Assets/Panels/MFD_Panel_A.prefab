@@ -24493,11 +24493,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: -1149091167
-      Data2: 1101139201
-      Data3: 537356951
-      Data4: 238249942
-    Path: event:/Button_Click
+      Data1: -272794650
+      Data2: 1100750907
+      Data3: 819505580
+      Data4: -1994292628
+    Path: event:/AttachmentClick
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0

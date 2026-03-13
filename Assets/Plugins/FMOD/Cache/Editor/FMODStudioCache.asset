@@ -1,5 +1,32 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8952872420612675191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/GSuitInflate
+  m_EditorClassIdentifier: 
+  Path: event:/GSuitInflate
+  Guid:
+    Data1: 1512135635
+    Data2: 1099150358
+    Data3: 477697443
+    Data4: 1861093712
+  Banks:
+  - {fileID: -7451690536092709837}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1097
 --- !u!114 &-8937870563260056584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,7 +42,7 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Weapon.bank
   Name: Weapon
   StudioPath: bank:/Weapon
-  lastModified: 639087862840000000
+  lastModified: 639089456140000000
   FileSizes:
   - Name: 
     Value: 225600
@@ -39,8 +66,8 @@ MonoBehaviour:
     Data3: 490170274
     Data4: 23205322
   Banks:
-  - {fileID: -8937870563260056584}
   - {fileID: 8357622970963403756}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -91,10 +118,10 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Player.bank
   Name: Player
   StudioPath: bank:/Player
-  lastModified: 639089359900000000
+  lastModified: 639089453760000000
   FileSizes:
   - Name: 
-    Value: 456512
+    Value: 470432
   Exists: 1
 --- !u!114 &-7393874123029624137
 MonoBehaviour:
@@ -536,10 +563,10 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/RWR.bank
   Name: RWR
   StudioPath: bank:/RWR
-  lastModified: 639089356280000000
+  lastModified: 639089451000000000
   FileSizes:
   - Name: 
-    Value: 166688
+    Value: 173888
   Exists: 1
 --- !u!114 &-1061848579527120730
 MonoBehaviour:
@@ -560,8 +587,8 @@ MonoBehaviour:
     Data3: -1830341462
     Data4: -108242841
   Banks:
-  - {fileID: -8937870563260056584}
   - {fileID: 8357622970963403756}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1
@@ -707,13 +734,15 @@ MonoBehaviour:
   - {fileID: 4162160456536093411}
   - {fileID: 8613440715585615094}
   - {fileID: -4567588085064308626}
+  - {fileID: 5349610599640494477}
+  - {fileID: -8952872420612675191}
   EditorParameters: []
   MasterBanks:
   - {fileID: 5237935236821261486}
   StringsBanks:
   - {fileID: 4868761543586494059}
   cacheVersion: 131849
-  cacheTime: 639089359900000000
+  cacheTime: 639089456140000000
   SerializableEventsDict:
   - key: event:/MenuTheme
     index: 0
@@ -797,6 +826,10 @@ MonoBehaviour:
     index: 39
   - key: event:/RWR/NewContact
     index: 40
+  - key: event:/RWR/OverG
+    index: 41
+  - key: event:/GSuitInflate
+    index: 42
 --- !u!114 &29588018979775467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1137,10 +1170,10 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639089356280000000
+  lastModified: 639089453760000000
   FileSizes:
   - Name: 
-    Value: 2936
+    Value: 3026
   Exists: 1
 --- !u!114 &4960075687400951640
 MonoBehaviour:
@@ -1238,11 +1271,38 @@ MonoBehaviour:
   Path: D:/FMODProject/ARVR420FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639089356280000000
+  lastModified: 639089453760000000
   FileSizes:
   - Name: 
     Value: 3632384
   Exists: 1
+--- !u!114 &5349610599640494477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RWR/OverG
+  m_EditorClassIdentifier: 
+  Path: event:/RWR/OverG
+  Guid:
+    Data1: -1637224429
+    Data2: 1130365742
+    Data3: -1013672273
+    Data4: -1048067855
+  Banks:
+  - {fileID: -1323337311726445338}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 764
 --- !u!114 &5431293797295025028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1309,8 +1369,8 @@ MonoBehaviour:
     Data3: 907369403
     Data4: 1223343480
   Banks:
-  - {fileID: -8937870563260056584}
   - {fileID: 8357622970963403756}
+  - {fileID: -8937870563260056584}
   IsStream: 0
   Is3D: 1
   IsOneShot: 1

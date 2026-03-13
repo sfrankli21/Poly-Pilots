@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Rendering;
 using FMODUnity;
 using FMOD.Studio;
 
@@ -97,6 +98,12 @@ public class JetMechanics : MonoBehaviour
     [SerializeField]
     float enginePitchResponseSeconds = 0.25f;
 
+    [Header("G Events")]
+    [SerializeField]
+    EventReference OverG;
+    [SerializeField]
+    EventReference GSuitInflate;
+
     [Header("Fuel")]
     [SerializeField]
     float dryFuelBurnPerSecond;
@@ -167,6 +174,24 @@ public class JetMechanics : MonoBehaviour
     [SerializeField]
     float initialSpeed;
 
+    [Header("GLOK")]
+    [SerializeField, Range(-25f, 100f)]
+    float stamina = 100f;
+    [SerializeField]
+    float staminaRecoverRate = 10f;
+    [SerializeField]
+    float staminaDrainRateAt9G = 20f;
+    [SerializeField]
+    float glokStartG = 3.5f;
+    [SerializeField]
+    float glokMaxG = 9f;
+    [SerializeField]
+    Volume glokVolume;
+    [SerializeField]
+    float glokVolumeFadeStartStamina = 30f;
+    [SerializeField]
+    float glokVolumeFadeEndStamina = -10f;
+
     [Header("Control Surfaces")]
     [SerializeField]
     SurfaceElement[] pitchSurfaces;
@@ -196,6 +221,8 @@ public class JetMechanics : MonoBehaviour
     RudderPedalVisualElement[] rudderPedalVisual;
     [SerializeField]
     List<TMP_Text> airSpeedKnotsTexts = new List<TMP_Text>();
+    [SerializeField]
+    List<TMP_Text> gForceTextDisplays = new List<TMP_Text>();
 
     float leftThrottleInput;
     float rightThrottleInput;
@@ -210,6 +237,8 @@ public class JetMechanics : MonoBehaviour
     EventInstance rightEngineEventInstance;
     float currentLeftEnginePitchParameter;
     float currentRightEnginePitchParameter;
+    bool overGActive;
+    bool gSuitInflateActive;
 
     public Rigidbody Rigidbody { get; private set; }
     public float Throttle { get; private set; }
@@ -222,6 +251,13 @@ public class JetMechanics : MonoBehaviour
     public Vector3 LocalAngularVelocity { get; private set; }
     public float AngleOfAttack { get; private set; }
     public float AngleOfAttackYaw { get; private set; }
+    public float Stamina
+    {
+        get
+        {
+            return stamina;
+        }
+    }
 
     public bool AirbrakeDeployed
     {
@@ -284,6 +320,8 @@ public class JetMechanics : MonoBehaviour
             Rigidbody.linearVelocity = Rigidbody.rotation * new Vector3(0f, 0f, initialSpeed);
         }
 
+        stamina = Mathf.Clamp(stamina, -25f, 100f);
+
         ApplyLandingGearStateImmediate(gearDeployed);
 
         InitializeSurfaceAngles(pitchSurfaces);
@@ -301,6 +339,8 @@ public class JetMechanics : MonoBehaviour
 
         currentLeftEnginePitchParameter = GetEnginePitchParameterValue(leftThrottleInput);
         currentRightEnginePitchParameter = GetEnginePitchParameterValue(rightThrottleInput);
+
+        UpdateGlokVolume();
 
         StartEngineAudio();
         UpdateEngineAudio(Time.fixedDeltaTime);
@@ -401,6 +441,45 @@ public class JetMechanics : MonoBehaviour
         {
             SetEngineInstance3DAttributes(rightEngineEventInstance, rightEngine != null ? rightEngine : transform);
             rightEngineEventInstance.setParameterByName(enginePitchParameterName, currentRightEnginePitchParameter);
+        }
+    }
+
+    void UpdateGEvents()
+    {
+        float currentG = LocalGForce.magnitude / 9.81f;
+
+        if (currentG > 9f)
+        {
+            if (!overGActive)
+            {
+                overGActive = true;
+
+                if (!OverG.IsNull)
+                {
+                    RuntimeManager.PlayOneShot(OverG, transform.position);
+                }
+            }
+        }
+        else
+        {
+            overGActive = false;
+        }
+
+        if (currentG > 3.5f)
+        {
+            if (!gSuitInflateActive)
+            {
+                gSuitInflateActive = true;
+
+                if (!GSuitInflate.IsNull)
+                {
+                    RuntimeManager.PlayOneShot(GSuitInflate, transform.position);
+                }
+            }
+        }
+        else
+        {
+            gSuitInflateActive = false;
         }
     }
 
@@ -1045,6 +1124,91 @@ public class JetMechanics : MonoBehaviour
         }
     }
 
+    void UpdateGForceDisplay()
+    {
+        if (gForceTextDisplays == null || gForceTextDisplays.Count == 0)
+        {
+            return;
+        }
+
+        float gValue = LocalGForce.magnitude / 9.81f;
+        string gText = gValue.ToString("F1");
+
+        for (int i = 0; i < gForceTextDisplays.Count; i++)
+        {
+            if (gForceTextDisplays[i] == null)
+            {
+                continue;
+            }
+
+            gForceTextDisplays[i].text = gText;
+        }
+    }
+
+    void UpdateStamina(float dt)
+    {
+        float currentG = LocalGForce.magnitude / 9.81f;
+
+        if (currentG > glokStartG)
+        {
+            float drainT = Mathf.InverseLerp(glokStartG, glokMaxG, currentG);
+            float drainRate = staminaDrainRateAt9G * drainT;
+            stamina = Mathf.MoveTowards(stamina, -25f, drainRate * dt);
+        }
+        else
+        {
+            stamina = Mathf.MoveTowards(stamina, 100f, staminaRecoverRate * dt);
+        }
+
+        stamina = Mathf.Clamp(stamina, -25f, 100f);
+    }
+
+    void UpdateGlokVolume()
+    {
+        if (glokVolume == null)
+        {
+            return;
+        }
+
+        if (glokVolumeFadeStartStamina == glokVolumeFadeEndStamina)
+        {
+            glokVolume.weight = stamina <= glokVolumeFadeEndStamina ? 1f : 0f;
+            return;
+        }
+
+        if (glokVolumeFadeStartStamina > glokVolumeFadeEndStamina)
+        {
+            if (stamina <= glokVolumeFadeEndStamina)
+            {
+                glokVolume.weight = 1f;
+                return;
+            }
+
+            if (stamina >= glokVolumeFadeStartStamina)
+            {
+                glokVolume.weight = 0f;
+                return;
+            }
+
+            glokVolume.weight = Mathf.InverseLerp(glokVolumeFadeStartStamina, glokVolumeFadeEndStamina, stamina);
+            return;
+        }
+
+        if (stamina >= glokVolumeFadeEndStamina)
+        {
+            glokVolume.weight = 1f;
+            return;
+        }
+
+        if (stamina <= glokVolumeFadeStartStamina)
+        {
+            glokVolume.weight = 0f;
+            return;
+        }
+
+        glokVolume.weight = Mathf.InverseLerp(glokVolumeFadeStartStamina, glokVolumeFadeEndStamina, stamina);
+    }
+
     void UpdateSurfaces(float dt)
     {
         UpdateSurfaceArray(pitchSurfaces, Mathf.Clamp(controlInput.x, -1f, 1f), dt);
@@ -1123,6 +1287,9 @@ public class JetMechanics : MonoBehaviour
         UpdateEngineAudio(dt);
         CalculateState();
         CalculateGForce(dt);
+        UpdateGEvents();
+        UpdateStamina(dt);
+        UpdateGlokVolume();
         UpdateThrottle(dt);
         UpdateFuel(dt);
         UpdateThrust();
@@ -1133,5 +1300,6 @@ public class JetMechanics : MonoBehaviour
         UpdateSurfaces(dt);
         CalculateState();
         UpdateAirSpeedDisplay();
+        UpdateGForceDisplay();
     }
 }
