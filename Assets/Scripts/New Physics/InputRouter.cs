@@ -30,12 +30,10 @@ public class InputRouter : MonoBehaviour
     InputAction radarGimbleYAction;
     InputAction gearUpAction;
     InputAction gearDownAction;
-    InputAction flapsUpAction;
-    InputAction flapsDownAction;
+    InputAction flapsAction;
     InputAction gOverrideAction;
     InputAction shootGunAction;
-    InputAction airBrakeUpAction;
-    InputAction airBrakeDownAction;
+    InputAction airBrakeAction;
 
     public float LeftEngines;
     public float RightEngines;
@@ -59,12 +57,10 @@ public class InputRouter : MonoBehaviour
     public float RadarGimbleY;
     public bool GearUp;
     public bool GearDown;
-    public bool FlapsUp;
-    public bool FlapsDown;
+    public float Flaps;
     public bool GOverride;
     public bool ShootGun;
-    public bool AirBrakeUp;
-    public bool AirBrakeDown;
+    public float AirBrake;
 
     void Awake()
     {
@@ -129,12 +125,10 @@ public class InputRouter : MonoBehaviour
         radarGimbleYAction = actionMap.FindAction("RadarGimbleY", false);
         gearUpAction = actionMap.FindAction("GearUp", false);
         gearDownAction = actionMap.FindAction("GearDown", false);
-        flapsUpAction = actionMap.FindAction("FlapsUp", false);
-        flapsDownAction = actionMap.FindAction("FlapsDown", false);
+        flapsAction = actionMap.FindAction("Flaps", false);
         gOverrideAction = actionMap.FindAction("GOverride", false);
         shootGunAction = actionMap.FindAction("ShootGun", false);
-        airBrakeUpAction = actionMap.FindAction("AirBrakeUp", false);
-        airBrakeDownAction = actionMap.FindAction("AirBrakeDown", false);
+        airBrakeAction = actionMap.FindAction("AirBrake", false);
     }
 
     void Update()
@@ -161,12 +155,10 @@ public class InputRouter : MonoBehaviour
         RadarGimbleY = ReadFloat(radarGimbleYAction);
         GearUp = ReadButton(gearUpAction);
         GearDown = ReadButton(gearDownAction);
-        FlapsUp = ReadButton(flapsUpAction);
-        FlapsDown = ReadButton(flapsDownAction);
+        Flaps = ReadFloat(flapsAction);
         GOverride = ReadButton(gOverrideAction);
         ShootGun = ReadButton(shootGunAction);
-        AirBrakeUp = ReadButton(airBrakeUpAction);
-        AirBrakeDown = ReadButton(airBrakeDownAction);
+        AirBrake = ReadFloat(airBrakeAction);
     }
 
     float ReadFloat(InputAction action)
@@ -213,11 +205,9 @@ public class InputRouter : MonoBehaviour
         RadarGimbleY = 0f;
         GearUp = false;
         GearDown = false;
-        FlapsUp = false;
-        FlapsDown = false;
+        Flaps = 0f;
         GOverride = false;
         ShootGun = false;
-        AirBrakeUp = false;
-        AirBrakeDown = false;
+        AirBrake = 0f;
     }
 }

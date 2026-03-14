@@ -68,7 +68,9 @@ public class JetMechanics : MonoBehaviour
         public float playGearUpDelay;
         public string gearDownAnimationName;
         public float playGearDownDelay;
+        public bool colliderLogic;
         public Collider gearCollider;
+        public Animator animator;
     }
 
     [SerializeField]
@@ -165,12 +167,12 @@ public class JetMechanics : MonoBehaviour
     LandingGearElement[] landingGear;
     [SerializeField]
     PhysicsMaterial landingGearBrakesMaterial;
-    [SerializeField]
-    bool flapsDeployed;
+    [SerializeField, Range(0f, 1f)]
+    float flapsAmount;
     [SerializeField]
     bool gearDeployed;
-    [SerializeField]
-    bool airBrakeDeployed;
+    [SerializeField, Range(0f, 1f)]
+    float airBrakeAmount;
     [SerializeField]
     float initialSpeed;
 
@@ -259,15 +261,39 @@ public class JetMechanics : MonoBehaviour
         }
     }
 
+    public float AirbrakeAmount
+    {
+        get
+        {
+            return airBrakeAmount;
+        }
+        private set
+        {
+            airBrakeAmount = Mathf.Clamp01(value);
+        }
+    }
+
+    public float FlapsAmount
+    {
+        get
+        {
+            return flapsAmount;
+        }
+        private set
+        {
+            flapsAmount = Mathf.Clamp01(value);
+        }
+    }
+
     public bool AirbrakeDeployed
     {
         get
         {
-            return airBrakeDeployed;
+            return airBrakeAmount > 0.001f;
         }
         private set
         {
-            airBrakeDeployed = value;
+            AirbrakeAmount = value ? 1f : 0f;
         }
     }
 
@@ -275,11 +301,11 @@ public class JetMechanics : MonoBehaviour
     {
         get
         {
-            return flapsDeployed;
+            return flapsAmount > 0.001f;
         }
         private set
         {
-            flapsDeployed = value;
+            FlapsAmount = value ? 1f : 0f;
         }
     }
 
@@ -310,9 +336,28 @@ public class JetMechanics : MonoBehaviour
             landingGearAnimationCoroutines = new Coroutine[landingGear.Length];
         }
 
-        if (landingGear != null && landingGear.Length > 0 && landingGear[0] != null && landingGear[0].gearCollider != null)
+        if (landingGear != null)
         {
-            landingGearDefaultMaterial = landingGear[0].gearCollider.sharedMaterial;
+            for (int i = 0; i < landingGear.Length; i++)
+            {
+                if (landingGear[i] == null)
+                {
+                    continue;
+                }
+
+                if (!landingGear[i].colliderLogic)
+                {
+                    continue;
+                }
+
+                if (landingGear[i].gearCollider == null)
+                {
+                    continue;
+                }
+
+                landingGearDefaultMaterial = landingGear[i].gearCollider.sharedMaterial;
+                break;
+            }
         }
 
         if (Rigidbody != null)
@@ -321,6 +366,8 @@ public class JetMechanics : MonoBehaviour
         }
 
         stamina = Mathf.Clamp(stamina, -25f, 100f);
+        flapsAmount = Mathf.Clamp01(flapsAmount);
+        airBrakeAmount = Mathf.Clamp01(airBrakeAmount);
 
         ApplyLandingGearStateImmediate(gearDeployed);
 
@@ -488,6 +535,16 @@ public class JetMechanics : MonoBehaviour
         gearDeployed = deployed;
     }
 
+    public void LandingGearDown()
+    {
+        GearDeployed = true;
+    }
+
+    public void LandingGearUp()
+    {
+        GearDeployed = false;
+    }
+
     void PlayLandingGearAnimations(bool deployed)
     {
         if (landingGear == null)
@@ -516,7 +573,7 @@ public class JetMechanics : MonoBehaviour
 
         LandingGearElement gear = landingGear[index];
 
-        if (gear == null || gear.gearCollider == null)
+        if (gear == null || gear.animator == null)
         {
             yield break;
         }
@@ -534,17 +591,7 @@ public class JetMechanics : MonoBehaviour
             yield break;
         }
 
-        Animator animator = gear.gearCollider.GetComponent<Animator>();
-
-        if (animator == null)
-        {
-            animator = gear.gearCollider.GetComponentInParent<Animator>();
-        }
-
-        if (animator != null)
-        {
-            animator.Play(animationName, 0, 0f);
-        }
+        gear.animator.Play(animationName, 0, 0f);
 
         if (landingGearAnimationCoroutines != null && index < landingGearAnimationCoroutines.Length)
         {
@@ -666,6 +713,26 @@ public class JetMechanics : MonoBehaviour
         FlapsDeployed = value;
     }
 
+    public void SetAirbrakeAmount(float value)
+    {
+        AirbrakeAmount = value;
+    }
+
+    public void SetFlapsAmount(float value)
+    {
+        FlapsAmount = value;
+    }
+
+    float ConvertMinusOneToOneToZeroToOne(float value)
+    {
+        return Mathf.Clamp01((Mathf.Clamp(value, -1f, 1f) + 1f) * 0.5f);
+    }
+
+    float ConvertZeroToOneToMinusOneToOne(float value)
+    {
+        return Mathf.Clamp(value, 0f, 1f) * 2f - 1f;
+    }
+
     void ReadRouterInputs()
     {
         if (inputRouter == null)
@@ -680,31 +747,16 @@ public class JetMechanics : MonoBehaviour
         rightThrustVectorInput = Mathf.Clamp(inputRouter.ThrustVectorRight, -1f, 1f);
         gOverrideActive = inputRouter.GOverride;
 
-        if (inputRouter.FlapsUp)
-        {
-            FlapsDeployed = true;
-        }
-        else if (inputRouter.FlapsDown)
-        {
-            FlapsDeployed = false;
-        }
+        FlapsAmount = ConvertMinusOneToOneToZeroToOne(inputRouter.Flaps);
+        AirbrakeAmount = ConvertMinusOneToOneToZeroToOne(inputRouter.AirBrake);
 
         if (inputRouter.GearUp)
         {
-            GearDeployed = true;
+            LandingGearUp();
         }
         else if (inputRouter.GearDown)
         {
-            GearDeployed = false;
-        }
-
-        if (inputRouter.AirBrakeUp)
-        {
-            AirbrakeDeployed = true;
-        }
-        else if (inputRouter.AirBrakeDown)
-        {
-            AirbrakeDeployed = false;
+            LandingGearDown();
         }
     }
 
@@ -724,12 +776,22 @@ public class JetMechanics : MonoBehaviour
 
         for (int i = 0; i < landingGear.Length; i++)
         {
-            if (landingGear[i] == null || landingGear[i].gearCollider == null)
+            if (landingGear[i] == null)
             {
                 continue;
             }
 
-            landingGear[i].gearCollider.sharedMaterial = AirbrakeDeployed ? landingGearBrakesMaterial : landingGearDefaultMaterial;
+            if (!landingGear[i].colliderLogic)
+            {
+                continue;
+            }
+
+            if (landingGear[i].gearCollider == null)
+            {
+                continue;
+            }
+
+            landingGear[i].gearCollider.sharedMaterial = AirbrakeAmount > 0.001f ? landingGearBrakesMaterial : landingGearDefaultMaterial;
         }
     }
 
@@ -783,7 +845,7 @@ public class JetMechanics : MonoBehaviour
 
     public void ToggleFlaps()
     {
-        FlapsDeployed = !FlapsDeployed;
+        FlapsAmount = FlapsAmount > 0.5f ? 0f : 1f;
     }
 
     void CalculateAngleOfAttack()
@@ -821,8 +883,8 @@ public class JetMechanics : MonoBehaviour
         var lv = LocalVelocity;
         var lv2 = lv.sqrMagnitude;
 
-        float extraAirbrakeDrag = AirbrakeDeployed ? airbrakeDrag : 0f;
-        float extraFlapsDrag = FlapsDeployed ? flapsDrag : 0f;
+        float extraAirbrakeDrag = airbrakeDrag * AirbrakeAmount;
+        float extraFlapsDrag = flapsDrag * FlapsAmount;
 
         var coefficient = Scale6(
             lv.normalized,
@@ -864,8 +926,8 @@ public class JetMechanics : MonoBehaviour
             return;
         }
 
-        float currentFlapsLiftPower = FlapsDeployed ? flapsLiftPower : 0f;
-        float currentFlapsAOABias = FlapsDeployed ? flapsAOABias : 0f;
+        float currentFlapsLiftPower = flapsLiftPower * FlapsAmount;
+        float currentFlapsAOABias = flapsAOABias * FlapsAmount;
 
         var liftForce = CalculateLift(
             AngleOfAttack + (currentFlapsAOABias * Mathf.Deg2Rad),
@@ -1214,8 +1276,8 @@ public class JetMechanics : MonoBehaviour
         UpdateSurfaceArray(pitchSurfaces, Mathf.Clamp(controlInput.x, -1f, 1f), dt);
         UpdateSurfaceArray(rollSurfaces, Mathf.Clamp(-controlInput.z, -1f, 1f), dt);
         UpdateSurfaceArray(yawSurfaces, Mathf.Clamp(controlInput.y, -1f, 1f), dt);
-        UpdateSurfaceArray(airbrakeSurfaces, AirbrakeDeployed ? 1f : -1f, dt);
-        UpdateSurfaceArray(flapsSurfaces, FlapsDeployed ? 1f : -1f, dt);
+        UpdateSurfaceArray(airbrakeSurfaces, ConvertZeroToOneToMinusOneToOne(AirbrakeAmount), dt);
+        UpdateSurfaceArray(flapsSurfaces, ConvertZeroToOneToMinusOneToOne(FlapsAmount), dt);
 
         if (gOverrideActive)
         {

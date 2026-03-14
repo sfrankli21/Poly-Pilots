@@ -187,15 +187,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "FlapsUp",
-                    "type": "Button",
-                    "id": "ca0e5152-57f0-4e01-9466-8e2be3205ed6",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "GearUp",
                     "type": "Button",
                     "id": "a976985f-359b-4771-b9e8-738a8dd56f82",
@@ -205,13 +196,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "FlapsDown",
-                    "type": "Button",
+                    "name": "Flaps",
+                    "type": "Value",
                     "id": "8057937c-beec-483b-b72d-065c3dd23edf",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "GearDown",
@@ -241,31 +232,22 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "AirBrakeUp",
-                    "type": "Button",
+                    "name": "AirBrake",
+                    "type": "Value",
                     "id": "d2dd878b-eff4-4ce0-9451-6f31db638c44",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "AirBrakeDown",
-                    "type": "Button",
-                    "id": "bd2c0ec0-c64f-4993-b946-cc49061ca63f",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
                     "id": "4fe784b9-abba-493f-880c-fbed5ba612f4",
-                    "path": "<XInputController>/leftStick/y",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/stick/x",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Invert",
                     "groups": "",
                     "action": "LeftEngines",
                     "isComposite": false,
@@ -274,7 +256,7 @@
                 {
                     "name": "",
                     "id": "d823f5f5-4c05-48d4-8593-b2b367ed263b",
-                    "path": "<XInputController>/leftStick/y",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/stick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -285,7 +267,7 @@
                 {
                     "name": "",
                     "id": "e02e6ddd-4f5c-469d-a3ea-cb6e099adcfb",
-                    "path": "<XInputController>/rightStick/y",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -296,7 +278,7 @@
                 {
                     "name": "",
                     "id": "2dfc409f-46b5-47f4-ac3a-a781cbc861da",
-                    "path": "<XInputController>/rightStick/y",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -307,7 +289,7 @@
                 {
                     "name": "",
                     "id": "53d3f5c3-b428-4bec-8209-1f5ddd7b29a1",
-                    "path": "<XInputController>/rightStick/x",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/x",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -318,7 +300,7 @@
                 {
                     "name": "",
                     "id": "434471f7-e1fe-44b2-baf1-4b92aea48f52",
-                    "path": "<XInputController>/rightStick/y",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -329,9 +311,9 @@
                 {
                     "name": "",
                     "id": "1ff6037b-e19f-4627-a908-c2a012d138fd",
-                    "path": "<XInputController>/leftStick/x",
+                    "path": "<HID::Saitek Saitek Pro Flight Rudder Pedals>/rz",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Invert",
                     "groups": "",
                     "action": "Yaw",
                     "isComposite": false,
@@ -406,7 +388,7 @@
                 {
                     "name": "",
                     "id": "b85b74a2-5a10-49c4-896d-bd3312f70632",
-                    "path": "<XInputController>/leftTrigger",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/button2",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -417,7 +399,7 @@
                 {
                     "name": "",
                     "id": "1832f1eb-4f17-4b3a-9da1-ca3fc31defdc",
-                    "path": "<XInputController>/rightShoulder",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button29",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -428,7 +410,7 @@
                 {
                     "name": "",
                     "id": "93411c26-a09c-4df0-abb4-300a5d9f513b",
-                    "path": "<XInputController>/leftShoulder",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button28",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -460,19 +442,8 @@
                 },
                 {
                     "name": "",
-                    "id": "26c1256f-9f0f-42f2-aca7-dc9980ce25a3",
-                    "path": "<XInputController>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "FlapsUp",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "b700c454-4f04-48bb-9a86-ebaab3dd480f",
-                    "path": "<XInputController>/buttonNorth",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -483,18 +454,18 @@
                 {
                     "name": "",
                     "id": "14f4dc76-6aab-4714-b4b0-a50e3d944f42",
-                    "path": "<XInputController>/buttonEast",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/rz",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "FlapsDown",
+                    "action": "Flaps",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "0030fbe3-70d4-4cd2-bc21-09071553f04a",
-                    "path": "<XInputController>/buttonSouth",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button7",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -505,7 +476,7 @@
                 {
                     "name": "",
                     "id": "6c994190-213e-43c0-9d12-0983ae8a8f50",
-                    "path": "<XInputController>/rightStickPress",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/button6",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -516,7 +487,7 @@
                 {
                     "name": "",
                     "id": "e973f883-b166-4016-a64e-0c4831b84cb6",
-                    "path": "<XInputController>/rightTrigger",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/trigger",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -527,22 +498,11 @@
                 {
                     "name": "",
                     "id": "4a96536f-9db6-49fc-8938-0079bb0bbf03",
-                    "path": "<Keyboard>/h",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/z",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "AirBrakeUp",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "933a7d91-0614-4c81-8519-d23ddfa3d534",
-                    "path": "<Keyboard>/n",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "AirBrakeDown",
+                    "action": "AirBrake",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
