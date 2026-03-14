@@ -443,7 +443,7 @@
                 {
                     "name": "",
                     "id": "b700c454-4f04-48bb-9a86-ebaab3dd480f",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button6",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -465,7 +465,7 @@
                 {
                     "name": "",
                     "id": "0030fbe3-70d4-4cd2-bc21-09071553f04a",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/button7",
+                    "path": "<Keyboard>/g",
                     "interactions": "",
                     "processors": "",
                     "groups": "",

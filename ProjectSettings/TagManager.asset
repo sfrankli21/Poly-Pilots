@@ -18,6 +18,7 @@ TagManager:
   - FlapsStatusTextDisplay
   - GearStatusTextDisplay
   - AirBrakeStatusTextDisplay
+  - SelectedPylonTextDisplay
   layers:
   - Default
   - TransparentFX

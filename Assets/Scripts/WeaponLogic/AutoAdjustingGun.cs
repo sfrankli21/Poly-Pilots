@@ -4,7 +4,6 @@ using TMPro;
 using FMODUnity;
 using FMOD.Studio;
 
-[RequireComponent(typeof(LineRenderer))]
 public class AutoAdjustingGun : MonoBehaviour
 {
     public Transform AimPointOrigin;
@@ -43,12 +42,6 @@ public class AutoAdjustingGun : MonoBehaviour
     bool fireLoopExiting;
     GameObject closestHitInstance;
     bulletLogic bulletData;
-    LineRenderer lineRenderer;
-
-    void Awake()
-    {
-        lineRenderer = GetComponent<LineRenderer>();
-    }
 
     void Start()
     {
@@ -178,16 +171,6 @@ public class AutoAdjustingGun : MonoBehaviour
 
         if (foundHit)
         {
-            if (lineRenderer != null)
-            {
-                lineRenderer.positionCount = points.Count;
-
-                for (int i = 0; i < points.Count; i++)
-                {
-                    lineRenderer.SetPosition(i, points[i]);
-                }
-            }
-
             Vector3 worldDirectionToHit = firstHit.point - MuzzlePoint.position;
 
             if (MuzzlePoint.parent != null)
@@ -278,16 +261,6 @@ public class AutoAdjustingGun : MonoBehaviour
 
     void SetLineRendererState(bool enabled)
     {
-        if (lineRenderer != null)
-        {
-            lineRenderer.enabled = enabled;
-
-            if (!enabled)
-            {
-                lineRenderer.positionCount = 0;
-            }
-        }
-
         if (toggleObjectWithLineRenderer != null)
         {
             toggleObjectWithLineRenderer.SetActive(!enabled);
