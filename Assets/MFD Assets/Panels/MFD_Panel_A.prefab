@@ -2214,7 +2214,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -2414,12 +2438,36 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   - presetName: Home
+    changeMenuOnPress: 1
+    menuNameToSelect: Nav
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Nav
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -2922,7 +2970,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -3163,7 +3235,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -3368,7 +3464,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -4856,7 +4976,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -5059,7 +5203,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -6225,7 +6393,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Menu
+  m_text: NAV
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 2e498d1c8094910479dc3e1b768306a4, type: 2}
@@ -6443,7 +6611,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -7296,19 +7488,43 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
       m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 0}
-          m_TargetAssemblyTypeName: Radar, Assembly-CSharp
-          m_MethodName: BackMode
-          m_Mode: 1
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_ObjectArgumentAssemblyTypeName: 
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -7907,12 +8123,48 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &2783826824487899412
 GameObject:
   m_ObjectHideFlags: 0
@@ -12247,7 +12499,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -12314,7 +12590,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -13140,25 +13440,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
-  - presetName: Attitude
-    changeMenuOnPress: 1
-    menuNameToSelect: Home
-    onButtonPress:
-      m_PersistentCalls:
-        m_Calls: []
   - presetName: Nav
     changeMenuOnPress: 1
     menuNameToSelect: Home
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
-  - presetName: Radar
+  - presetName: Attitude
+    changeMenuOnPress: 1
+    menuNameToSelect: Nav
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
     changeMenuOnPress: 1
     menuNameToSelect: Home
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
-  - presetName: Status
+  - presetName: RWR
+    changeMenuOnPress: 1
+    menuNameToSelect: Home
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 1
     menuNameToSelect: Home
     onButtonPress:
@@ -19425,12 +19731,48 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6068378108243248044
 GameObject:
   m_ObjectHideFlags: 0
@@ -19743,7 +20085,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -19896,7 +20262,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -22906,6 +23296,42 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &7121777678699094146
 GameObject:
   m_ObjectHideFlags: 0
@@ -23439,7 +23865,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -25910,7 +26360,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
@@ -28779,7 +29253,31 @@ MonoBehaviour:
     onButtonPress:
       m_PersistentCalls:
         m_Calls: []
+  - presetName: Nav
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
   - presetName: Attitude
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Status
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: RWR
+    changeMenuOnPress: 0
+    menuNameToSelect: 
+    onButtonPress:
+      m_PersistentCalls:
+        m_Calls: []
+  - presetName: Radar
     changeMenuOnPress: 0
     menuNameToSelect: 
     onButtonPress:
