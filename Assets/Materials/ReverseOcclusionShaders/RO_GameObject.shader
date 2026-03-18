@@ -1,13 +1,19 @@
-Shader "Custom/ReverseOcclusionReveal"
+Shader "Custom/RO/GameObject"
 {
     Properties
     {
         _BaseColor ("Base Color", Color) = (1,0,0,1)
+        _Stencil ("Reveal Layer", Float) = 1
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
     }
 
     SubShader
     {
-        Tags { "RenderType"="Transparent" "Queue"="Transparent" }
+        Tags
+        {
+            "RenderType"="Transparent"
+            "Queue"="Transparent"
+        }
 
         Pass
         {
@@ -17,9 +23,12 @@ Shader "Custom/ReverseOcclusionReveal"
 
             Stencil
             {
-                Ref 1
+                Ref [_Stencil]
                 Comp Equal
                 Pass Keep
+                Fail Keep
+                ZFail Keep
+                ReadMask [_StencilReadMask]
             }
 
             HLSLPROGRAM

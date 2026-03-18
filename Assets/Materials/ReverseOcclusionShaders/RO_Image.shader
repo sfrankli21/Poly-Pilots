@@ -1,4 +1,4 @@
-Shader "Custom/UI Reveal Default"
+Shader "Custom/RO/Image"
 {
     Properties
     {
@@ -6,7 +6,7 @@ Shader "Custom/UI Reveal Default"
         _Color ("Tint", Color) = (1,1,1,1)
 
         _StencilComp ("Stencil Comparison", Float) = 3
-        _Stencil ("Stencil ID", Float) = 1
+        _Stencil ("Reveal Layer", Float) = 1
         _StencilOp ("Stencil Operation", Float) = 0
         _StencilWriteMask ("Stencil Write Mask", Float) = 255
         _StencilReadMask ("Stencil Read Mask", Float) = 255
@@ -29,11 +29,13 @@ Shader "Custom/UI Reveal Default"
 
         Stencil
         {
-            Ref 1
+            Ref [_Stencil]
             Comp Equal
             Pass Keep
             Fail Keep
             ZFail Keep
+            ReadMask [_StencilReadMask]
+            WriteMask [_StencilWriteMask]
         }
 
         Cull Off

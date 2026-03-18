@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_CubeB_Mask
+  m_Name: M_RO_Mask
   m_Shader: {fileID: 4800000, guid: a961aab73c7286c4ca5a235bc5c24181, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -123,6 +123,9 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
+    - _Stencil: 1
+    - _StencilID: 1
+    - _StencilWriteMask: 1
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1

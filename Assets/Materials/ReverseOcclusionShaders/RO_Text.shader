@@ -1,4 +1,4 @@
-Shader "Custom/TMP Reveal Overlay"
+Shader "Custom/RO/Text"
 {
 	Properties
 	{
@@ -63,6 +63,11 @@ Shader "Custom/TMP Reveal Overlay"
 		_MaskSoftnessY		("Mask SoftnessY", float) = 0
 		_CullMode			("Cull Mode", Float) = 0
 		_ColorMask			("Color Mask", Float) = 15
+		_StencilComp		("Stencil Comparison", Float) = 3
+		_Stencil			("Reveal Layer", Float) = 4
+		_StencilOp			("Stencil Operation", Float) = 0
+		_StencilWriteMask	("Stencil Write Mask", Float) = 255
+		_StencilReadMask	("Stencil Read Mask", Float) = 4
 	}
 
 	SubShader
@@ -76,11 +81,13 @@ Shader "Custom/TMP Reveal Overlay"
 
 		Stencil
 		{
-			Ref 1
+			Ref [_Stencil]
 			Comp Equal
 			Pass Keep
 			Fail Keep
 			ZFail Keep
+			ReadMask [_StencilReadMask]
+			WriteMask [_StencilWriteMask]
 		}
 
 		Cull [_CullMode]
@@ -112,37 +119,37 @@ Shader "Custom/TMP Reveal Overlay"
 			struct vertex_t
 			{
 				UNITY_VERTEX_INPUT_INSTANCE_ID
-				float4	position		: POSITION;
-				float3	normal			: NORMAL;
-				fixed4	color			: COLOR;
-				float4	texcoord0		: TEXCOORD0;
-				float2	texcoord1		: TEXCOORD1;
+				float4	position : POSITION;
+				float3	normal : NORMAL;
+				fixed4	color : COLOR;
+				float4	texcoord0 : TEXCOORD0;
+				float2	texcoord1 : TEXCOORD1;
 			};
 
 			struct pixel_t
 			{
 				UNITY_VERTEX_INPUT_INSTANCE_ID
 				UNITY_VERTEX_OUTPUT_STEREO
-				float4	position		: SV_POSITION;
-				fixed4	color			: COLOR;
-				float2	atlas			: TEXCOORD0;
-				float4	param			: TEXCOORD1;
-				float4	mask			: TEXCOORD2;
-				float3	viewDir			: TEXCOORD3;
+				float4	position : SV_POSITION;
+				fixed4	color : COLOR;
+				float2	atlas : TEXCOORD0;
+				float4	param : TEXCOORD1;
+				float4	mask : TEXCOORD2;
+				float3	viewDir : TEXCOORD3;
 
 				#if (UNDERLAY_ON || UNDERLAY_INNER)
-				float4	texcoord2		: TEXCOORD4;
-				fixed4	underlayColor	: COLOR1;
+				float4	texcoord2 : TEXCOORD4;
+				fixed4	underlayColor : COLOR1;
 				#endif
 
-				float4 textures			: TEXCOORD5;
+				float4 textures : TEXCOORD5;
 			};
 
-			uniform float4	_FaceTex_ST;
-			uniform float4	_OutlineTex_ST;
-			uniform float	_UIMaskSoftnessX;
-			uniform float	_UIMaskSoftnessY;
-			uniform int     _UIVertexColorAlwaysGammaSpace;
+			uniform float4 _FaceTex_ST;
+			uniform float4 _OutlineTex_ST;
+			uniform float _UIMaskSoftnessX;
+			uniform float _UIMaskSoftnessY;
+			uniform int _UIVertexColorAlwaysGammaSpace;
 
 			pixel_t VertShader(vertex_t input)
 			{
@@ -301,5 +308,4 @@ Shader "Custom/TMP Reveal Overlay"
 	}
 
 	Fallback "TextMeshPro/Mobile/Distance Field"
-	CustomEditor "TMPro.EditorUtilities.TMP_SDFShaderGUI"
 }
