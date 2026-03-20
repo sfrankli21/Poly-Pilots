@@ -53,6 +53,11 @@ public class PayloadManager : MonoBehaviour
     public GameObject ZUNIPrefab;
 
     [SerializeField] InputRouter inputRouter;
+    [SerializeField] NewRadar radar;
+    [SerializeField] Rigidbody aircraftRigidbody;
+
+    public Transform RadarSelectedContactTransform;
+    public bool AIM120TargetEstablished;
 
     public Transform AimPointOrigin;
     public Transform MuzzlePoint;
@@ -109,6 +114,15 @@ public class PayloadManager : MonoBehaviour
 
     void Start()
     {
+        if (aircraftRigidbody == null)
+        {
+            aircraftRigidbody = GetComponent<Rigidbody>();
+            if (aircraftRigidbody == null)
+            {
+                aircraftRigidbody = GetComponentInParent<Rigidbody>();
+            }
+        }
+
         PopulateSelectedPylonTextFromTag();
 
         currentAmmo = ammoCapacity;
@@ -132,6 +146,8 @@ public class PayloadManager : MonoBehaviour
             UpdateSelectedPylonWeaponDisplay();
             UpdateSelectedPylonTextDisplay();
             UpdateTrajectoryPreviewVisibility();
+            UpdateRadarSelectedContact();
+            UpdateAIM120TargetEstablished();
             return;
         }
 
@@ -140,6 +156,8 @@ public class PayloadManager : MonoBehaviour
             UpdateSelectedPylonWeaponDisplay();
             UpdateSelectedPylonTextDisplay();
             UpdateTrajectoryPreviewVisibility();
+            UpdateRadarSelectedContact();
+            UpdateAIM120TargetEstablished();
             return;
         }
 
@@ -148,6 +166,8 @@ public class PayloadManager : MonoBehaviour
             UpdateSelectedPylonWeaponDisplay();
             UpdateSelectedPylonTextDisplay();
             UpdateTrajectoryPreviewVisibility();
+            UpdateRadarSelectedContact();
+            UpdateAIM120TargetEstablished();
             return;
         }
 
@@ -190,6 +210,8 @@ public class PayloadManager : MonoBehaviour
         UpdateSelectedPylonWeaponDisplay();
         UpdateSelectedPylonTextDisplay();
         UpdateTrajectoryPreviewVisibility();
+        UpdateRadarSelectedContact();
+        UpdateAIM120TargetEstablished();
     }
 
     void Update()
@@ -200,12 +222,61 @@ public class PayloadManager : MonoBehaviour
         UpdateSelectedPylonWeaponDisplay();
         UpdateSelectedPylonTextDisplay();
         UpdateTrajectoryPreviewVisibility();
+        UpdateRadarSelectedContact();
+        UpdateAIM120TargetEstablished();
         UpdateGunSystem();
     }
 
     void LateUpdate()
     {
         UpdateClosestHitVisuals();
+    }
+
+    void UpdateRadarSelectedContact()
+    {
+        if (radar == null)
+        {
+            RadarSelectedContactTransform = null;
+            return;
+        }
+
+        RadarSelectedContactTransform = radar.SelectedContactTransform;
+    }
+
+    void UpdateAIM120TargetEstablished()
+    {
+        AIM120TargetEstablished = false;
+
+        if (CurrentSelectedPylonWeapon != AircraftWeaponData.SelectedWeaponType.AIM120C5)
+        {
+            return;
+        }
+
+        if (RadarSelectedContactTransform == null)
+        {
+            return;
+        }
+
+        int pylonIndex = (int)CurrentSelectedPylon;
+        if (pylonIndex < 0 || pylonIndex >= spawnedWeaponObjects.Length)
+        {
+            return;
+        }
+
+        GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
+        if (weaponObject == null)
+        {
+            return;
+        }
+
+        AIM120GuidanceLogic aim120 = weaponObject.GetComponent<AIM120GuidanceLogic>();
+        if (aim120 == null)
+        {
+            return;
+        }
+
+        aim120.SetTarget(RadarSelectedContactTransform);
+        AIM120TargetEstablished = aim120.targetLocked;
     }
 
     void PopulateSelectedPylonTextFromTag()
@@ -560,6 +631,37 @@ public class PayloadManager : MonoBehaviour
 
         AircraftWeaponData.SelectedWeaponType weaponType = listener.weaponType;
 
+        if (weaponType == AircraftWeaponData.SelectedWeaponType.AIM120C5)
+        {
+            if (!AIM120TargetEstablished) return;
+            if (RadarSelectedContactTransform == null) return;
+
+            GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
+            if (weaponObject == null) return;
+
+            AIM120GuidanceLogic aim120 = weaponObject.GetComponent<AIM120GuidanceLogic>();
+            if (aim120 == null) return;
+
+            aim120.SetTarget(RadarSelectedContactTransform);
+
+            if (aircraftRigidbody != null)
+            {
+                aim120.SetLaunchVelocity(aircraftRigidbody.linearVelocity);
+            }
+
+            listener.TriggerReleaseApproved();
+
+            spawnedWeaponListeners[pylonIndex] = null;
+            spawnedWeaponObjects[pylonIndex] = null;
+            aircraftWeaponData.Pylons[pylonIndex].SelectedWeapon = AircraftWeaponData.SelectedWeaponType.None;
+            SelectNextSameWeaponPylon(AircraftWeaponData.SelectedWeaponType.AIM120C5, pylonIndex);
+            UpdateSelectedPylonWeaponDisplay();
+            UpdateSelectedPylonTextDisplay();
+            UpdateTrajectoryPreviewVisibility();
+            UpdateAIM120TargetEstablished();
+            return;
+        }
+
         if (weaponType == AircraftWeaponData.SelectedWeaponType.MK84)
         {
             listener.TriggerReleaseApproved();
@@ -570,6 +672,7 @@ public class PayloadManager : MonoBehaviour
             UpdateSelectedPylonWeaponDisplay();
             UpdateSelectedPylonTextDisplay();
             UpdateTrajectoryPreviewVisibility();
+            UpdateAIM120TargetEstablished();
             return;
         }
 
@@ -594,6 +697,7 @@ public class PayloadManager : MonoBehaviour
                 UpdateSelectedPylonWeaponDisplay();
                 UpdateSelectedPylonTextDisplay();
                 UpdateTrajectoryPreviewVisibility();
+                UpdateAIM120TargetEstablished();
             }
         }
     }
