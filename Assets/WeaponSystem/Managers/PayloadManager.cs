@@ -247,6 +247,21 @@ public class PayloadManager : MonoBehaviour
     {
         AIM120TargetEstablished = false;
 
+        for (int i = 0; i < spawnedWeaponObjects.Length; i++)
+        {
+            GameObject loopWeaponObject = spawnedWeaponObjects[i];
+            if (loopWeaponObject == null)
+            {
+                continue;
+            }
+
+            AIM120GuidanceLogic aim120Loop = loopWeaponObject.GetComponent<AIM120GuidanceLogic>();
+            if (aim120Loop != null)
+            {
+                aim120Loop.SetPreReleaseSeekerActive(false);
+            }
+        }
+
         if (CurrentSelectedPylonWeapon != AircraftWeaponData.SelectedWeaponType.AIM120C5)
         {
             return;
@@ -263,18 +278,19 @@ public class PayloadManager : MonoBehaviour
             return;
         }
 
-        GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
-        if (weaponObject == null)
+        GameObject selectedWeaponObject = spawnedWeaponObjects[pylonIndex];
+        if (selectedWeaponObject == null)
         {
             return;
         }
 
-        AIM120GuidanceLogic aim120 = weaponObject.GetComponent<AIM120GuidanceLogic>();
+        AIM120GuidanceLogic aim120 = selectedWeaponObject.GetComponent<AIM120GuidanceLogic>();
         if (aim120 == null)
         {
             return;
         }
 
+        aim120.SetPreReleaseSeekerActive(true);
         aim120.SetTarget(RadarSelectedContactTransform);
         AIM120TargetEstablished = aim120.targetLocked;
     }
@@ -630,13 +646,12 @@ public class PayloadManager : MonoBehaviour
         if (listener == null) return;
 
         AircraftWeaponData.SelectedWeaponType weaponType = listener.weaponType;
+        GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
 
         if (weaponType == AircraftWeaponData.SelectedWeaponType.AIM120C5)
         {
             if (!AIM120TargetEstablished) return;
             if (RadarSelectedContactTransform == null) return;
-
-            GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
             if (weaponObject == null) return;
 
             AIM120GuidanceLogic aim120 = weaponObject.GetComponent<AIM120GuidanceLogic>();
@@ -678,7 +693,6 @@ public class PayloadManager : MonoBehaviour
 
         if (weaponType == AircraftWeaponData.SelectedWeaponType.ZUNI)
         {
-            GameObject weaponObject = spawnedWeaponObjects[pylonIndex];
             if (weaponObject == null) return;
 
             ZuniPodRelease zuniPod = weaponObject.GetComponent<ZuniPodRelease>();

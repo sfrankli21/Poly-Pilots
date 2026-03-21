@@ -6,6 +6,9 @@ public class AIM120GuidanceLogic : MonoBehaviour
     public Rigidbody missileRigidbody;
     public Transform radarGimble;
     public PayloadManager payloadManager;
+    public Collider ExplosionTrigger;
+    public GameObject ExplosionPrefab;
+    public bool preReleaseSeekerActive;
     public float gimbleMinY = -60f;
     public float gimbleMaxY = 60f;
     public float gimbleMinX = -60f;
@@ -49,6 +52,7 @@ public class AIM120GuidanceLogic : MonoBehaviour
     Vector3 lastRadarRayStart;
     Vector3 lastRadarRayEnd;
     Transform designatedTargetTransform;
+    bool detonated;
 
     void Awake()
     {
@@ -71,11 +75,14 @@ public class AIM120GuidanceLogic : MonoBehaviour
         propulsionActive = false;
         released = false;
         targetLocked = false;
+        detonated = false;
+        preReleaseSeekerActive = false;
         designatedTargetTransform = targetTransform;
         targetVelocity = Vector3.zero;
         targetAcceleration = Vector3.zero;
         previousTargetVelocity = Vector3.zero;
         hasPreviousTargetVelocity = false;
+        lastRadarHitTarget = false;
 
         if (designatedTargetTransform != null)
         {
@@ -97,13 +104,32 @@ public class AIM120GuidanceLogic : MonoBehaviour
     {
         if (!released)
         {
-            UpdateRadarGimble();
+            if (preReleaseSeekerActive)
+            {
+                UpdateRadarGimble();
+            }
+            else
+            {
+                targetLocked = false;
+                lastRadarHitTarget = false;
+
+                if (radarGimble != null)
+                {
+                    lastRadarRayStart = radarGimble.position;
+                    lastRadarRayEnd = radarGimble.position;
+                }
+                else
+                {
+                    lastRadarRayStart = transform.position;
+                    lastRadarRayEnd = transform.position;
+                }
+            }
         }
     }
 
     void FixedUpdate()
     {
-        if (!released)
+        if (!released || detonated)
         {
             return;
         }
@@ -111,7 +137,7 @@ public class AIM120GuidanceLogic : MonoBehaviour
         lifeTimer += Time.fixedDeltaTime;
         if (lifeTimer >= lifeTime)
         {
-            Destroy(gameObject);
+            Detonate();
             return;
         }
 
@@ -119,6 +145,31 @@ public class AIM120GuidanceLogic : MonoBehaviour
         UpdateRadarGimble();
         UpdateGuidance();
         UpdatePropulsion();
+    }
+
+    public void SetPreReleaseSeekerActive(bool active)
+    {
+        preReleaseSeekerActive = active;
+
+        if (!released && !preReleaseSeekerActive)
+        {
+            targetLocked = false;
+            lastRadarHitTarget = false;
+            seekerMemoryTimer = 0f;
+            targetTransform = null;
+            designatedTargetTransform = null;
+
+            if (radarGimble != null)
+            {
+                lastRadarRayStart = radarGimble.position;
+                lastRadarRayEnd = radarGimble.position;
+            }
+            else
+            {
+                lastRadarRayStart = transform.position;
+                lastRadarRayEnd = transform.position;
+            }
+        }
     }
 
     public void SetTarget(Transform newTarget)
@@ -170,6 +221,7 @@ public class AIM120GuidanceLogic : MonoBehaviour
         propulsionActive = true;
         boostTimer = 0f;
         seekerMemoryTimer = seekerMemoryTime;
+        preReleaseSeekerActive = false;
 
         if (payloadManager != null)
         {
@@ -186,6 +238,23 @@ public class AIM120GuidanceLogic : MonoBehaviour
             missileRigidbody.isKinematic = false;
             missileRigidbody.linearVelocity += inheritedLaunchVelocity;
         }
+    }
+
+    public void Detonate()
+    {
+        if (detonated)
+        {
+            return;
+        }
+
+        detonated = true;
+
+        if (ExplosionPrefab != null)
+        {
+            Instantiate(ExplosionPrefab, transform.position, transform.rotation);
+        }
+
+        Destroy(gameObject);
     }
 
     void UpdateTargetKinematics()
@@ -450,7 +519,6 @@ public class AIM120GuidanceLogic : MonoBehaviour
         }
 
         Vector3 interceptPoint = estimatedTargetPosition;
-        
 
         return interceptPoint;
     }
@@ -496,6 +564,26 @@ public class AIM120GuidanceLogic : MonoBehaviour
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (!released || detonated)
+        {
+            return;
+        }
+
+        if (other.CompareTag("RCS"))
+        {
+            Detonate();
+            return;
+        }
+
+        Transform otherRoot = other.transform.root;
+        if (otherRoot != null && otherRoot.CompareTag("RCS"))
+        {
+            Detonate();
+        }
+    }
+
     float NormalizeAngle(float angle)
     {
         while (angle > 180f) angle -= 360f;
@@ -505,6 +593,11 @@ public class AIM120GuidanceLogic : MonoBehaviour
 
     void OnDrawGizmos()
     {
+        if (!released && !preReleaseSeekerActive)
+        {
+            return;
+        }
+
         if (radarGimble != null)
         {
             Gizmos.color = lastRadarHitTarget ? Color.green : Color.red;
