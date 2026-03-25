@@ -19,6 +19,7 @@ TagManager:
   - GearStatusTextDisplay
   - AirBrakeStatusTextDisplay
   - SelectedPylonTextDisplay
+  - Bullet
   layers:
   - Default
   - TransparentFX
