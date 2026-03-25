@@ -28,6 +28,7 @@ public class WeaponReleaseListener : MonoBehaviour
         }
 
         Debug.Log("Weapon release approved event fired on " + gameObject.name + " | Pylon: " + pylonIndex + " | Weapon: " + weaponType);
+        Debug.Log("OnReleaseApproved persistent count: " + OnReleaseApproved.GetPersistentEventCount());
         OnReleaseApproved.Invoke();
     }
 }

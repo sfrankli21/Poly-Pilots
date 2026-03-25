@@ -52,7 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pylonIndex: 0
-  weaponType: 0
+  weaponType: 1
   OnReleaseApproved:
     m_PersistentCalls:
       m_Calls:
@@ -137,6 +137,7 @@ MonoBehaviour:
   payloadManager: {fileID: 0}
   ExplosionTrigger: {fileID: 609202034743476700}
   ExplosionPrefab: {fileID: 100008, guid: 8632d92cf1d0c02459ddaeec3a08d6c1, type: 3}
+  preReleaseSeekerActive: 0
   gimbleMinY: -90
   gimbleMaxY: 90
   gimbleMinX: -90
@@ -252,7 +253,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 20
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5469791820289779204
 GameObject:

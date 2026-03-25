@@ -58,6 +58,11 @@ public class PayloadManager : MonoBehaviour
 
     public Transform RadarSelectedContactTransform;
     public bool AIM120TargetEstablished;
+    public bool IRSeekerOn = false;
+    public bool HasHeatSource = false;
+
+    public EventReference FOX2SFX;
+    public string fox2HasTargetParameterName = "HasTarget";
 
     public Transform AimPointOrigin;
     public Transform MuzzlePoint;
@@ -112,6 +117,9 @@ public class PayloadManager : MonoBehaviour
     GameObject closestHitInstance;
     bulletLogic bulletData;
 
+    EventInstance fox2SeekerInstance;
+    bool fox2SeekerInstanceCreated;
+
     void Start()
     {
         if (aircraftRigidbody == null)
@@ -148,6 +156,8 @@ public class PayloadManager : MonoBehaviour
             UpdateTrajectoryPreviewVisibility();
             UpdateRadarSelectedContact();
             UpdateAIM120TargetEstablished();
+            UpdateAIM9SeekerState();
+            UpdateFOX2Audio();
             return;
         }
 
@@ -158,6 +168,8 @@ public class PayloadManager : MonoBehaviour
             UpdateTrajectoryPreviewVisibility();
             UpdateRadarSelectedContact();
             UpdateAIM120TargetEstablished();
+            UpdateAIM9SeekerState();
+            UpdateFOX2Audio();
             return;
         }
 
@@ -168,6 +180,8 @@ public class PayloadManager : MonoBehaviour
             UpdateTrajectoryPreviewVisibility();
             UpdateRadarSelectedContact();
             UpdateAIM120TargetEstablished();
+            UpdateAIM9SeekerState();
+            UpdateFOX2Audio();
             return;
         }
 
@@ -212,18 +226,22 @@ public class PayloadManager : MonoBehaviour
         UpdateTrajectoryPreviewVisibility();
         UpdateRadarSelectedContact();
         UpdateAIM120TargetEstablished();
+        UpdateAIM9SeekerState();
+        UpdateFOX2Audio();
     }
 
     void Update()
     {
         ClampSelectedPylonToValidRange();
         HandlePylonSelectionInput();
-        HandleReleaseInput();
         UpdateSelectedPylonWeaponDisplay();
         UpdateSelectedPylonTextDisplay();
         UpdateTrajectoryPreviewVisibility();
         UpdateRadarSelectedContact();
         UpdateAIM120TargetEstablished();
+        UpdateAIM9SeekerState();
+        UpdateFOX2Audio();
+        HandleReleaseInput();
         UpdateGunSystem();
     }
 
@@ -247,8 +265,15 @@ public class PayloadManager : MonoBehaviour
     {
         AIM120TargetEstablished = false;
 
+        int selectedIndex = (int)CurrentSelectedPylon;
+
         for (int i = 0; i < spawnedWeaponObjects.Length; i++)
         {
+            if (i == selectedIndex)
+            {
+                continue;
+            }
+
             GameObject loopWeaponObject = spawnedWeaponObjects[i];
             if (loopWeaponObject == null)
             {
@@ -272,13 +297,12 @@ public class PayloadManager : MonoBehaviour
             return;
         }
 
-        int pylonIndex = (int)CurrentSelectedPylon;
-        if (pylonIndex < 0 || pylonIndex >= spawnedWeaponObjects.Length)
+        if (selectedIndex < 0 || selectedIndex >= spawnedWeaponObjects.Length)
         {
             return;
         }
 
-        GameObject selectedWeaponObject = spawnedWeaponObjects[pylonIndex];
+        GameObject selectedWeaponObject = spawnedWeaponObjects[selectedIndex];
         if (selectedWeaponObject == null)
         {
             return;
@@ -291,8 +315,142 @@ public class PayloadManager : MonoBehaviour
         }
 
         aim120.SetPreReleaseSeekerActive(true);
-        aim120.SetTarget(RadarSelectedContactTransform);
+
+        if (aim120.targetTransform != RadarSelectedContactTransform)
+        {
+            aim120.SetTarget(RadarSelectedContactTransform);
+        }
+
         AIM120TargetEstablished = aim120.targetLocked;
+    }
+
+    void UpdateAIM9SeekerState()
+    {
+        for (int i = 0; i < spawnedWeaponObjects.Length; i++)
+        {
+            GameObject loopWeaponObject = spawnedWeaponObjects[i];
+            if (loopWeaponObject == null)
+            {
+                continue;
+            }
+
+            AIM9XGuidanceLogic aim9Loop = loopWeaponObject.GetComponent<AIM9XGuidanceLogic>();
+            if (aim9Loop != null)
+            {
+                aim9Loop.SetPreReleaseSeekerActive(false);
+            }
+        }
+
+        if (CurrentSelectedPylonWeapon != AircraftWeaponData.SelectedWeaponType.AIM9M)
+        {
+            IRSeekerOn = false;
+            HasHeatSource = false;
+            return;
+        }
+
+        int pylonIndex = (int)CurrentSelectedPylon;
+        if (pylonIndex < 0 || pylonIndex >= spawnedWeaponObjects.Length)
+        {
+            IRSeekerOn = false;
+            HasHeatSource = false;
+            return;
+        }
+
+        GameObject selectedWeaponObject = spawnedWeaponObjects[pylonIndex];
+        if (selectedWeaponObject == null)
+        {
+            IRSeekerOn = false;
+            HasHeatSource = false;
+            return;
+        }
+
+        AIM9XGuidanceLogic aim9 = selectedWeaponObject.GetComponent<AIM9XGuidanceLogic>();
+        if (aim9 == null)
+        {
+            IRSeekerOn = false;
+            HasHeatSource = false;
+            return;
+        }
+
+        aim9.SetPreReleaseSeekerActive(IRSeekerOn);
+
+        if (IRSeekerOn)
+        {
+            HasHeatSource = aim9.RefreshRailHeatSourceNow();
+        }
+        else
+        {
+            HasHeatSource = false;
+        }
+    }
+
+    void UpdateFOX2Audio()
+    {
+        if (fox2SeekerInstanceCreated)
+        {
+            fox2SeekerInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+        }
+
+        if (!IRSeekerOn)
+        {
+            StopFOX2Audio();
+            return;
+        }
+
+        if (!fox2SeekerInstanceCreated)
+        {
+            StartFOX2Audio();
+        }
+
+        if (fox2SeekerInstanceCreated && !string.IsNullOrEmpty(fox2HasTargetParameterName))
+        {
+            fox2SeekerInstance.setParameterByName(fox2HasTargetParameterName, HasHeatSource ? 1f : 0f);
+        }
+    }
+
+    void StartFOX2Audio()
+    {
+        if (FOX2SFX.IsNull)
+        {
+            return;
+        }
+
+        if (fox2SeekerInstanceCreated)
+        {
+            PLAYBACK_STATE playbackState;
+            fox2SeekerInstance.getPlaybackState(out playbackState);
+
+            if (playbackState != PLAYBACK_STATE.STOPPED)
+            {
+                return;
+            }
+
+            fox2SeekerInstance.release();
+            fox2SeekerInstanceCreated = false;
+        }
+
+        fox2SeekerInstance = RuntimeManager.CreateInstance(FOX2SFX);
+        fox2SeekerInstance.set3DAttributes(RuntimeUtils.To3DAttributes(transform));
+
+        if (!string.IsNullOrEmpty(fox2HasTargetParameterName))
+        {
+            fox2SeekerInstance.setParameterByName(fox2HasTargetParameterName, HasHeatSource ? 1f : 0f);
+        }
+
+        fox2SeekerInstance.start();
+        fox2SeekerInstanceCreated = true;
+    }
+
+    void StopFOX2Audio()
+    {
+        if (!fox2SeekerInstanceCreated)
+        {
+            return;
+        }
+
+        fox2SeekerInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        fox2SeekerInstance.release();
+        fox2SeekerInstanceCreated = false;
     }
 
     void PopulateSelectedPylonTextFromTag()
@@ -650,14 +808,11 @@ public class PayloadManager : MonoBehaviour
 
         if (weaponType == AircraftWeaponData.SelectedWeaponType.AIM120C5)
         {
-            if (!AIM120TargetEstablished) return;
-            if (RadarSelectedContactTransform == null) return;
+            if (!AIM120TargetEstablished || RadarSelectedContactTransform == null) return;
             if (weaponObject == null) return;
 
             AIM120GuidanceLogic aim120 = weaponObject.GetComponent<AIM120GuidanceLogic>();
             if (aim120 == null) return;
-
-            aim120.SetTarget(RadarSelectedContactTransform);
 
             if (aircraftRigidbody != null)
             {
@@ -673,7 +828,54 @@ public class PayloadManager : MonoBehaviour
             UpdateSelectedPylonWeaponDisplay();
             UpdateSelectedPylonTextDisplay();
             UpdateTrajectoryPreviewVisibility();
+            UpdateRadarSelectedContact();
             UpdateAIM120TargetEstablished();
+            UpdateAIM9SeekerState();
+            UpdateFOX2Audio();
+            return;
+        }
+
+        if (weaponType == AircraftWeaponData.SelectedWeaponType.AIM9M)
+        {
+            if (weaponObject == null) return;
+
+            AIM9XGuidanceLogic aim9 = weaponObject.GetComponent<AIM9XGuidanceLogic>();
+            if (aim9 == null) return;
+
+            if (!IRSeekerOn)
+            {
+                IRSeekerOn = true;
+                UpdateAIM9SeekerState();
+                UpdateFOX2Audio();
+                return;
+            }
+
+            aim9.SetPreReleaseSeekerActive(true);
+            HasHeatSource = aim9.RefreshRailHeatSourceNow();
+            UpdateFOX2Audio();
+
+            if (!HasHeatSource) return;
+
+            if (aircraftRigidbody != null)
+            {
+                aim9.SetLaunchVelocity(aircraftRigidbody.linearVelocity);
+            }
+
+            listener.TriggerReleaseApproved();
+
+            IRSeekerOn = false;
+            HasHeatSource = false;
+            spawnedWeaponListeners[pylonIndex] = null;
+            spawnedWeaponObjects[pylonIndex] = null;
+            aircraftWeaponData.Pylons[pylonIndex].SelectedWeapon = AircraftWeaponData.SelectedWeaponType.None;
+            SelectNextSameWeaponPylon(AircraftWeaponData.SelectedWeaponType.AIM9M, pylonIndex);
+            UpdateSelectedPylonWeaponDisplay();
+            UpdateSelectedPylonTextDisplay();
+            UpdateTrajectoryPreviewVisibility();
+            UpdateRadarSelectedContact();
+            UpdateAIM120TargetEstablished();
+            UpdateAIM9SeekerState();
+            UpdateFOX2Audio();
             return;
         }
 
@@ -687,7 +889,10 @@ public class PayloadManager : MonoBehaviour
             UpdateSelectedPylonWeaponDisplay();
             UpdateSelectedPylonTextDisplay();
             UpdateTrajectoryPreviewVisibility();
+            UpdateRadarSelectedContact();
             UpdateAIM120TargetEstablished();
+            UpdateAIM9SeekerState();
+            UpdateFOX2Audio();
             return;
         }
 
@@ -711,7 +916,10 @@ public class PayloadManager : MonoBehaviour
                 UpdateSelectedPylonWeaponDisplay();
                 UpdateSelectedPylonTextDisplay();
                 UpdateTrajectoryPreviewVisibility();
+                UpdateRadarSelectedContact();
                 UpdateAIM120TargetEstablished();
+                UpdateAIM9SeekerState();
+                UpdateFOX2Audio();
             }
         }
     }
@@ -1270,6 +1478,7 @@ public class PayloadManager : MonoBehaviour
     {
         wasTryingToFireLastFrame = false;
         DestroyClosestHitPrefab();
+        StopFOX2Audio();
 
         if (fireLoopInstanceCreated)
         {
@@ -1283,6 +1492,7 @@ public class PayloadManager : MonoBehaviour
     void OnDestroy()
     {
         DestroyClosestHitPrefab();
+        StopFOX2Audio();
 
         if (fireLoopInstanceCreated)
         {

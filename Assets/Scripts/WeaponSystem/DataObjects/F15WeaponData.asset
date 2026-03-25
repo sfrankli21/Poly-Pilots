@@ -16,82 +16,82 @@ MonoBehaviour:
   Pylons:
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 7
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 0
     allowAIM9M: 0
     allowAGM88: 0
     allowGBU32: 0
-    allowMK84: 1
+    allowMK84: 0
     allowFUELPOD: 1
     allowZUNI: 0
     SelectedWeapon: 6
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 7
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
-    allowAIM9M: 0
+    allowAIM9M: 1
     allowAGM88: 0
     allowGBU32: 0
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 1
+    SelectedWeapon: 2
