@@ -609,8 +609,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: E:/FMODProject/ARVR420FMOD/ARVR420FMOD.fspro
-  sourceBankPath: E:/FMODProject/ARVR420FMOD/Build
+  sourceProjectPath: G:/FMODProject/ARVR420FMOD/ARVR420FMOD.fspro
+  sourceBankPath: G:/FMODProject/ARVR420FMOD/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -632,16 +632,8 @@ MonoBehaviour:
   VirtualChannelSettings: []
   RealChannelSettings: []
   Plugins: []
-  MasterBanks:
-  - Master
-  Banks:
-  - Env
-  - ImpactSounds
-  - Player
-  - RWR
-  - UI
-  - VO
-  - Weapon
+  MasterBanks: []
+  Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
