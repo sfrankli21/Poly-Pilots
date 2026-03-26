@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 8b1b3434b17782b4e882b4f562587be1
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Transport Aircraft.prefab
+  uploadId: 721855

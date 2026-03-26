@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e5aa7b4257b17d74ca6a062efb9c8d6c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/Wind Field Arrow.prefab
+  uploadId: 721855

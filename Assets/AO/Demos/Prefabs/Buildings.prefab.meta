@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c5a6be8319ab25148884422031cbf64c
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Buildings.prefab
+  uploadId: 721855

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: dd86f1fe52b8e9e40aab51e63e11e5e9
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Smoke Mast (Coloured smoke).prefab
+  uploadId: 721855

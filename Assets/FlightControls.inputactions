@@ -302,20 +302,9 @@
                     "id": "434471f7-e1fe-44b2-baf1-4b92aea48f52",
                     "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/stick/y",
                     "interactions": "",
-                    "processors": "Invert",
+                    "processors": "",
                     "groups": "",
                     "action": "Pitch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "1ff6037b-e19f-4627-a908-c2a012d138fd",
-                    "path": "<HID::Saitek Saitek Pro Flight Rudder Pedals>/rz",
-                    "interactions": "",
-                    "processors": "Invert",
-                    "groups": "",
-                    "action": "Yaw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -503,6 +492,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "AirBrake",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "81900a1a-a16e-438b-9a78-3c2bc6e30347",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/rx",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Yaw",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

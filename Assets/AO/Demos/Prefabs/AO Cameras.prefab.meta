@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a997a648781220a4ead7a72f4acfa921
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/AO Cameras.prefab
+  uploadId: 721855

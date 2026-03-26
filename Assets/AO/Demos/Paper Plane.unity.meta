@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: b8520ab6548d57f46959c8ef8efe562d
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Paper Plane.unity
+  uploadId: 721855

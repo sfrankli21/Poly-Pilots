@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 907ab75317cb9304180e1a3eed290e10
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Ground Plane.prefab
+  uploadId: 721855

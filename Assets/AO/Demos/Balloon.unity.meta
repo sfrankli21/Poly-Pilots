@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c56c93e57b2187d44a9a3993eef698ae
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Balloon.unity
+  uploadId: 721855

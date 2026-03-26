@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 2f5dc100066fdba4c8b7f218fb9e60e7
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Scripts/FlowRoundAnAerofoil.cs
+  uploadId: 721855

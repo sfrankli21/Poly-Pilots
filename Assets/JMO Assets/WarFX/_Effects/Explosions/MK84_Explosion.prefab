@@ -4857,6 +4857,7 @@ GameObject:
   - component: {fileID: 19900002}
   - component: {fileID: 11400000}
   - component: {fileID: 3020961236363015127}
+  - component: {fileID: 7637652598734674323}
   m_Layer: 0
   m_Name: MK84_Explosion
   m_TagString: Untagged
@@ -4874,7 +4875,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 400012}
@@ -9740,6 +9741,23 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 0
   OverrideMaxDistance: 2200
+--- !u!114 &7637652598734674323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baab22f52ae18ed43b88c79dfc1d5f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 2000
+  minDamage: 100
+  damageFalloff: 0
+  explosiveRadius: 150
+  detonateOnAwake: 1
 --- !u!1 &100004
 GameObject:
   m_ObjectHideFlags: 0

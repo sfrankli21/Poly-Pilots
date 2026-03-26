@@ -287,6 +287,30 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 650
   Length: 3120
+--- !u!114 &-8382405091629225247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/FOX2/HasTarget
+  m_EditorClassIdentifier: 
+  Name: HasTarget
+  StudioPath: 
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 1717144483
+    data2: 100720685
+  Type: 0
+  IsGlobal: 0
+  Labels: []
+  Exists: 1
 --- !u!114 &-8270192278194144252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -536,6 +560,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 750
   Length: 7400
+--- !u!114 &-7524675470563304345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RWR/RWRSpike
+  m_EditorClassIdentifier: 
+  Path: event:/RWR/RWRSpike
+  Guid:
+    Data1: 972277111
+    Data2: 1253717290
+    Data3: 2128717962
+    Data4: 1892091205
+  Banks:
+  - {fileID: 5376523679666680767}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 295
 --- !u!114 &-7458026874701891754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,34 +878,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 517
---- !u!114 &-6543172972889180222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Fox2Buzz
-  m_EditorClassIdentifier: 
-  Path: event:/Fox2Buzz
-  Guid:
-    Data1: 2070288686
-    Data2: 1158393335
-    Data3: -1835295582
-    Data4: 1037789678
-  Banks:
-  - {fileID: 5376523679666680767}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 0
-  Parameters:
-  - {fileID: 5837463953064578269}
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 1250
 --- !u!114 &-6483593745128873243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1896,7 +1919,7 @@ MonoBehaviour:
   Path: E:/FMODProject/ARVR420FMOD/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 639099822620000000
+  lastModified: 639100641480000000
   FileSizes:
   - Name: Desktop
     Value: 3632384
@@ -2555,6 +2578,34 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 800
+--- !u!114 &-2451937815710297756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RWR/FOX2
+  m_EditorClassIdentifier: 
+  Path: event:/RWR/FOX2
+  Guid:
+    Data1: 2070288686
+    Data2: 1158393335
+    Data3: -1835295582
+    Data4: 1037789678
+  Banks:
+  - {fileID: 5376523679666680767}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -8382405091629225247}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1250
 --- !u!114 &-2334308477788213986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3159,6 +3210,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1959
+--- !u!114 &-912532884853974558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/RWR/RWRNewContact
+  m_EditorClassIdentifier: 
+  Path: event:/RWR/RWRNewContact
+  Guid:
+    Data1: 2143396436
+    Data2: 1102588610
+    Data3: 934590640
+    Data4: -141511183
+  Banks:
+  - {fileID: 5376523679666680767}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 360
 --- !u!114 &-843998370480492562
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3461,15 +3539,16 @@ MonoBehaviour:
   - {fileID: 8654166338902576898}
   - {fileID: 986736121865099835}
   - {fileID: 4582094005616882495}
-  - {fileID: 1717235854407594124}
-  - {fileID: -6543172972889180222}
+  - {fileID: -7524675470563304345}
+  - {fileID: -912532884853974558}
+  - {fileID: -2451937815710297756}
   EditorParameters: []
   MasterBanks:
   - {fileID: -3906993826010595209}
   StringsBanks:
   - {fileID: 7946354583422178802}
   cacheVersion: 131849
-  cacheTime: 639099833180000000
+  cacheTime: 639100657620000000
   SerializableEventsDict:
   - key: event:/Impacts/ConcreteImpact
     index: 0
@@ -3555,10 +3634,12 @@ MonoBehaviour:
     index: 40
   - key: event:/RWR/OverG
     index: 41
-  - key: event:/RWR/NewContact
+  - key: event:/RWR/RWRSpike
     index: 42
-  - key: event:/Fox2Buzz
+  - key: event:/RWR/RWRNewContact
     index: 43
+  - key: event:/RWR/FOX2
+    index: 44
 --- !u!114 &34190066911514458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4152,33 +4233,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 156
---- !u!114 &1717235854407594124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/RWR/NewContact
-  m_EditorClassIdentifier: 
-  Path: event:/RWR/NewContact
-  Guid:
-    Data1: 2143396436
-    Data2: 1102588610
-    Data3: 934590640
-    Data4: -141511183
-  Banks:
-  - {fileID: 5376523679666680767}
-  IsStream: 1
-  Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 360
 --- !u!114 &1783252747906172340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5675,10 +5729,10 @@ MonoBehaviour:
   Path: E:/FMODProject/ARVR420FMOD/Build/Desktop/RWR.bank
   Name: RWR
   StudioPath: bank:/RWR
-  lastModified: 639099833180000000
+  lastModified: 639100657620000000
   FileSizes:
   - Name: Desktop
-    Value: 347040
+    Value: 348192
   Exists: 1
 --- !u!114 &5415241440060090309
 MonoBehaviour:
@@ -5903,30 +5957,6 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 650
   Length: 2136
---- !u!114 &5837463953064578269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
-  m_Name: parameter:/Fox2Buzz/HasTarget
-  m_EditorClassIdentifier: 
-  Name: HasTarget
-  StudioPath: 
-  Min: 0
-  Max: 1
-  Default: 0
-  ID:
-    data1: 1717144483
-    data2: 100720685
-  Type: 0
-  IsGlobal: 0
-  Labels: []
-  Exists: 1
 --- !u!114 &5865693490699729666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6720,10 +6750,10 @@ MonoBehaviour:
   Path: E:/FMODProject/ARVR420FMOD/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 639099822620000000
+  lastModified: 639100641480000000
   FileSizes:
   - Name: Desktop
-    Value: 3128
+    Value: 3164
   Exists: 1
 --- !u!114 &8023402841690047021
 MonoBehaviour:

@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 81c37745dde68b145bcf91fedf70d265
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Airship.prefab
+  uploadId: 721855

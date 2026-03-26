@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ec417046536d9884aaf797facf5f2244
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Materials/AO white.mat
+  uploadId: 721855

@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 6f93de5efcc5b0f4cae9e95839cb2905
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Tutorial Scenes/Scripts/AircraftManager_Tutorial_5.cs
+  uploadId: 721855

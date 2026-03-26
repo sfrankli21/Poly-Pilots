@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: 5f110b7b3ae068045b2b1f57551349bd
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Aeroman figure.prefab
+  uploadId: 721855

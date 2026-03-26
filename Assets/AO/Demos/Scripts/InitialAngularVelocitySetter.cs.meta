@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: f596ee347948ed6499caa5df4fe0c1d5
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Scripts/InitialAngularVelocitySetter.cs
+  uploadId: 721855

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 920158e28a981974aac2716f921cbe5d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 4300000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Meshes/FoilboardRider.asset
+  uploadId: 721855

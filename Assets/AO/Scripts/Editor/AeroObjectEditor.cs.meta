@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: d2d395a587dcc924cad75322238f676f
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: 27a8b6877661a3e4a84da9ae7cd3bf1f, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Scripts/Editor/AeroObjectEditor.cs
+  uploadId: 721855

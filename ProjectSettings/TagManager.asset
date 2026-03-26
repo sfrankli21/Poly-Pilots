@@ -20,6 +20,7 @@ TagManager:
   - AirBrakeStatusTextDisplay
   - SelectedPylonTextDisplay
   - Bullet
+  - PlayerRCS
   layers:
   - Default
   - TransparentFX

@@ -4,58 +4,56 @@ using System.Collections;
 public class ObjectHealth : MonoBehaviour
 {
     public float health;
-
     public float currentHealth;
-
     public GameObject AliveVisual;
-
     public GameObject DeadVisual;
-
     public bool isAlive;
-
     public bool destroyOnDeath;
-
     public string bulletTag;
-
     public float bulletDamage;
+
+    bool deathStarted;
+
+    void Start()
+    {
+        currentHealth = health;
+        isAlive = true;
+        UpdateVisualState();
+    }
 
     public void CheckAlive()
     {
-        
-        if (currentHealth == 0)
+        if (currentHealth <= 0f)
         {
+            currentHealth = 0f;
             isAlive = false;
 
-            if (isAlive == false)
+            UpdateVisualState();
+
+            if (destroyOnDeath && !deathStarted)
             {
-                AliveVisual.SetActive(false);
-                DeadVisual.SetActive(true);
-                if(destroyOnDeath==true)
-                {
-                    StartCoroutine(Death());
-                }
+                deathStarted = true;
+                StartCoroutine(Death());
             }
-            if (isAlive == true)
-            {
-                AliveVisual.SetActive(true);
-                DeadVisual.SetActive(false);
-            }
+        }
+        else
+        {
+            isAlive = true;
+            UpdateVisualState();
         }
     }
 
     public void ApplyDamage(float damage)
     {
-        if (damage <= currentHealth)
+        if (!isAlive)
         {
-            currentHealth -= damage;
+            return;
         }
 
-        if (damage >= currentHealth)
-        {
-            currentHealth = 0;
-        }
+        currentHealth -= damage;
         CheckAlive();
     }
+
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag(bulletTag))
@@ -64,28 +62,22 @@ public class ObjectHealth : MonoBehaviour
         }
     }
 
+    void UpdateVisualState()
+    {
+        if (AliveVisual != null)
+        {
+            AliveVisual.SetActive(isAlive);
+        }
+
+        if (DeadVisual != null)
+        {
+            DeadVisual.SetActive(!isAlive);
+        }
+    }
+
     IEnumerator Death()
     {
-        yield return new WaitForSeconds(10.00f);
-        Destroy(this.gameObject);
-    }
-
-
-
-
-
-    void Start()
-    {
-        currentHealth = health;
-        isAlive = true;
-        
-    }
-
-
-    
-    
-    void Update()
-    {
-        
+        yield return new WaitForSeconds(10f);
+        Destroy(gameObject);
     }
 }

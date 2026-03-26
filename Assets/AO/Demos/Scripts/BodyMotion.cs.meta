@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 81826988cb49c4f4cad9d761d7f86521
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Scripts/BodyMotion.cs
+  uploadId: 721855

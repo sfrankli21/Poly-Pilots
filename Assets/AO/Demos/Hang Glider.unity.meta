@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: ba1ee5cfb67b4f64cb8e20e47f9c424e
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Hang Glider.unity
+  uploadId: 721855

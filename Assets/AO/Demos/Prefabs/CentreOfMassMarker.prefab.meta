@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: e458bf64fb50a9444ad2c627adc344ff
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/CentreOfMassMarker.prefab
+  uploadId: 721855

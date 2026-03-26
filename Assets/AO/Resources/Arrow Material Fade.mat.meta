@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 940b0c88167d1e645bf2a7af3b185982
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Resources/Arrow Material Fade.mat
+  uploadId: 721855

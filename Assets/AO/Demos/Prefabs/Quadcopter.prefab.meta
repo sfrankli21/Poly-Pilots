@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a3b12db0b6477d243a10659e64cd5368
+PrefabImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 251378
+  packageName: Aerodynamic Objects Core
+  packageVersion: 2.0.1
+  assetPath: Assets/AO/Demos/Prefabs/Quadcopter.prefab
+  uploadId: 721855
