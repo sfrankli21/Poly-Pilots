@@ -139,6 +139,7 @@ public class RadarWarningReceiver : MonoBehaviour
         if (entry.label != null)
         {
             entry.label.gameObject.SetActive(showLabels);
+            entry.label.text = radar.RWRID;
         }
 
         activeContacts.Add(entry);
@@ -231,10 +232,9 @@ public class RadarWarningReceiver : MonoBehaviour
             if (contact.label != null)
             {
                 contact.label.gameObject.SetActive(showLabels);
-
                 if (showLabels)
                 {
-                    contact.label.text = contact.radar.name;
+                    contact.label.text = contact.radar.RWRID;
                 }
             }
         }

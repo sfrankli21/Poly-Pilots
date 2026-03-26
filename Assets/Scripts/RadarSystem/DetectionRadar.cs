@@ -22,6 +22,7 @@ public class DetectionRadar : MonoBehaviour
     public RadarRange currentRange = RadarRange.Range_5000;
 
     public string rcsTag = "RCS";
+    public string RWRID;
     public float scanInterval = 0.25f;
 
     public EventReference FirstPing;
