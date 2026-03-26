@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7462978747790148595}
   - component: {fileID: 351806099931487466}
   - component: {fileID: 4568249054462381794}
+  - component: {fileID: 1598345984032739878}
   m_Layer: 6
   m_Name: BulletPrefab
   m_TagString: Bullet
@@ -78,6 +79,21 @@ MonoBehaviour:
         Data3: -1830341462
         Data4: -108242841
       Path: event:/Impacts/ConcreteImpact
+  OnBeforeReturnToPool:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1598345984032739878}
+        m_TargetAssemblyTypeName: ExplosiveObject, Assembly-CSharp
+        m_MethodName: Detonate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!54 &351806099931487466
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -126,6 +142,24 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1598345984032739878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3397984360709481572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baab22f52ae18ed43b88c79dfc1d5f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 10
+  minDamage: 7.5
+  damageFalloff: 0
+  explosiveRadius: 5
+  detonateOnAwake: 0
+  allowMultipleDetonations: 1
 --- !u!1 &3920975894357903922
 GameObject:
   m_ObjectHideFlags: 0

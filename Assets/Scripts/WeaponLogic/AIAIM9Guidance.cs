@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEngine.Events;
+using FMODUnity;
+using FMOD.Studio;
 
 public class AIAIM9Guidance : MonoBehaviour
 {
@@ -41,6 +43,8 @@ public class AIAIM9Guidance : MonoBehaviour
     public Color seekerPathColor = Color.yellow;
     public Color seekerHitColor = Color.red;
     public float seekerHitMarkerSize = 1f;
+    public EventReference RWRLaunch;
+    public string RWRID;
     public UnityEvent OnReleased;
 
     public string lastSeekerHitName;
@@ -58,6 +62,8 @@ public class AIAIM9Guidance : MonoBehaviour
     bool seekerHasHit;
     Vector3 seekerHitPoint;
     float seekerLastCastDistance;
+    EventInstance rwrLaunchInstance;
+    bool rwrLaunchPlaying;
 
     void Awake()
     {
@@ -91,6 +97,7 @@ public class AIAIM9Guidance : MonoBehaviour
         targetAcceleration = Vector3.zero;
         previousTargetVelocity = Vector3.zero;
         hasPreviousTargetVelocity = false;
+        StopRWRLaunchLoop();
 
         if (targetTransform != null)
         {
@@ -106,6 +113,16 @@ public class AIAIM9Guidance : MonoBehaviour
         {
             ExplosionTrigger.enabled = false;
         }
+    }
+
+    void OnDisable()
+    {
+        StopRWRLaunchLoop();
+    }
+
+    void OnDestroy()
+    {
+        StopRWRLaunchLoop();
     }
 
     void FixedUpdate()
@@ -143,6 +160,7 @@ public class AIAIM9Guidance : MonoBehaviour
         UpdateTargetKinematics();
         UpdateGuidance();
         UpdatePropulsion();
+        UpdateRWRLaunch3DAttributes();
     }
 
     public void SetTarget(Transform newTarget)
@@ -229,6 +247,7 @@ public class AIAIM9Guidance : MonoBehaviour
             ExplosionTrigger.enabled = true;
         }
 
+        StartRWRLaunchLoop();
         OnReleased.Invoke();
     }
 
@@ -240,6 +259,7 @@ public class AIAIM9Guidance : MonoBehaviour
         }
 
         detonated = true;
+        StopRWRLaunchLoop();
 
         if (ExplosionPrefab != null)
         {
@@ -247,6 +267,42 @@ public class AIAIM9Guidance : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    void StartRWRLaunchLoop()
+    {
+        if (RWRLaunch.IsNull)
+        {
+            return;
+        }
+
+        StopRWRLaunchLoop();
+        rwrLaunchInstance = RuntimeManager.CreateInstance(RWRLaunch);
+        RuntimeManager.AttachInstanceToGameObject(rwrLaunchInstance, transform, missileRigidbody);
+        rwrLaunchInstance.start();
+        rwrLaunchPlaying = true;
+    }
+
+    void StopRWRLaunchLoop()
+    {
+        if (!rwrLaunchPlaying)
+        {
+            return;
+        }
+
+        rwrLaunchInstance.stop(STOP_MODE.IMMEDIATE);
+        rwrLaunchInstance.release();
+        rwrLaunchPlaying = false;
+    }
+
+    void UpdateRWRLaunch3DAttributes()
+    {
+        if (!rwrLaunchPlaying)
+        {
+            return;
+        }
+
+        RuntimeManager.AttachInstanceToGameObject(rwrLaunchInstance, transform, missileRigidbody);
     }
 
     void UpdateRadarGimble()
@@ -556,6 +612,10 @@ public class AIAIM9Guidance : MonoBehaviour
         }
 
         if (other.CompareTag("PlayerRCS"))
+        {
+            Detonate();
+        }
+        if (other.CompareTag("Flare"))
         {
             Detonate();
         }

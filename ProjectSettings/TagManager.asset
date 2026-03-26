@@ -21,6 +21,7 @@ TagManager:
   - SelectedPylonTextDisplay
   - Bullet
   - PlayerRCS
+  - Flare
   layers:
   - Default
   - TransparentFX

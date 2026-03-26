@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using FMODUnity;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -16,6 +17,7 @@ public class bulletLogic : MonoBehaviour
     public float speed;
     public float lifeTime;
     public ImpactPerMaterial[] ImpactsPerMaterial;
+    public UnityEvent OnBeforeReturnToPool;
 
     Rigidbody rb;
     float timer;
@@ -43,7 +45,7 @@ public class bulletLogic : MonoBehaviour
 
         if (timer <= 0f)
         {
-            gameObject.SetActive(false);
+            ReturnToPool();
         }
     }
 
@@ -98,13 +100,19 @@ public class bulletLogic : MonoBehaviour
             }
         }
 
-        gameObject.SetActive(false);
+        ReturnToPool();
     }
 
     void OnDisable()
     {
         rb.linearVelocity = Vector3.zero;
         rb.angularVelocity = Vector3.zero;
+    }
+
+    void ReturnToPool()
+    {
+        OnBeforeReturnToPool.Invoke();
+        gameObject.SetActive(false);
     }
 
     void InitializeImpactPools()

@@ -232,6 +232,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "FireCounterMeasure",
+                    "type": "Button",
+                    "id": "df86ce4e-246a-498b-b963-d74ada406106",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "AirBrake",
                     "type": "Value",
                     "id": "d2dd878b-eff4-4ce0-9451-6f31db638c44",
@@ -486,6 +495,17 @@
                 },
                 {
                     "name": "",
+                    "id": "3585c97c-d5d6-482e-884c-1c066e0fcb15",
+                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/button5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FireCounterMeasure",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "4a96536f-9db6-49fc-8938-0079bb0bbf03",
                     "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Throttle>/z",
                     "interactions": "",
@@ -498,9 +518,9 @@
                 {
                     "name": "",
                     "id": "81900a1a-a16e-438b-9a78-3c2bc6e30347",
-                    "path": "<HID::Mad Catz Saitek Pro Flight X-56 Rhino Stick>/rx",
+                    "path": "<HID::Saitek Saitek Pro Flight Rudder Pedals>/rz",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "Invert",
                     "groups": "",
                     "action": "Yaw",
                     "isComposite": false,

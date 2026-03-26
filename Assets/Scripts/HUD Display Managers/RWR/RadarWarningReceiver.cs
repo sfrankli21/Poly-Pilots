@@ -9,6 +9,7 @@ public class RadarWarningReceiver : MonoBehaviour
     public class RWRContactUI
     {
         public DetectionRadar radar;
+        public AIAIM9Guidance missile;
         public RectTransform icon;
         public Image iconImage;
         public TMP_Text label;
@@ -32,8 +33,10 @@ public class RadarWarningReceiver : MonoBehaviour
     public List<RWRContactUI> activeContacts = new List<RWRContactUI>();
 
     float updateTimer;
-    readonly Dictionary<DetectionRadar, RWRContactUI> contactMap = new Dictionary<DetectionRadar, RWRContactUI>();
+    readonly Dictionary<DetectionRadar, RWRContactUI> radarContactMap = new Dictionary<DetectionRadar, RWRContactUI>();
+    readonly Dictionary<AIAIM9Guidance, RWRContactUI> missileContactMap = new Dictionary<AIAIM9Guidance, RWRContactUI>();
     readonly List<DetectionRadar> radarsBuffer = new List<DetectionRadar>();
+    readonly List<AIAIM9Guidance> missilesBuffer = new List<AIAIM9Guidance>();
 
     void Update()
     {
@@ -50,6 +53,12 @@ public class RadarWarningReceiver : MonoBehaviour
 
     void RefreshContacts()
     {
+        RefreshRadarContacts();
+        RefreshMissileContacts();
+    }
+
+    void RefreshRadarContacts()
+    {
         radarsBuffer.Clear();
         DetectionRadar[] allRadars = FindObjectsByType<DetectionRadar>(FindObjectsSortMode.None);
 
@@ -65,9 +74,14 @@ public class RadarWarningReceiver : MonoBehaviour
         {
             RWRContactUI existing = activeContacts[i];
 
-            if (existing == null || existing.radar == null || !radarsBuffer.Contains(existing.radar))
+            if (existing == null || existing.radar == null)
             {
-                RemoveContact(existing != null ? existing.radar : null);
+                continue;
+            }
+
+            if (!radarsBuffer.Contains(existing.radar))
+            {
+                RemoveRadarContact(existing.radar);
                 continue;
             }
 
@@ -77,7 +91,7 @@ public class RadarWarningReceiver : MonoBehaviour
             }
             else if (Time.time - existing.lastDetectedTime > blipPersistTime)
             {
-                RemoveContact(existing.radar);
+                RemoveRadarContact(existing.radar);
             }
         }
 
@@ -87,14 +101,62 @@ public class RadarWarningReceiver : MonoBehaviour
 
             if (RadarHasLockOnThisJet(radar))
             {
-                if (!contactMap.ContainsKey(radar))
+                if (!radarContactMap.ContainsKey(radar))
                 {
-                    CreateContact(radar);
+                    CreateRadarContact(radar);
                 }
                 else
                 {
-                    contactMap[radar].lastDetectedTime = Time.time;
+                    radarContactMap[radar].lastDetectedTime = Time.time;
                 }
+            }
+        }
+    }
+
+    void RefreshMissileContacts()
+    {
+        missilesBuffer.Clear();
+        AIAIM9Guidance[] allMissiles = FindObjectsByType<AIAIM9Guidance>(FindObjectsSortMode.None);
+
+        for (int i = 0; i < allMissiles.Length; i++)
+        {
+            AIAIM9Guidance missile = allMissiles[i];
+
+            if (missile == null)
+            {
+                continue;
+            }
+
+            if (!missile.released)
+            {
+                continue;
+            }
+
+            missilesBuffer.Add(missile);
+        }
+
+        List<AIAIM9Guidance> missilesToRemove = new List<AIAIM9Guidance>();
+
+        foreach (KeyValuePair<AIAIM9Guidance, RWRContactUI> pair in missileContactMap)
+        {
+            if (pair.Key == null || !missilesBuffer.Contains(pair.Key))
+            {
+                missilesToRemove.Add(pair.Key);
+            }
+        }
+
+        for (int i = 0; i < missilesToRemove.Count; i++)
+        {
+            RemoveMissileContact(missilesToRemove[i]);
+        }
+
+        for (int i = 0; i < missilesBuffer.Count; i++)
+        {
+            AIAIM9Guidance missile = missilesBuffer[i];
+
+            if (!missileContactMap.ContainsKey(missile))
+            {
+                CreateMissileContact(missile);
             }
         }
     }
@@ -117,7 +179,7 @@ public class RadarWarningReceiver : MonoBehaviour
         return false;
     }
 
-    void CreateContact(DetectionRadar radar)
+    void CreateRadarContact(DetectionRadar radar)
     {
         if (radar == null || contactPrefab == null || rwrDisplay == null)
         {
@@ -131,6 +193,7 @@ public class RadarWarningReceiver : MonoBehaviour
 
         RWRContactUI entry = new RWRContactUI();
         entry.radar = radar;
+        entry.missile = null;
         entry.icon = iconRect;
         entry.iconImage = iconImage;
         entry.label = label;
@@ -143,17 +206,47 @@ public class RadarWarningReceiver : MonoBehaviour
         }
 
         activeContacts.Add(entry);
-        contactMap.Add(radar, entry);
+        radarContactMap.Add(radar, entry);
     }
 
-    void RemoveContact(DetectionRadar radar)
+    void CreateMissileContact(AIAIM9Guidance missile)
+    {
+        if (missile == null || contactPrefab == null || rwrDisplay == null)
+        {
+            return;
+        }
+
+        GameObject iconObject = Instantiate(contactPrefab, rwrDisplay);
+        RectTransform iconRect = iconObject.GetComponent<RectTransform>();
+        Image iconImage = iconObject.GetComponent<Image>();
+        TMP_Text label = iconObject.GetComponentInChildren<TMP_Text>(true);
+
+        RWRContactUI entry = new RWRContactUI();
+        entry.radar = null;
+        entry.missile = missile;
+        entry.icon = iconRect;
+        entry.iconImage = iconImage;
+        entry.label = label;
+        entry.lastDetectedTime = Time.time;
+
+        if (entry.label != null)
+        {
+            entry.label.gameObject.SetActive(showLabels);
+            entry.label.text = missile.RWRID;
+        }
+
+        activeContacts.Add(entry);
+        missileContactMap.Add(missile, entry);
+    }
+
+    void RemoveRadarContact(DetectionRadar radar)
     {
         if (radar == null)
         {
             return;
         }
 
-        if (!contactMap.TryGetValue(radar, out RWRContactUI entry))
+        if (!radarContactMap.TryGetValue(radar, out RWRContactUI entry))
         {
             return;
         }
@@ -164,7 +257,28 @@ public class RadarWarningReceiver : MonoBehaviour
         }
 
         activeContacts.Remove(entry);
-        contactMap.Remove(radar);
+        radarContactMap.Remove(radar);
+    }
+
+    void RemoveMissileContact(AIAIM9Guidance missile)
+    {
+        if (missile == null)
+        {
+            return;
+        }
+
+        if (!missileContactMap.TryGetValue(missile, out RWRContactUI entry))
+        {
+            return;
+        }
+
+        if (entry != null && entry.icon != null)
+        {
+            Destroy(entry.icon.gameObject);
+        }
+
+        activeContacts.Remove(entry);
+        missileContactMap.Remove(missile);
     }
 
     void UpdateContactPositions()
@@ -175,18 +289,45 @@ public class RadarWarningReceiver : MonoBehaviour
         {
             RWRContactUI contact = activeContacts[i];
 
-            if (contact == null || contact.radar == null || contact.icon == null)
+            if (contact == null || contact.icon == null)
             {
-                if (contact != null && contact.radar != null)
+                activeContacts.RemoveAt(i);
+                continue;
+            }
+
+            Transform sourceTransform = null;
+
+            if (contact.radar != null)
+            {
+                sourceTransform = contact.radar.transform;
+            }
+            else if (contact.missile != null)
+            {
+                sourceTransform = contact.missile.transform;
+            }
+
+            if (sourceTransform == null)
+            {
+                if (contact.radar != null)
                 {
-                    contactMap.Remove(contact.radar);
+                    radarContactMap.Remove(contact.radar);
+                }
+
+                if (contact.missile != null)
+                {
+                    missileContactMap.Remove(contact.missile);
+                }
+
+                if (contact.icon != null)
+                {
+                    Destroy(contact.icon.gameObject);
                 }
 
                 activeContacts.RemoveAt(i);
                 continue;
             }
 
-            Vector3 toEmitter = contact.radar.transform.position - transform.position;
+            Vector3 toEmitter = sourceTransform.position - transform.position;
             Vector3 local = transform.InverseTransformDirection(toEmitter.normalized);
 
             Vector2 topDownDirection = new Vector2(local.x, local.z);
@@ -204,8 +345,14 @@ public class RadarWarningReceiver : MonoBehaviour
 
             if (scaleByDistance)
             {
-                float maxDistance = useRadarRangeForDistanceNormalization ? contact.radar.CurrentRangeValue : manualMaxDistance;
-                float actualDistance = Vector3.Distance(transform.position, contact.radar.transform.position);
+                float maxDistance = manualMaxDistance;
+
+                if (contact.radar != null && useRadarRangeForDistanceNormalization)
+                {
+                    maxDistance = contact.radar.CurrentRangeValue;
+                }
+
+                float actualDistance = Vector3.Distance(transform.position, sourceTransform.position);
                 float t = Mathf.Clamp01(actualDistance / Mathf.Max(1f, maxDistance));
                 radialDistance = Mathf.Lerp(displayRadius * 0.35f, displayRadius, t);
             }
@@ -218,8 +365,14 @@ public class RadarWarningReceiver : MonoBehaviour
 
             if (scaleByDistance)
             {
-                float maxDistance = useRadarRangeForDistanceNormalization ? contact.radar.CurrentRangeValue : manualMaxDistance;
-                float actualDistance = Vector3.Distance(transform.position, contact.radar.transform.position);
+                float maxDistance = manualMaxDistance;
+
+                if (contact.radar != null && useRadarRangeForDistanceNormalization)
+                {
+                    maxDistance = contact.radar.CurrentRangeValue;
+                }
+
+                float actualDistance = Vector3.Distance(transform.position, sourceTransform.position);
                 float t = 1f - Mathf.Clamp01(actualDistance / Mathf.Max(1f, maxDistance));
                 float scale = Mathf.Lerp(minScale, maxScale, t);
                 contact.icon.localScale = Vector3.one * scale;
@@ -232,9 +385,17 @@ public class RadarWarningReceiver : MonoBehaviour
             if (contact.label != null)
             {
                 contact.label.gameObject.SetActive(showLabels);
+
                 if (showLabels)
                 {
-                    contact.label.text = contact.radar.RWRID;
+                    if (contact.radar != null)
+                    {
+                        contact.label.text = contact.radar.RWRID;
+                    }
+                    else if (contact.missile != null)
+                    {
+                        contact.label.text = contact.missile.RWRID;
+                    }
                 }
             }
         }
@@ -263,6 +424,23 @@ public class RadarWarningReceiver : MonoBehaviour
             if (RadarHasLockOnThisJet(radar))
             {
                 Gizmos.DrawLine(transform.position, radar.transform.position);
+            }
+        }
+
+        AIAIM9Guidance[] allMissiles = FindObjectsByType<AIAIM9Guidance>(FindObjectsSortMode.None);
+
+        for (int i = 0; i < allMissiles.Length; i++)
+        {
+            AIAIM9Guidance missile = allMissiles[i];
+
+            if (missile == null)
+            {
+                continue;
+            }
+
+            if (missile.released)
+            {
+                Gizmos.DrawLine(transform.position, missile.transform.position);
             }
         }
     }

@@ -34,6 +34,7 @@ public class InputRouter : MonoBehaviour
     InputAction gOverrideAction;
     InputAction shootGunAction;
     InputAction airBrakeAction;
+    InputAction fireCounterMeasureAction;
 
     public float LeftEngines;
     public float RightEngines;
@@ -61,6 +62,7 @@ public class InputRouter : MonoBehaviour
     public bool GOverride;
     public bool ShootGun;
     public float AirBrake;
+    public bool FireCounterMeasure;
 
     void Awake()
     {
@@ -129,6 +131,7 @@ public class InputRouter : MonoBehaviour
         gOverrideAction = actionMap.FindAction("GOverride", false);
         shootGunAction = actionMap.FindAction("ShootGun", false);
         airBrakeAction = actionMap.FindAction("AirBrake", false);
+        fireCounterMeasureAction = actionMap.FindAction("FireCounterMeasure", false);
     }
 
     void Update()
@@ -159,6 +162,7 @@ public class InputRouter : MonoBehaviour
         GOverride = ReadButton(gOverrideAction);
         ShootGun = ReadButton(shootGunAction);
         AirBrake = ReadFloat(airBrakeAction);
+        FireCounterMeasure = ReadButton(fireCounterMeasureAction);
     }
 
     float ReadFloat(InputAction action)
@@ -209,5 +213,6 @@ public class InputRouter : MonoBehaviour
         GOverride = false;
         ShootGun = false;
         AirBrake = 0f;
+        FireCounterMeasure = false;
     }
 }

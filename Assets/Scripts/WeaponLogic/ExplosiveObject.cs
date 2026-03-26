@@ -17,6 +17,7 @@ public class ExplosiveObject : MonoBehaviour
 
     public float explosiveRadius = 10f;
     public bool detonateOnAwake = false;
+    public bool allowMultipleDetonations = false;
 
     bool hasDetonated;
 
@@ -28,9 +29,14 @@ public class ExplosiveObject : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        hasDetonated = false;
+    }
+
     public void Detonate()
     {
-        if (hasDetonated)
+        if (!allowMultipleDetonations && hasDetonated)
         {
             return;
         }
