@@ -31,7 +31,7 @@ MonoBehaviour:
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 5
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
     allowAIM9M: 1
@@ -49,7 +49,7 @@ MonoBehaviour:
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 7
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 0
     allowAIM9M: 0
@@ -67,15 +67,6 @@ MonoBehaviour:
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 7
-  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
-    allowAIM120C5: 1
-    allowAIM9M: 1
-    allowAGM88: 0
-    allowGBU32: 0
-    allowMK84: 1
-    allowFUELPOD: 0
-    allowZUNI: 1
     SelectedWeapon: 5
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
@@ -85,7 +76,7 @@ MonoBehaviour:
     allowMK84: 1
     allowFUELPOD: 0
     allowZUNI: 1
-    SelectedWeapon: 5
+    SelectedWeapon: 2
   - PylonLocalXYZ: {x: 0, y: 0, z: 0}
     allowAIM120C5: 1
     allowAIM9M: 1
@@ -95,3 +86,12 @@ MonoBehaviour:
     allowFUELPOD: 0
     allowZUNI: 1
     SelectedWeapon: 7
+  - PylonLocalXYZ: {x: 0, y: 0, z: 0}
+    allowAIM120C5: 1
+    allowAIM9M: 1
+    allowAGM88: 0
+    allowGBU32: 0
+    allowMK84: 1
+    allowFUELPOD: 0
+    allowZUNI: 1
+    SelectedWeapon: 2

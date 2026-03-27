@@ -1254,7 +1254,7 @@ MonoBehaviour:
   Parameters:
   - {fileID: 120900115781049853}
   MinDistance: 0
-  MaxDistance: 800
+  MaxDistance: 4000
   Length: 2000
 --- !u!114 &-6747454459976384899
 MonoBehaviour:
@@ -3471,7 +3471,7 @@ MonoBehaviour:
   Path: G:/FMODProject/ARVR420FMOD/Build/Desktop/Player.bank
   Name: Player
   StudioPath: bank:/Player
-  lastModified: 639101488760000000
+  lastModified: 639102187040000000
   FileSizes:
   - Name: Desktop
     Value: 470400
@@ -5036,7 +5036,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 436489248299391695}
   cacheVersion: 131849
-  cacheTime: 639101488760000000
+  cacheTime: 639102187040000000
   SerializableEventsDict:
   - key: event:/Impacts/ConcreteImpact
     index: 0

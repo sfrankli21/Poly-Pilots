@@ -55,6 +55,9 @@ public class NewRadar : MonoBehaviour
     [SerializeField, InspectorName("RCS Tag")]
     string rcsTag = "RCS";
 
+    [SerializeField, InspectorName("Radar Mask")]
+    LayerMask radarMask = ~0;
+
     [SerializeField, InspectorName("Scan Interval")]
     float scanInterval = 0.1f;
 
@@ -899,6 +902,12 @@ public class NewRadar : MonoBehaviour
             GameObject rcsObject = rcsObjects[i];
             if (rcsObject == null) continue;
 
+            if (((1 << rcsObject.layer) & radarMask.value) == 0)
+            {
+                RemoveContact(rcsObject);
+                continue;
+            }
+
             Transform rcsTransform = rcsObject.transform;
 
             Vector3 toTarget = rcsTransform.position - g.position;
@@ -917,7 +926,7 @@ public class NewRadar : MonoBehaviour
 
             bool insideCone = Mathf.Abs(yawDeg) <= horizontalAngleDeg && Mathf.Abs(pitchDeg) <= verticalAngleDeg;
 
-            bool hitSomething = Physics.Raycast(g.position, dirWorld, out RaycastHit hit, maxDistance, ~0, QueryTriggerInteraction.Ignore);
+            bool hitSomething = Physics.Raycast(g.position, dirWorld, out RaycastHit hit, maxDistance, radarMask, QueryTriggerInteraction.Ignore);
 
             bool unobstructedLos = false;
             if (hitSomething)
@@ -937,7 +946,7 @@ public class NewRadar : MonoBehaviour
 
             Color c = isGreen ? Color.green : Color.red;
 
-            float visualDist = Mathf.Min(targetDist, maxDistance);
+            float visualDist = hitSomething ? Mathf.Min(hit.distance, maxDistance) : Mathf.Min(targetDist, maxDistance);
             Vector3 visualEnd = g.position + dirWorld * visualDist;
 
             if (rayStarts != null && rayCount < rayStarts.Length)

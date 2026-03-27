@@ -24187,6 +24187,10 @@ MonoBehaviour:
   damageFalloff: 0
   explosiveRadius: 20
   detonateOnAwake: 1
+  allowMultipleDetonations: 0
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 16385
 --- !u!1 &100010
 GameObject:
   m_ObjectHideFlags: 0

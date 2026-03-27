@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a0acdfa5548614193fff64435bf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 400
   gravityMultiplier: 1
   Impact:
     m_PersistentCalls:
@@ -273,7 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a0acdfa5548614193fff64435bf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 400
   gravityMultiplier: 1
   Impact:
     m_PersistentCalls:
@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a0acdfa5548614193fff64435bf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 400
   gravityMultiplier: 1
   Impact:
     m_PersistentCalls:
@@ -615,7 +615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a0acdfa5548614193fff64435bf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 400
   gravityMultiplier: 1
   Impact:
     m_PersistentCalls:
@@ -786,7 +786,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a0acdfa5548614193fff64435bf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 400
   gravityMultiplier: 1
   Impact:
     m_PersistentCalls:
@@ -957,7 +957,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a0acdfa5548614193fff64435bf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 400
   gravityMultiplier: 1
   Impact:
     m_PersistentCalls:
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45a0acdfa5548614193fff64435bf91e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pushForce: 200
+  pushForce: 400
   gravityMultiplier: 1
   Impact:
     m_PersistentCalls:

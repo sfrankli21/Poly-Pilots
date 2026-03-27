@@ -41,7 +41,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
     public Vector3 predictedInterceptPoint;
     public Vector3 targetVelocity;
     public Vector3 targetAcceleration;
-    public LineRenderer seekerLineRenderer;
 
     Vector3 lastTargetPosition;
     Vector3 previousTargetVelocity;
@@ -75,7 +74,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
         }
 
         CacheMainCameraTransform();
-        UpdateSeekerLineRenderer();
     }
 
     void OnEnable()
@@ -126,8 +124,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
         {
             payloadManager.HasHeatSource = false;
         }
-
-        UpdateSeekerLineRenderer();
     }
 
     void Update()
@@ -135,10 +131,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
         if (!released)
         {
             UpdateRailGimbleState();
-        }
-        else
-        {
-            UpdateSeekerLineRenderer();
         }
     }
 
@@ -191,8 +183,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
                 lastRadarRayEnd = transform.position;
             }
         }
-
-        UpdateSeekerLineRenderer();
     }
 
     public bool RefreshRailHeatSourceNow()
@@ -277,8 +267,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
         {
             ExplosionTrigger.enabled = true;
         }
-
-        UpdateSeekerLineRenderer();
     }
 
     public void Detonate()
@@ -325,7 +313,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
                 payloadManager.HasHeatSource = false;
             }
 
-            UpdateSeekerLineRenderer();
             return;
         }
 
@@ -344,7 +331,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
                 payloadManager.HasHeatSource = false;
             }
 
-            UpdateSeekerLineRenderer();
             return;
         }
 
@@ -368,7 +354,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
                 payloadManager.HasHeatSource = false;
             }
 
-            UpdateSeekerLineRenderer();
             return;
         }
 
@@ -436,7 +421,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
                 payloadManager.HasHeatSource = true;
             }
 
-            UpdateSeekerLineRenderer();
             return;
         }
 
@@ -451,8 +435,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
         {
             payloadManager.HasHeatSource = false;
         }
-
-        UpdateSeekerLineRenderer();
     }
 
     void UpdateReleasedSeeker()
@@ -463,7 +445,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
             lastRadarHitTarget = false;
             lastRadarRayStart = transform.position;
             lastRadarRayEnd = transform.position;
-            UpdateSeekerLineRenderer();
             return;
         }
 
@@ -476,7 +457,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
             lastRadarHitTarget = false;
             lastRadarRayStart = radarGimble.position;
             lastRadarRayEnd = radarGimble.position + radarGimble.forward * radarRange;
-            UpdateSeekerLineRenderer();
             return;
         }
 
@@ -489,7 +469,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
             lastRadarHitTarget = false;
             lastRadarRayStart = radarGimble.position;
             lastRadarRayEnd = radarGimble.position;
-            UpdateSeekerLineRenderer();
             return;
         }
 
@@ -522,7 +501,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
                 lastRadarHitTarget = true;
                 seekerMemoryTimer = seekerMemoryTime;
                 targetTransform = designatedTargetTransform;
-                UpdateSeekerLineRenderer();
                 return;
             }
         }
@@ -540,8 +518,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
             targetTransform = null;
             designatedTargetTransform = null;
         }
-
-        UpdateSeekerLineRenderer();
     }
 
     void UpdateTargetKinematics()
@@ -677,18 +653,6 @@ public class AIM9XGuidanceLogic : MonoBehaviour
         {
             missileRigidbody.linearVelocity = missileRigidbody.linearVelocity.normalized * minSpeed;
         }
-    }
-
-    void UpdateSeekerLineRenderer()
-    {
-        if (seekerLineRenderer == null)
-        {
-            return;
-        }
-
-        seekerLineRenderer.positionCount = 2;
-        seekerLineRenderer.SetPosition(0, lastRadarRayStart);
-        seekerLineRenderer.SetPosition(1, lastRadarRayEnd);
     }
 
     float NormalizeAngle(float angle)

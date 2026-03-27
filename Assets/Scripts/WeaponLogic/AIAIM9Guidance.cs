@@ -390,6 +390,11 @@ public class AIAIM9Guidance : MonoBehaviour
                 continue;
             }
 
+            if (!IsInRadarMask(heatSignature.transform))
+            {
+                continue;
+            }
+
             float heatValue = heatSignature.GetHeatValue();
             float hitDistance = hits[i].distance;
 
@@ -414,6 +419,16 @@ public class AIAIM9Guidance : MonoBehaviour
         {
             targetInSeeker = false;
         }
+    }
+
+    bool IsInRadarMask(Transform t)
+    {
+        if (t == null)
+        {
+            return false;
+        }
+
+        return ((1 << t.gameObject.layer) & radarMask.value) != 0;
     }
 
     HeatSignature GetHeatSignature(Collider hitCollider)

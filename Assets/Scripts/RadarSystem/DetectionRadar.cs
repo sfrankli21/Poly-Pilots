@@ -25,10 +25,14 @@ public class DetectionRadar : MonoBehaviour
     public string RWRID;
     public float scanInterval = 0.25f;
 
+    public LayerMask detectionMask = ~0;
+    public LayerMask blockingMask = ~0;
+
     public EventReference FirstPing;
     public EventReference NotFirstPing;
 
     public int SpikeCount;
+    public int spikeResetThreshold = 75;
     public UnityEvent SpikeReset;
 
     public List<Transform> radarContacts = new List<Transform>();
@@ -110,6 +114,11 @@ public class DetectionRadar : MonoBehaviour
                 continue;
             }
 
+            if (((1 << obj.layer) & detectionMask.value) == 0)
+            {
+                continue;
+            }
+
             Transform target = obj.transform;
             Vector3 toTarget = target.position - transform.position;
             float distance = toTarget.magnitude;
@@ -131,6 +140,23 @@ public class DetectionRadar : MonoBehaviour
             if (Mathf.Abs(pitch) > pitchHalf)
             {
                 continue;
+            }
+
+            bool blocked = Physics.Raycast(
+                transform.position,
+                toTarget.normalized,
+                out RaycastHit hit,
+                distance,
+                blockingMask,
+                QueryTriggerInteraction.Ignore
+            );
+
+            if (blocked)
+            {
+                if (hit.transform != target && !hit.transform.IsChildOf(target))
+                {
+                    continue;
+                }
             }
 
             detectedThisScan.Add(target);
@@ -202,7 +228,7 @@ public class DetectionRadar : MonoBehaviour
 
     void CheckSpikeReset()
     {
-        if (SpikeCount >= 75)
+        if (SpikeCount >= spikeResetThreshold)
         {
             SpikeCount = 0;
             ReleaseMissileFromList();

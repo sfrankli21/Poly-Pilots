@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class ObjectHealth : MonoBehaviour
@@ -11,6 +12,7 @@ public class ObjectHealth : MonoBehaviour
     public bool destroyOnDeath;
     public string bulletTag;
     public float bulletDamage;
+    public UnityEvent OnDeath;
 
     bool deathStarted;
 
@@ -26,7 +28,12 @@ public class ObjectHealth : MonoBehaviour
         if (currentHealth <= 0f)
         {
             currentHealth = 0f;
-            isAlive = false;
+
+            if (isAlive)
+            {
+                isAlive = false;
+                OnDeath.Invoke();
+            }
 
             UpdateVisualState();
 
@@ -78,6 +85,6 @@ public class ObjectHealth : MonoBehaviour
     IEnumerator Death()
     {
         yield return new WaitForSeconds(10f);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

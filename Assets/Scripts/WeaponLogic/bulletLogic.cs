@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,11 +17,13 @@ public class bulletLogic : MonoBehaviour
 
     public float speed;
     public float lifeTime;
+    public LayerMask hitDetectionMask;
     public ImpactPerMaterial[] ImpactsPerMaterial;
     public UnityEvent OnBeforeReturnToPool;
 
     Rigidbody rb;
     float timer;
+    bool isReturning;
 
     static readonly Dictionary<string, GameObject> pooledImpacts = new Dictionary<string, GameObject>();
     static readonly HashSet<string> initializedPools = new HashSet<string>();
@@ -34,6 +37,7 @@ public class bulletLogic : MonoBehaviour
     void OnEnable()
     {
         timer = lifeTime;
+        isReturning = false;
         rb.useGravity = true;
         rb.linearVelocity = transform.forward * speed;
         rb.angularVelocity = Vector3.zero;
@@ -41,16 +45,26 @@ public class bulletLogic : MonoBehaviour
 
     void Update()
     {
+        if (isReturning)
+        {
+            return;
+        }
+
         timer -= Time.deltaTime;
 
         if (timer <= 0f)
         {
-            ReturnToPool();
+            StartCoroutine(DelayedReturnToPool());
         }
     }
 
     void OnCollisionEnter(Collision collision)
     {
+        if (isReturning)
+        {
+            return;
+        }
+
         Collider other = collision.collider;
 
         if (other == null)
@@ -63,7 +77,7 @@ public class bulletLogic : MonoBehaviour
             return;
         }
 
-        if (other.gameObject.layer != LayerMask.NameToLayer("Default"))
+        if (((1 << other.gameObject.layer) & hitDetectionMask.value) == 0)
         {
             return;
         }
@@ -100,7 +114,7 @@ public class bulletLogic : MonoBehaviour
             }
         }
 
-        ReturnToPool();
+        StartCoroutine(DelayedReturnToPool());
     }
 
     void OnDisable()
@@ -109,8 +123,10 @@ public class bulletLogic : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
     }
 
-    void ReturnToPool()
+    IEnumerator DelayedReturnToPool()
     {
+        isReturning = true;
+        yield return new WaitForSeconds(0.5f);
         OnBeforeReturnToPool.Invoke();
         gameObject.SetActive(false);
     }

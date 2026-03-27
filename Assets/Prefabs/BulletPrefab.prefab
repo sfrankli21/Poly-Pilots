@@ -51,6 +51,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1000
   lifeTime: 5
+  hitDetectionMask:
+    serializedVersion: 2
+    m_Bits: 16385
   ImpactsPerMaterial:
   - tagName: Metal
     impactPrefab: {fileID: 100002, guid: 00fedc70b62a31e448e8ccc298257b56, type: 3}
@@ -110,11 +113,11 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16385
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 64
-  m_ImplicitCom: 1
+  m_ImplicitCom: 0
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -131,7 +134,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 16385
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 64
@@ -160,6 +163,9 @@ MonoBehaviour:
   explosiveRadius: 5
   detonateOnAwake: 0
   allowMultipleDetonations: 1
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 16385
 --- !u!1 &3920975894357903922
 GameObject:
   m_ObjectHideFlags: 0

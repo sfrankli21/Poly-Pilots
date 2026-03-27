@@ -18,6 +18,7 @@ public class ExplosiveObject : MonoBehaviour
     public float explosiveRadius = 10f;
     public bool detonateOnAwake = false;
     public bool allowMultipleDetonations = false;
+    public LayerMask affectedLayers = ~0;
 
     bool hasDetonated;
 
@@ -43,7 +44,7 @@ public class ExplosiveObject : MonoBehaviour
 
         hasDetonated = true;
 
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosiveRadius, affectedLayers, QueryTriggerInteraction.Ignore);
         HashSet<ObjectHealth> damagedObjects = new HashSet<ObjectHealth>();
 
         for (int i = 0; i < hitColliders.Length; i++)
