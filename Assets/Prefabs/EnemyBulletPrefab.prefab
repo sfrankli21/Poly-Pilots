@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 351806099931487466}
   - component: {fileID: 4568249054462381794}
   - component: {fileID: 1606518575752210807}
+  - component: {fileID: 4105646520460758020}
   m_Layer: 6
   m_Name: EnemyBulletPrefab
   m_TagString: EnemyBullet
@@ -131,7 +132,40 @@ MonoBehaviour:
       Path: event:/Impacts/ConcreteImpact
   OnBeforeReturnToPool:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4105646520460758020}
+        m_TargetAssemblyTypeName: ExplosiveObject, Assembly-CSharp
+        m_MethodName: Detonate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4105646520460758020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3397984360709481572}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baab22f52ae18ed43b88c79dfc1d5f89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDamage: 10
+  minDamage: 5
+  damageFalloff: 0
+  explosiveRadius: 10
+  detonateOnAwake: 0
+  allowMultipleDetonations: 1
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 8193
 --- !u!1 &3920975894357903922
 GameObject:
   m_ObjectHideFlags: 0

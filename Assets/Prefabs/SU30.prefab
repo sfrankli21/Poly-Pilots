@@ -605,7 +605,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -719,17 +719,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 3397984360709481572, guid: 82b2c63eba7222e4faae150c9d6b48aa, type: 3}
   pooledObjectsParent: {fileID: 6193583053877677125}
-  poolSize: 80
+  poolSize: 300
   bulletFirePoint: {fileID: 1914290616604035864}
   sphereCastOrigin: {fileID: 3171524811768108258}
   hitMask:
     serializedVersion: 2
     m_Bits: 8192
-  sphereCastRadius: 5
-  sphereCastRange: 500
-  burstGap: 1
+  sphereCastRadius: 20
+  sphereCastRange: 2000
+  burstGap: 2
   rateOfFireRPM: 3900
-  shotsPerBurst: 20
+  shotsPerBurst: 100
   hasHit: 0
   isShooting: 0
 --- !u!1 &1438219784202371944
@@ -1562,7 +1562,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6782090288062502300}
   - component: {fileID: 7402888710637417948}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: HitBox
   m_TagString: Metal
   m_Icon: {fileID: 0}
@@ -2465,13 +2465,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6886983811495317235}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.021814799, y: 0, z: 0, w: 0.999762}
   m_LocalPosition: {x: 0, y: -0.5, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7138902535165053462}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.5, y: 0, z: 0}
 --- !u!1 &7080119248782698524
 GameObject:
   m_ObjectHideFlags: 0

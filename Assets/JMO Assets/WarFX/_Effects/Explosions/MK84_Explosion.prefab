@@ -9756,7 +9756,7 @@ MonoBehaviour:
   maxDamage: 2000
   minDamage: 100
   damageFalloff: 0
-  explosiveRadius: 150
+  explosiveRadius: 100
   detonateOnAwake: 1
   allowMultipleDetonations: 0
   affectedLayers:

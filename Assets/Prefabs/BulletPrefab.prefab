@@ -157,8 +157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: baab22f52ae18ed43b88c79dfc1d5f89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDamage: 10
-  minDamage: 7.5
+  maxDamage: 20
+  minDamage: 10
   damageFalloff: 0
   explosiveRadius: 5
   detonateOnAwake: 0
