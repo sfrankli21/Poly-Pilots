@@ -126,7 +126,7 @@ public class bulletLogic : MonoBehaviour
     IEnumerator DelayedReturnToPool()
     {
         isReturning = true;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.01f);
         OnBeforeReturnToPool.Invoke();
         gameObject.SetActive(false);
     }
